@@ -2,7 +2,7 @@ package Archive::Libarchive;
 
 use strict;
 use warnings;
-use 5.008004;
+use 5.020;
 
 # ABSTRACT: Modern Perl bindings to libarchive
 # VERSION
