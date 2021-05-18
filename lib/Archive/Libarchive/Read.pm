@@ -5,6 +5,7 @@ use warnings;
 use 5.020;
 use Archive::Libarchive::Lib;
 use experimental qw( signatures );
+use parent qw( Archive::Libarchive );
 
 # ABSTRACT: Libarchive read archive class
 # VERSION
@@ -19,7 +20,7 @@ my $ffi = Archive::Libarchive::Lib->ffi;
 
 =head2 new
 
- my $e = Archive::Libarchive::Read->new;
+ my $r = Archive::Libarchive::Read->new;
 
 Create a new archive read object.
 

@@ -4,8 +4,8 @@ use Archive::Libarchive::Write;
 
 subtest 'basic' => sub {
 
-  my $e = Archive::Libarchive::Write->new;
-  isa_ok $e, 'Archive::Libarchive::Write';
+  my $w = Archive::Libarchive::Write->new;
+  isa_ok $w, 'Archive::Libarchive::Write';
 
 };
 
