@@ -4,7 +4,6 @@ use strict;
 use warnings;
 use 5.020;
 use FFI::CheckLib 0.28 qw( find_lib_or_die );
-use FFI::Platypus 1.00;
 
 # ABSTRACT: Private class for Archive::Libarchive
 # VERSION
@@ -37,6 +36,8 @@ sub ffi
 {
   state $ffi;
   $ffi ||= do {
+    require FFI::Platypus;
+    FFI::Platypus->VERSION('1.00');
     my $ffi = FFI::Platypus->new( api => 1 );
     $ffi->lib(__PACKAGE__->lib);
     $ffi;
