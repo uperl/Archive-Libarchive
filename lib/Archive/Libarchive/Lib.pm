@@ -39,7 +39,17 @@ sub ffi
     require FFI::Platypus;
     FFI::Platypus->VERSION('1.00');
     my $ffi = FFI::Platypus->new( api => 1 );
+
+    # use libarchive dynamic lib
     $ffi->lib(__PACKAGE__->lib);
+
+    # type
+    $ffi->load_custom_type( '::PtrObject', 'archive_t'       => 'Archive::Libarchive'        );
+    $ffi->load_custom_type( '::PtrObject', 'archive_read_t'  => 'Archive::Libarchive::Read'  );
+    $ffi->load_custom_type( '::PtrObject', 'archive_write_t' => 'Archive::Libarchive::Write' );
+
+    $ffi->type( 'object(Archive::Libarchive::Entry)' => 'archive_entry_t' );
+
     $ffi;
   };
 }

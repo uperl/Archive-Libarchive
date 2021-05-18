@@ -13,6 +13,7 @@ $modules{$_} = $_ for qw(
   ExtUtils::MakeMaker
   FFI::CheckLib
   FFI::Platypus
+  FFI::Platypus::Type::PtrObject
   Test2::V0
 );
 
