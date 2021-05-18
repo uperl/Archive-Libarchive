@@ -4,8 +4,8 @@ use Archive::Libarchive::Read;
 
 subtest 'basic' => sub {
 
-  my $e = Archive::Libarchive::Read->new;
-  isa_ok $e, 'Archive::Libarchive::Read';
+  my $r = Archive::Libarchive::Read->new;
+  isa_ok $r, 'Archive::Libarchive::Read';
 
 };
 
