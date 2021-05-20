@@ -18,7 +18,7 @@ foreach my $version ('2.8.5','3.0.2',ref_config->{LATEST})
   say "libarchive $version, so=$so";
 
   my @symbols;
-  
+
   extract_symbols($so,
     code => sub ($symbol, $) {
       return unless $symbol =~ /^archive_/;
