@@ -1,4 +1,4 @@
-# Archive::Libarchive ![linux](https://github.com/uperl/Archive-Libarchive/workflows/linux/badge.svg) ![macos](https://github.com/uperl/Archive-Libarchive/workflows/macos/badge.svg) ![cygwin](https://github.com/uperl/Archive-Libarchive/workflows/cygwin/badge.svg) ![msys2-mingw](https://github.com/uperl/Archive-Libarchive/workflows/msys2-mingw/badge.svg)
+# Archive::Libarchive ![linux](https://github.com/uperl/Archive-Libarchive/workflows/linux/badge.svg) ![macos](https://github.com/uperl/Archive-Libarchive/workflows/macos/badge.svg) ![cygwin](https://github.com/uperl/Archive-Libarchive/workflows/cygwin/badge.svg) ![msys2-mingw](https://github.com/uperl/Archive-Libarchive/workflows/msys2-mingw/badge.svg) ![ref](https://github.com/uperl/Archive-Libarchive/workflows/ref/badge.svg)
 
 Modern Perl bindings to libarchive
 
