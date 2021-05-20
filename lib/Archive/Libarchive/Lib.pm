@@ -29,7 +29,7 @@ L<Archive::Libarchive>.
 
 sub lib
 {
-  find_lib_or_die( lib => 'archive', symbol => [], alien => ['Alien::Libarchive3'] );
+  find_lib_or_die( lib => 'archive', symbol => ['archive_read_free','archive_write_free'], alien => ['Alien::Libarchive3'] );
 }
 
 sub ffi

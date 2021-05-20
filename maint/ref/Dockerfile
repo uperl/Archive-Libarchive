@@ -85,7 +85,11 @@ RUN mkdir -p /tmp/build                \
   && rm -rf /tmp/build
 
 RUN cpanm -n \
+  File::chdir                                      \
+  FFI::CheckLib                                    \
   FFI::Platypus                                    \
+  FFI::Platypus::Type::PtrObject                   \
+  FFI::ExtractSymbols                              \
   Const::Introspect::C                             \
   Clang::CastXML                                   \
   https://dist.wdlabs.com/App-castyml-0.01.tar.gz
