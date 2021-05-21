@@ -5,7 +5,7 @@ use warnings;
 use 5.020;
 use Archive::Libarchive::Lib;
 use experimental qw( signatures );
-use parent qw( Archive::Libarchive );
+use parent qw( Archive::Libarchive::Archive );
 
 # ABSTRACT: Libarchive write archive class
 # VERSION
@@ -34,6 +34,6 @@ $ffi->attach( new => [] => 'opaque' => sub {
   bless { ptr => $ptr }, $class;
 });
 
-$ffi->attach( [ free => 'DESTROY' ] => ['archive_write_t'] => 'void' );
+$ffi->attach( [ free => 'DESTROY' ] => ['archive_write'] => 'void' );
 
 1;
