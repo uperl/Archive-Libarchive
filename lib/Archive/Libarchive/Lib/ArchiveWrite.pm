@@ -1,4 +1,4 @@
-package Archive::Libarchive::Generated::ArchiveWrite;
+package Archive::Libarchive::Lib::ArchiveWrite;
 
 use strict;
 use warnings;

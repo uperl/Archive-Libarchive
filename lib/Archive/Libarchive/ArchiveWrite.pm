@@ -36,6 +36,6 @@ $ffi->attach( new => [] => 'opaque' => sub {
 
 $ffi->attach( [ free => 'DESTROY' ] => ['archive_write'] => 'void' );
 
-require Archive::Libarchive::Generated::ArchiveWrite unless $Archive::Libarchive::no_gen;
+require Archive::Libarchive::Lib::ArchiveWrite unless $Archive::Libarchive::no_gen;
 
 1;

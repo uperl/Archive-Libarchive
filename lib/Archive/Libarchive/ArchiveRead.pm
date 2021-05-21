@@ -36,6 +36,6 @@ $ffi->attach( new => [] => 'opaque' => sub {
 
 $ffi->attach( [ free => 'DESTROY' ] => ['archive_read'] => 'void' );
 
-require Archive::Libarchive::Generated::ArchiveRead unless $Archive::Libarchive::no_gen;
+require Archive::Libarchive::Lib::ArchiveRead unless $Archive::Libarchive::no_gen;
 
 1;

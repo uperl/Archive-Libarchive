@@ -1,4 +1,4 @@
-package Archive::Libarchive::Generated::DiskWrite;
+package Archive::Libarchive::Lib::DiskWrite;
 
 use strict;
 use warnings;

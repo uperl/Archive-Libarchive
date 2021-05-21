@@ -34,7 +34,7 @@ $ffi->attach( new => [] => 'opaque' => sub {
   bless { ptr => $ptr }, $class;
 });
 
-require Archive::Libarchive::Generated::DiskWrite unless $Archive::Libarchive::no_gen;
+require Archive::Libarchive::Lib::DiskWrite unless $Archive::Libarchive::no_gen;
 
 $ffi->mangler(sub ($name) { "archive_write_$name"  });
 

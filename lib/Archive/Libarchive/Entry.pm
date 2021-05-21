@@ -35,6 +35,6 @@ $ffi->attach( new => [] => 'opaque' => sub {
 
 $ffi->attach( [ free => 'DESTROY' ] => ['archive_entry'] => 'void' );
 
-require Archive::Libarchive::Generated::Entry unless $Archive::Libarchive::no_gen;
+require Archive::Libarchive::Lib::Entry unless $Archive::Libarchive::no_gen;
 
 1;

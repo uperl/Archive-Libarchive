@@ -1,4 +1,4 @@
-package Archive::Libarchive::Generated::Unbound;
+package Archive::Libarchive::Lib::Unbound;
 
 use strict;
 use warnings;

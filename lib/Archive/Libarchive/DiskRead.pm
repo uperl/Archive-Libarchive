@@ -34,7 +34,7 @@ $ffi->attach( new => [] => 'opaque' => sub {
   bless { ptr => $ptr }, $class;
 });
 
-require Archive::Libarchive::Generated::DiskRead unless $Archive::Libarchive::no_gen;
+require Archive::Libarchive::Lib::DiskRead unless $Archive::Libarchive::no_gen;
 
 $ffi->mangler(sub ($name) { "archive_read_$name"  });
 

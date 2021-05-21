@@ -284,7 +284,7 @@ sub generate ($function, $bindings)
 
   foreach my $class (sort keys %$bindings)
   {
-    my $path = path(qw( lib Archive Libarchive Generated ), do {
+    my $path = path(qw( lib Archive Libarchive Lib ), do {
       my @name = split /::/, $class;
       $name[-1] .= ".pm";
       @name
