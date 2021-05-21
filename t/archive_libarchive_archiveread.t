@@ -1,5 +1,6 @@
 use Test2::V0 -no_srand => 1;
 use 5.020;
+use Path::Tiny qw( path );
 use Archive::Libarchive::ArchiveRead;
 
 subtest 'basic' => sub {
@@ -43,4 +44,17 @@ subtest 'next_header' => sub {
   is($r->next_header($e), ARCHIVE_EOF);
 };
 
+subtest 'open_memory' => sub {
+
+  my $r = Archive::Libarchive::ArchiveRead->new;
+  is($r->support_format_tar, ARCHIVE_OK);
+  is($r->open_memory( \path("examples/archive.tar")->slurp_raw ), ARCHIVE_OK);
+
+  my $e = Archive::Libarchive::Entry->new;
+  is($r->next_header($e), ARCHIVE_OK);
+  is($e->pathname, 'archive/');
+
+};
+
 done_testing;
+

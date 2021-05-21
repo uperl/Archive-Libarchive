@@ -230,6 +230,14 @@ sub process_functions ($href, $global, $bindings)
 
       # we use the newer next_header2 method
       push @prune, $name if $name eq 'archive_read_next_header';
+
+      # From the header file:
+      # A more involved version that is only used for internal testing.
+      push @prune, $name if $name eq 'archive_read_open_memory2';
+
+      # We don't call this version, since it wasn't in 3.0.2 and
+      # it is a shortcut for archive_*_free functions.
+      push @prune, $name if $name eq 'archive_free';
     }
 
     foreach my $name (@prune)
@@ -280,24 +288,35 @@ sub process_functions ($href, $global, $bindings)
           $name = $1;
         }
 
-        if($name =~ /^archive_read_disk_(.*)$/)
+        elsif($name =~ /^archive_read_disk_(.*)$/)
         {
           $arg_types[0] = 'archive_read_disk';
           $class = 'DiskRead';
           $name = $1;
         }
 
-        if($name =~ /^archive_read_(.*)$/)
+        elsif($name =~ /^archive_read_(.*)$/)
         {
           $arg_types[0] = 'archive_read';
           $class = 'ArchiveRead';
           $name = $1;
         }
 
-        if($name =~ /^archive_write_(.*)$/)
+        elsif($name =~ /^archive_write_(.*)$/)
         {
           $arg_types[0] = 'archive_write';
           $class = 'ArchiveWrite';
+          $name = $1;
+        }
+
+        elsif($name =~ /^archive_match_(.*)$/)
+        {
+          # TODO
+        }
+
+        elsif($name =~ /^archive_(.*)$/)
+        {
+          $class = 'Archive';
           $name = $1;
         }
 
