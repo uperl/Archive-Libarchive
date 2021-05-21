@@ -46,9 +46,11 @@ sub ffi
     $ffi->load_custom_type( '::WideString', 'wstring', access => 'read' );
 
     # type
-    $ffi->load_custom_type( '::PtrObject', 'archive'       => 'Archive::Libarchive::Archive'      );
-    $ffi->load_custom_type( '::PtrObject', 'archive_read'  => 'Archive::Libarchive::ArchiveRead'  );
-    $ffi->load_custom_type( '::PtrObject', 'archive_write' => 'Archive::Libarchive::ArchiveWrite' );
+    $ffi->load_custom_type( '::PtrObject', 'archive'            => 'Archive::Libarchive::Archive'      );
+    $ffi->load_custom_type( '::PtrObject', 'archive_read'       => 'Archive::Libarchive::ArchiveRead'  );
+    $ffi->load_custom_type( '::PtrObject', 'archive_write'      => 'Archive::Libarchive::ArchiveWrite' );
+    $ffi->load_custom_type( '::PtrObject', 'archive_read_disk'  => 'Archive::Libarchive::DiskRead'  );
+    $ffi->load_custom_type( '::PtrObject', 'archive_write_disk' => 'Archive::Libarchive::DiskWrite' );
 
     $ffi->type( 'object(Archive::Libarchive::Entry)' => 'archive_entry' );
     $ffi->type( 'object(Archive::Libarchive::Entry::LinkResolver)' => 'archive_entry_linkresolver' );
