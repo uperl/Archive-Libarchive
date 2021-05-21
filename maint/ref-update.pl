@@ -85,10 +85,15 @@ my $const;
   $ffi = Archive::Libarchive::Lib->ffi;
 }
 
-process_functions($archive_h);
-process_functions($entry_h);
+{
+  my %bindings;
+  my %functions;
+  process_functions($archive_h, \%functions, \%bindings);
+  process_functions($entry_h,   \%functions, \%bindings);
+  generate(\%functions, \%bindings);
+}
 
-sub process_functions ($href)
+sub process_functions ($href, $global, $bindings)
 {
   my %id;
 
@@ -156,17 +161,17 @@ sub process_functions ($href)
     $id{$item->{id}} = $item if exists $item->{id} && defined $item->{id};
   }
 
-  my %function;
+  my %functions;
 
-  foreach my $function (grep { $_->{_class} eq 'Function' && $_->{name} =~ /^archive_/ } $href->{inner}->@*)
+  foreach my $f (grep { $_->{_class} eq 'Function' && $_->{name} =~ /^archive_/ } $href->{inner}->@*)
   {
-    $function{$function->{name}} = $function;
+    $functions{$f->{name}} = $f;
   }
 
   {
     my @prune;
 
-    foreach my $name (keys %function)
+    foreach my $name (keys %functions)
     {
       # if there is a _utf8 variant we don't really want
       # to muck with the ASCII or wchar_t variant since
@@ -186,16 +191,14 @@ sub process_functions ($href)
       # There's not yet anything clients can actually do with this...
       push @prune, $name if $name eq 'archive_entry_acl';
     }
-    delete $function{$_} for @prune;
+    delete $functions{$_} for @prune;
   }
 
-  my %bindings;
-
-  foreach my $name (sort keys %function)
+  foreach my $name (sort keys %functions)
   {
-    my $function = $function{$name};
-    my $ret_type = $get_type->($name, $function->{returns});
-    my @arg_types = map { $get_type->($name, $_->{type} ) } $function->{inner}->@*;
+    my $f = $functions{$name};
+    my $ret_type = $get_type->($name, $f->{returns});
+    my @arg_types = map { $get_type->($name, $_->{type} ) } $f->{inner}->@*;
 
     if(defined $ret_type && all { defined $_ } @arg_types)
     {
@@ -256,9 +259,9 @@ sub process_functions ($href)
         $perl_name = $1;
       }
 
-      $class //= "unbound";
+      $class //= "Unbound";
 
-      push $bindings{$class}->@*, {
+      push $bindings->{$class}->@*, {
               symbol_name => $orig,
         maybe optional    => $opt,
               name        => $name,
@@ -269,13 +272,18 @@ sub process_functions ($href)
     }
   }
 
+  %$global = (%$global, %functions);
+
+}
+
+sub generate ($function, $bindings)
+{
   my $tt = Template->new({
     INCLUDE_PATH => [path(__FILE__)->parent->child('tt')->stringify],
   });
 
-  foreach my $class (sort keys %bindings)
+  foreach my $class (sort keys %$bindings)
   {
-    next if $class eq 'unbound';
     my $path = path(qw( lib Archive Libarchive Generated ), do {
       my @name = split /::/, $class;
       $name[-1] .= ".pm";
@@ -285,8 +293,8 @@ sub process_functions ($href)
     $tt->process('Code.pm.tt', {
       class => $class,
       bindings => {
-        required => [grep { !$_->{optional} } $bindings{$class}->@*],
-        optional => [grep { $_->{optional} } $bindings{$class}->@*],
+        required => [grep { !$_->{optional} } $bindings->{$class}->@*],
+        optional => [grep { $_->{optional} } $bindings->{$class}->@*],
       }
     }, "$path") or do {
       say "Error generating $path @{[ $tt->error ]}";
@@ -294,5 +302,4 @@ sub process_functions ($href)
     };
   }
 
-  say Dump($bindings{unbound});
 }
