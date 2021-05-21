@@ -34,6 +34,7 @@ $ffi->attach( new => [] => 'opaque' => sub {
   bless { ptr => $ptr }, $class;
 });
 
+# TODO: warn if doesn't return ARCHIVE_OK
 $ffi->attach( [ free => 'DESTROY' ] => ['archive_write'] => 'void' );
 
 require Archive::Libarchive::Lib::ArchiveWrite unless $Archive::Libarchive::no_gen;

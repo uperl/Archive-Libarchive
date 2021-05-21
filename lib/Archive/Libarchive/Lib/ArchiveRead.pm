@@ -42,8 +42,6 @@ $ffi->attach( extract2 => ['archive_read', 'archive_entry', 'archive'] => 'int' 
 $ffi->attach( extract_set_skip_file => ['archive_read', 'sint64', 'sint64'] );
 $ffi->attach( finish => ['archive_read'] => 'int' );
 $ffi->attach( header_position => ['archive_read'] => 'sint64' );
-$ffi->attach( next_header => ['archive_read', 'archive_entry'] => 'int' );
-$ffi->attach( next_header2 => ['archive_read', 'archive_entry'] => 'int' );
 #$ffi->attach( open => ['archive_read', 'opaque', undef, undef, undef] => 'int' );
 $ffi->attach( open1 => ['archive_read'] => 'int' );
 #$ffi->attach( open2 => ['archive_read', 'opaque', undef, undef, undef, undef] => 'int' );

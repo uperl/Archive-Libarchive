@@ -5,6 +5,7 @@ use warnings;
 use 5.020;
 use Archive::Libarchive::Lib;
 use experimental qw( signatures );
+use Archive::Libarchive::Entry;
 use parent qw( Archive::Libarchive::Archive );
 
 # ABSTRACT: Libarchive read archive class
@@ -34,7 +35,21 @@ $ffi->attach( new => [] => 'opaque' => sub {
   bless { ptr => $ptr }, $class;
 });
 
+# TODO: warn if doesn't return ARCHIVE_OK
 $ffi->attach( [ free => 'DESTROY' ] => ['archive_read'] => 'void' );
+
+=head1 METHODS
+
+ my $code = $r->next_header($e);
+
+Returns the next L<Archive::Libarchive::Entry> object.
+
+=cut
+
+$ffi->attach( [ next_header2 => 'next_header' ] => ['archive_read','archive_entry'] => 'int' => sub {
+  my($xsub, $self, $entry) = @_;
+  $xsub->($self, $entry);
+});
 
 require Archive::Libarchive::Lib::ArchiveRead unless $Archive::Libarchive::no_gen;
 

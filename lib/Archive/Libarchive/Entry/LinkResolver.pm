@@ -20,7 +20,7 @@ my $ffi = Archive::Libarchive::Lib->ffi;
 =head2 new
 
  my $r = Archive::Libarchive::Entry::LinkResolver->new;
- 
+
 Create a new entry link resolver object.
 
 =cut
@@ -33,6 +33,7 @@ $ffi->attach( new => [] => 'opaque' => sub {
   bless \$ptr, $class;
 });
 
+# TODO: warn if doesn't return ARCHIVE_OK
 $ffi->attach( [ free => 'DESTROY' ] => ['archive_entry_linkresolver'] => 'void' );
 
 require Archive::Libarchive::Lib::Entry::LinkResolver unless $Archive::Libarchive::no_gen;
