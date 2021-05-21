@@ -18,6 +18,9 @@ $modules{$_} = $_ for qw(
   File::chdir
   Path::Tiny
   Ref::Util
+  Test2::API
+  Test2::Tools::Basic
+  Test2::Tools::Compare
   Test2::V0
   Test::Script
 );
