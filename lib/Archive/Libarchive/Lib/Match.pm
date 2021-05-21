@@ -1,4 +1,4 @@
-package Archive::Libarchive::Lib::ArchiveMatch;
+package Archive::Libarchive::Lib::Match;
 
 use strict;
 use warnings;
@@ -25,7 +25,7 @@ This is a private class for L<Archive::Libarchive> see the main documentation fo
 
 =cut
 
-package Archive::Libarchive::ArchiveMatch;
+package Archive::Libarchive::Match;
 
 use Archive::Libarchive::Lib;
 

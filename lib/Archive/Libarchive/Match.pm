@@ -1,4 +1,4 @@
-package Archive::Libarchive::ArchiveMatch;
+package Archive::Libarchive::Match;
 
 use strict;
 use warnings;
@@ -20,7 +20,7 @@ my $ffi = Archive::Libarchive::Lib->ffi;
 
 =head2 new
 
- my $r = Archive::Libarchive::ArchiveMatch->new;
+ my $r = Archive::Libarchive::Match->new;
 
 Create a new archive match object.
 
@@ -37,6 +37,6 @@ $ffi->attach( new => [] => 'opaque' => sub {
 # TODO: warn if doesn't return ARCHIVE_OK
 $ffi->attach( [ free => 'DESTROY' ] => ['archive_match'] => 'void' );
 
-require Archive::Libarchive::Lib::ArchiveMatch unless $Archive::Libarchive::no_gen;
+require Archive::Libarchive::Lib::Match unless $Archive::Libarchive::no_gen;
 
 1;
