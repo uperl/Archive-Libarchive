@@ -31,10 +31,10 @@ use Archive::Libarchive::Lib;
 
 my $ffi = Archive::Libarchive::Lib->ffi;
 
-$ffi->attach( archive_clear_error => ['archive'] => 'void' );
+$ffi->attach( archive_clear_error => ['archive'] );
 $ffi->attach( archive_compression => ['archive'] => 'int' );
 $ffi->attach( archive_compression_name => ['archive'] => 'string' );
-$ffi->attach( archive_copy_error => ['archive', 'archive'] => 'void' );
+$ffi->attach( archive_copy_error => ['archive', 'archive'] );
 $ffi->attach( archive_errno => ['archive'] => 'int' );
 $ffi->attach( archive_error_string => ['archive'] => 'string' );
 $ffi->attach( archive_file_count => ['archive'] => 'int' );
@@ -46,9 +46,10 @@ $ffi->attach( archive_format => ['archive'] => 'int' );
 $ffi->attach( archive_format_name => ['archive'] => 'string' );
 $ffi->attach( archive_position_compressed => ['archive'] => 'sint64' );
 $ffi->attach( archive_position_uncompressed => ['archive'] => 'sint64' );
+#$ffi->attach( archive_set_error => ['archive', 'int', 'string', undef] );
 $ffi->attach( archive_version_number => [] => 'int' );
 $ffi->attach( archive_version_string => [] => 'string' );
-$ffi->attach( archive_entry_linkify => ['archive_entry_linkresolver', 'archive_entry', 'archive_entry'] => 'void' );
+$ffi->attach( archive_entry_linkify => ['archive_entry_linkresolver', 'archive_entry', 'archive_entry'] );
 $ffi->attach( archive_entry_partial_links => ['archive_entry_linkresolver', 'uint*'] => 'archive_entry' );
 
 $ffi->ignore_not_found(1);
@@ -85,6 +86,7 @@ $ffi->attach( archive_match_owner_excluded => ['archive', 'archive_entry'] => 'i
 $ffi->attach( archive_match_path_excluded => ['archive', 'archive_entry'] => 'int' );
 $ffi->attach( archive_match_path_unmatched_inclusions => ['archive'] => 'int' );
 $ffi->attach( archive_match_path_unmatched_inclusions_next => ['archive', 'string*'] => 'int' );
+#$ffi->attach( archive_match_path_unmatched_inclusions_next_w => ['archive', undef] => 'int' );
 $ffi->attach( archive_match_set_inclusion_recursion => ['archive', 'int'] => 'int' );
 $ffi->attach( archive_match_time_excluded => ['archive', 'archive_entry'] => 'int' );
 $ffi->attach( archive_seek_data => ['archive', 'sint64', 'int'] => 'sint64' );

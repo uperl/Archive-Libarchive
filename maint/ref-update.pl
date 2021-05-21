@@ -200,86 +200,88 @@ sub process_functions ($href, $global, $bindings)
     my $ret_type = $get_type->($name, $f->{returns});
     my @arg_types = map { $get_type->($name, $_->{type} ) } $f->{inner}->@*;
 
-    if(defined $ret_type && all { defined $_ } @arg_types)
+    my $class;
+    my $orig = $name;
+    my $opt = $optional{$orig} ? 1 : undef;
+    my $perl_name;
+
+    if(defined $arg_types[0])
     {
-      my $class;
-      my $orig = $name;
-      my $opt = $optional{$orig} ? 1 : undef;
-      my $perl_name;
-
-      if(defined $arg_types[0])
+      if($arg_types[0] eq 'archive_entry' && $name =~ /^archive_entry_(.*)$/)
       {
-        if($arg_types[0] eq 'archive_entry' && $name =~ /^archive_entry_(.*)$/)
+        $class = 'Entry';
+        $name = $1;
+      }
+
+      if($arg_types[0] eq 'archive_entry_linkresolver' && $name =~ /^archive_entry_linkresolver_(.*)$/)
+      {
+        $class = 'Entry::LinkResolver';
+        $name = $1;
+      }
+
+      if($arg_types[0] eq 'archive')
+      {
+        if($name =~ /^archive_write_disk_(.*)$/)
         {
-          $class = 'Entry';
+          $arg_types[0] = 'archive_write_disk';
+          $class = 'DiskWrite';
           $name = $1;
         }
 
-        if($arg_types[0] eq 'archive_entry_linkresolver' && $name =~ /^archive_entry_linkresolver_(.*)$/)
+        if($name =~ /^archive_read_disk_(.*)$/)
         {
-          $class = 'Entry::LinkResolver';
+          $arg_types[0] = 'archive_read_disk';
+          $class = 'DiskRead';
           $name = $1;
         }
 
-        if($arg_types[0] eq 'archive')
+        if($name =~ /^archive_read_(.*)$/)
         {
-          if($name =~ /^archive_write_disk_(.*)$/)
-          {
-            $arg_types[0] = 'archive_write_disk';
-            $class = 'DiskWrite';
-            $name = $1;
-          }
-
-          if($name =~ /^archive_read_disk_(.*)$/)
-          {
-            $arg_types[0] = 'archive_read_disk';
-            $class = 'DiskRead';
-            $name = $1;
-          }
-
-          if($name =~ /^archive_read_(.*)$/)
-          {
-            $arg_types[0] = 'archive_read';
-            $class = 'ArchiveRead';
-            $name = $1;
-          }
-
-          if($name =~ /^archive_write_(.*)$/)
-          {
-            $arg_types[0] = 'archive_write';
-            $class = 'ArchiveWrite';
-            $name = $1;
-          }
-
+          $arg_types[0] = 'archive_read';
+          $class = 'ArchiveRead';
+          $name = $1;
         }
+
+        if($name =~ /^archive_write_(.*)$/)
+        {
+          $arg_types[0] = 'archive_write';
+          $class = 'ArchiveWrite';
+          $name = $1;
+        }
+
       }
-
-      if($name =~ /^(.*)_utf8$/)
-      {
-        $perl_name = $1;
-      }
-
-      $class //= "Unbound";
-
-      push $bindings->{$class}->@*, {
-              symbol_name => $orig,
-        maybe optional    => $opt,
-              name        => $name,
-        maybe perl_name   => $perl_name,
-              arg_types   => \@arg_types,
-              ret_type    => $ret_type,
-      };
     }
+
+    if($name =~ /^(.*)_utf8$/)
+    {
+      $perl_name = $1;
+    }
+
+    $class //= "Unbound";
+
+    push $bindings->{$class}->@*, {
+            symbol_name => $orig,
+      maybe optional    => $opt,
+            name        => $name,
+      maybe perl_name   => $perl_name,
+            arg_types   => \@arg_types,
+            ret_type    => $ret_type,
+      maybe incomplete  => !(defined $ret_type && all { defined $_ } @arg_types),
+    };
   }
 
   %$global = (%$global, %functions);
-
 }
 
 sub generate ($function, $bindings)
 {
   my $tt = Template->new({
     INCLUDE_PATH => [path(__FILE__)->parent->child('tt')->stringify],
+    FILTERS => {
+      type => sub ($name) {
+        $name ne '' ? "'$name'" : 'undef';
+      },
+    },
   });
 
   foreach my $class (sort keys %$bindings)
