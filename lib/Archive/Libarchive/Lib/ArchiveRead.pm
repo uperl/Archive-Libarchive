@@ -1,4 +1,4 @@
-package Archive::Libarchive::Generated::ArchiveRead;
+package Archive::Libarchive::Lib::ArchiveRead;
 
 use strict;
 use warnings;

@@ -1,4 +1,4 @@
-package Archive::Libarchive::Generated::Entry::LinkResolver;
+package Archive::Libarchive::Lib::Entry::LinkResolver;
 
 use strict;
 use warnings;

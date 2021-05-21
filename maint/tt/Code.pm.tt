@@ -1,4 +1,4 @@
-package Archive::Libarchive::Generated::[% class %];
+package Archive::Libarchive::Lib::[% class %];
 
 use strict;
 use warnings;

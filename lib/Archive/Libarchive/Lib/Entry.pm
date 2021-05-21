@@ -1,4 +1,4 @@
-package Archive::Libarchive::Generated::Entry;
+package Archive::Libarchive::Lib::Entry;
 
 use strict;
 use warnings;

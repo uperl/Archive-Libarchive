@@ -35,6 +35,6 @@ $ffi->attach( new => [] => 'opaque' => sub {
 
 $ffi->attach( [ free => 'DESTROY' ] => ['archive_entry_linkresolver'] => 'void' );
 
-require Archive::Libarchive::Generated::Entry::LinkResolver unless $Archive::Libarchive::no_gen;
+require Archive::Libarchive::Lib::Entry::LinkResolver unless $Archive::Libarchive::no_gen;
 
 1;

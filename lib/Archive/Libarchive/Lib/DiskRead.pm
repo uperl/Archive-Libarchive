@@ -1,4 +1,4 @@
-package Archive::Libarchive::Generated::DiskRead;
+package Archive::Libarchive::Lib::DiskRead;
 
 use strict;
 use warnings;
