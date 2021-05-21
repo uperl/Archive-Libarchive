@@ -31,7 +31,7 @@ L<Archive::Libarchive>.
 
 sub lib
 {
-  find_lib_or_die( lib => 'archive', symbol => ['archive_read_free','archive_write_free'], alien => ['Alien::Libarchive3'] );
+  $ENV{ARCHIVE_LIBARCHIVE_LIB_DLL} // find_lib_or_die( lib => 'archive', symbol => ['archive_read_free','archive_write_free','archive_free'], alien => ['Alien::Libarchive3'] );
 }
 
 sub ffi

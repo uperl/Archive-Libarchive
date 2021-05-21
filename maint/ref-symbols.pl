@@ -10,7 +10,7 @@ use experimental qw( signatures );
 
 my %all;
 
-foreach my $version ('2.8.5','3.0.2',ref_config->{LATEST})
+foreach my $version (ref_config->{UNSUPPORTED},ref_config->{OLDEST},ref_config->{LATEST})
 {
   local $CWD = "/opt/libarchive/$version/lib";
   my $so = "libarchive.so";
