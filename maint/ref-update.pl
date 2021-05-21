@@ -77,6 +77,7 @@ my $const;
       $manual{$symbol} = 1;
       return $original->($handle, $symbol);
     };
+    no warnings 'once';
     $Archive::Libarchive::no_gen = 1;
     require Archive::Libarchive;
   }
@@ -84,7 +85,7 @@ my $const;
   $ffi = Archive::Libarchive::Lib->ffi;
 }
 
-#process_functions($archive_h);
+process_functions($archive_h);
 process_functions($entry_h);
 
 sub process_functions ($href)
@@ -203,18 +204,51 @@ sub process_functions ($href)
       my $opt = $optional{$orig} ? 1 : undef;
       my $perl_name;
 
-      if($arg_types[0] eq 'archive_entry' && $name =~ /^archive_entry_(.*)$/)
+      if(defined $arg_types[0])
       {
-        $class = 'Entry';
-        $name = $1;
-        $name = $1;
-      }
+        if($arg_types[0] eq 'archive_entry' && $name =~ /^archive_entry_(.*)$/)
+        {
+          $class = 'Entry';
+          $name = $1;
+        }
 
-      if($arg_types[0] eq 'archive_entry_linkresolver' && $name =~ /^archive_entry_linkresolver_(.*)$/)
-      {
-        $class = 'Entry::LinkResolver';
-        $name = $1;
-        $name = $1;
+        if($arg_types[0] eq 'archive_entry_linkresolver' && $name =~ /^archive_entry_linkresolver_(.*)$/)
+        {
+          $class = 'Entry::LinkResolver';
+          $name = $1;
+        }
+
+        if($arg_types[0] eq 'archive')
+        {
+          if($name =~ /^archive_write_disk_(.*)$/)
+          {
+            $arg_types[0] = 'archive_write_disk';
+            $class = 'DiskWrite';
+            $name = $1;
+          }
+
+          if($name =~ /^archive_read_disk_(.*)$/)
+          {
+            $arg_types[0] = 'archive_read_disk';
+            $class = 'DiskRead';
+            $name = $1;
+          }
+
+          if($name =~ /^archive_read_(.*)$/)
+          {
+            $arg_types[0] = 'archive_read';
+            $class = 'ArchiveRead';
+            $name = $1;
+          }
+
+          if($name =~ /^archive_write_(.*)$/)
+          {
+            $arg_types[0] = 'archive_write';
+            $class = 'ArchiveWrite';
+            $name = $1;
+          }
+
+        }
       }
 
       if($name =~ /^(.*)_utf8$/)

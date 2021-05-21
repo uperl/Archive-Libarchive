@@ -1,4 +1,4 @@
-package Archive::Libarchive::ArchiveWrite;
+package Archive::Libarchive::DiskWrite;
 
 use strict;
 use warnings;
@@ -7,7 +7,7 @@ use Archive::Libarchive::Lib;
 use experimental qw( signatures );
 use parent qw( Archive::Libarchive::Archive );
 
-# ABSTRACT: Libarchive write archive class
+# ABSTRACT: Libarchive disk write class
 # VERSION
 
 my $ffi = Archive::Libarchive::Lib->ffi;
@@ -20,13 +20,13 @@ my $ffi = Archive::Libarchive::Lib->ffi;
 
 =head2 new
 
- my $w = Archive::Libarchive::ArchiveWrite->new;
+ my $r = Archive::Libarchive::DiskWrite->new;
 
-Create a new archive write object.
+Create a new disk write object.
 
 =cut
 
-$ffi->mangler(sub ($name) { "archive_write_$name"  });
+$ffi->mangler(sub ($name) { "archive_write_disk_$name"  });
 
 $ffi->attach( new => [] => 'opaque' => sub {
   my($xsub, $class) = @_;
@@ -34,8 +34,8 @@ $ffi->attach( new => [] => 'opaque' => sub {
   bless { ptr => $ptr }, $class;
 });
 
-$ffi->attach( [ free => 'DESTROY' ] => ['archive_write'] => 'void' );
+#$ffi->attach( [ free => 'DESTROY' ] => ['archive_disk_write'] => 'void' );
 
-require Archive::Libarchive::Generated::ArchiveWrite unless $Archive::Libarchive::no_gen;
+require Archive::Libarchive::Generated::DiskWrite unless $Archive::Libarchive::no_gen;
 
 1;
