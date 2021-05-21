@@ -5,7 +5,6 @@ use warnings;
 use 5.020;
 use Archive::Libarchive::Lib;
 use experimental qw( signatures );
-use Archive::Libarchive::Entry;
 use parent qw( Archive::Libarchive::Archive );
 
 # ABSTRACT: Libarchive read archive class
