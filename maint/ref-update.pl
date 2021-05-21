@@ -112,6 +112,7 @@ my $tt = Template->new({
   foreach my $const ($c->get_macro_constants)
   {
     next unless $const->name =~ /^ARCHIVE_/;
+    next if $const->name eq 'ARCHIVE_VERSION_NUMBER';
     next unless $const->type eq 'int';
     push @const, $const;
   }
