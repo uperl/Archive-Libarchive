@@ -31,10 +31,13 @@ use Archive::Libarchive::Lib;
 
 my $ffi = Archive::Libarchive::Lib->ffi;
 
+[% IF bindings.size > 0 -%]
 [% FOREACH binding IN bindings.required -%]
 [% INCLUDE binding.tt binding = binding -%]
 [% END -%]
 
+[% END -%]
+[% IF bindings.optional.size > 0 -%]
 $ffi->ignore_not_found(1);
 
 [% FOREACH binding IN bindings.optional -%]
@@ -43,4 +46,5 @@ $ffi->ignore_not_found(1);
 
 $ffi->ignore_not_found(0);
 
+[% END -%]
 1;
