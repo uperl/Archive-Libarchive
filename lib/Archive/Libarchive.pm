@@ -4,9 +4,8 @@ use strict;
 use warnings;
 use 5.020;
 use experimental qw( signatures );
-use Archive::Libarchive::Lib;
-use Archive::Libarchive::Read;
-use Archive::Libarchive::Write;
+use Archive::Libarchive::ArchiveRead;
+use Archive::Libarchive::ArchiveWrite;
 use Archive::Libarchive::Entry;
 use Archive::Libarchive::Entry::LinkResolver;
 

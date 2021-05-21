@@ -6,7 +6,7 @@ use 5.020;
 use experimental qw( signatures );
 use Archive::Libarchive::Entry;
 
-# ABSTRACT: Modern Perl bindings to libarchive
+# ABSTRACT: Libarchive archive base object
 # VERSION
 
 my $ffi = Archive::Libarchive::Lib->ffi;
