@@ -13,7 +13,7 @@ use parent qw( Exporter );
 # ABSTRACT: Testing tools for Archive::Libarchive
 # VERSION
 
-our @EXPORT = qw( la_ok );
+our @EXPORT = qw( la_ok la_eof );
 
 my %code;
 
@@ -23,27 +23,28 @@ foreach my $name (qw( EOF OK RETRY WARN FAILED FATAL ))
   $code{lc $name} = $code->();
 }
 
-sub la_ok ($archive, $method, $arguments=[], $test_name=undef)
+sub _ok
 {
+  my($code, $archive, $method, $arguments, $test_name) = @_;
+
   $test_name //= do {
     my $name = "\$archive->$method";
     $name .= "(@$arguments)" if @$arguments;
-    $name .= " == ARCHIVE_OK";
+    $name .= " == ARCHIVE_@{[ uc $code ]}";
     $name;
   };
 
-  my $context = context();
   my $ret = is(
     $archive,
     object {
       call([ isa => 'Archive::Libarchive::Archive' ] => T());
       if(@$arguments)
       {
-        call([ $method => @$arguments ] => $code{ok});
+        call([ $method => @$arguments ] => $code{$code});
       }
       else
       {
-        call($method => $code{ok});
+        call($method => $code{$code});
       }
     },
     $test_name,
@@ -61,8 +62,44 @@ sub la_ok ($archive, $method, $arguments=[], $test_name=undef)
     }
   }
 
-  $context->release;
+  return $ret;
+}
 
+=head1 FUNCTIONS
+
+=head2 la_ok
+
+ la_ok $a, $method;
+ la_ok $a, $method, \@arguments;
+ la_ok $a, $method, \@arguments, $test_name;
+
+Tests that calling the method C<$method> on the archive object C<$a> returns ARCHIVE_OK.
+
+=cut
+
+sub la_ok ($archive, $method, $arguments=[], $test_name=undef)
+{
+  my $ctx = context();
+  my $ret = _ok('ok', $archive, $method, $arguments, $test_name=undef);
+  $ctx->release;
+  return $ret;
+}
+
+=head2 la_eof
+
+ la_eof $a, $method;
+ la_eof $a, $method, \@arguments;
+ la_eof $a, $method, \@arguments, $test_name;
+
+Tests that calling the method C<$method> on the archive object C<$a> returns ARCHIVE_EOF.
+
+=cut
+
+sub la_eof ($archive, $method, $arguments=[], $test_name=undef)
+{
+  my $ctx = context();
+  my $ret = _ok('eof', $archive, $method, $arguments, $test_name=undef);
+  $ctx->release;
   return $ret;
 }
 
