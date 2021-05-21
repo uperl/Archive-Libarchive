@@ -146,12 +146,12 @@ $ffi->attach( acl_to_text => ['archive_entry', 'ssize_t*', 'int'] => 'string' );
 $ffi->attach( acl_to_text_w => ['archive_entry', 'ssize_t*', 'int'] => 'wstring' );
 $ffi->attach( acl_types => ['archive_entry'] => 'int' );
 #$ffi->attach( digest => ['archive_entry', 'int'] => undef );
-$ffi->attach( [gname_utf8 => 'gname'] => ['archive_entry'] => 'string' );
-$ffi->attach( [hardlink_utf8 => 'hardlink'] => ['archive_entry'] => 'string' );
+$ffi->attach( [gname_utf8 => 'gname'] => ['archive_entry'] => 'string_utf8' );
+$ffi->attach( [hardlink_utf8 => 'hardlink'] => ['archive_entry'] => 'string_utf8' );
 $ffi->attach( is_data_encrypted => ['archive_entry'] => 'int' );
 $ffi->attach( is_encrypted => ['archive_entry'] => 'int' );
 $ffi->attach( is_metadata_encrypted => ['archive_entry'] => 'int' );
-$ffi->attach( [pathname_utf8 => 'pathname'] => ['archive_entry'] => 'string' );
+$ffi->attach( [pathname_utf8 => 'pathname'] => ['archive_entry'] => 'string_utf8' );
 $ffi->attach( [set_gname_utf8 => 'set_gname'] => ['archive_entry', 'string'] );
 $ffi->attach( [set_hardlink_utf8 => 'set_hardlink'] => ['archive_entry', 'string'] );
 $ffi->attach( set_is_data_encrypted => ['archive_entry', 'char'] );
@@ -162,8 +162,8 @@ $ffi->attach( set_symlink_type => ['archive_entry', 'int'] );
 $ffi->attach( [set_symlink_utf8 => 'set_symlink'] => ['archive_entry', 'string'] );
 $ffi->attach( [set_uname_utf8 => 'set_uname'] => ['archive_entry', 'string'] );
 $ffi->attach( symlink_type => ['archive_entry'] => 'int' );
-$ffi->attach( [symlink_utf8 => 'symlink'] => ['archive_entry'] => 'string' );
-$ffi->attach( [uname_utf8 => 'uname'] => ['archive_entry'] => 'string' );
+$ffi->attach( [symlink_utf8 => 'symlink'] => ['archive_entry'] => 'string_utf8' );
+$ffi->attach( [uname_utf8 => 'uname'] => ['archive_entry'] => 'string_utf8' );
 
 $ffi->ignore_not_found(0);
 

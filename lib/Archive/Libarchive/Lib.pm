@@ -4,6 +4,8 @@ use strict;
 use warnings;
 use 5.020;
 use FFI::CheckLib 0.28 qw( find_lib_or_die );
+use Encode qw( decode );
+use experimental qw( signatures );
 
 # ABSTRACT: Private class for Archive::Libarchive
 # VERSION
@@ -51,6 +53,16 @@ sub ffi
     $ffi->load_custom_type( '::PtrObject', 'archive_write'      => 'Archive::Libarchive::ArchiveWrite' );
     $ffi->load_custom_type( '::PtrObject', 'archive_read_disk'  => 'Archive::Libarchive::DiskRead'  );
     $ffi->load_custom_type( '::PtrObject', 'archive_write_disk' => 'Archive::Libarchive::DiskWrite' );
+
+    $ffi->attach_cast( '_ptr_to_str', opaque => 'string' );
+
+    $ffi->custom_type(string_utf8 => {
+      native_type => 'opaque',
+      native_to_perl => sub ($ptr,$) {
+        my $raw = _ptr_to_str($ptr);
+        decode('UTF-8', $raw, Encode::FB_CROAK);
+      },
+    });
 
     $ffi->type( 'object(Archive::Libarchive::Entry)' => 'archive_entry' );
     $ffi->type( 'object(Archive::Libarchive::Entry::LinkResolver)' => 'archive_entry_linkresolver' );
