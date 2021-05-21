@@ -1,7 +1,7 @@
 FROM plicease/ciperl:5.32-bullseye
 LABEL maintainer="Graham Ollis <plicease@cpan.org>"
 ARG unsupported=2.8.5
-ARG oldest=3.0.2
+ARG oldest=no-default
 ARG latest=no-default
 
 RUN  apt-get update                            \
@@ -45,6 +45,23 @@ RUN mkdir -p /tmp/build                \
 
 RUN mkdir -p /tmp/build                \
   && cd /tmp/build                     \
+  && curl -L https://www.libarchive.org/downloads/libarchive-${unsupported}.tar.gz | tar zxf - \
+  && cd libarchive-${unsupported}           \
+  && chmod +x ./configure                   \
+  && ./configure                            \
+    --prefix=/opt/libarchive/${unsupported} \
+    --without-openssl                       \
+    --with-nettle                           \
+    --enable-bsdtar=static                  \
+    --enable-bsdcpio=static                 \
+    --enable-bsdcat=static                  \
+  && make                                   \
+  && make install                           \
+  && cd /                                   \
+  && rm -rf /tmp/build
+
+RUN mkdir -p /tmp/build                \
+  && cd /tmp/build                     \
   && curl -L https://www.libarchive.org/downloads/libarchive-${latest}.tar.gz | tar zxf - \
   && cd libarchive-${latest}           \
   && ./configure                       \
@@ -67,23 +84,6 @@ RUN cd /usr/bin && ln -s /opt/libarchive/${latest}/bin/* .                      
   && cd pkgconfig && ln -s /opt/libarchive/${latest}/lib/pkgconfig/* .            \
   && cd /usr/include && ln -s /opt/libarchive/${latest}/include/* .
 
-RUN mkdir -p /tmp/build                \
-  && cd /tmp/build                     \
-  && curl -L https://www.libarchive.org/downloads/libarchive-${unsupported}.zip | bsdtar zxf - \
-  && cd libarchive-${unsupported}           \
-  && chmod +x ./configure                   \
-  && ./configure                            \
-    --prefix=/opt/libarchive/${unsupported} \
-    --without-openssl                       \
-    --with-nettle                           \
-    --enable-bsdtar=static                  \
-    --enable-bsdcpio=static                 \
-    --enable-bsdcat=static                  \
-  && make                                   \
-  && make install                           \
-  && cd /                                   \
-  && rm -rf /tmp/build
-
 RUN cpanm -n \
   File::chdir                                      \
   FFI::CheckLib                                    \
@@ -94,4 +94,7 @@ RUN cpanm -n \
   Clang::CastXML                                   \
   Template                                         \
   PerlX::Maybe                                     \
-  https://dist.wdlabs.com/App-castyml-0.01.tar.gz
+  Test2::V0                                        \
+  Test::Script                                     \
+  https://dist.wdlabs.com/App-castyml-0.01.tar.gz  \
+  && rm -rf ~/cpanm

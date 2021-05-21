@@ -5,4 +5,8 @@ set -ex
 . ./maint/ref-config
 
 cd maint/ref
-docker build -t plicease/libarchive-ref:$REF_TAG --build-arg latest=$REF_LATEST .
+docker build -t plicease/libarchive-ref:$REF_TAG \
+  --build-arg latest=$REF_LATEST                 \
+  --build-arg oldest=$REF_OLDEST                 \
+  --build-arg unsupported=$REF_UNSUPPORTED       \
+  .

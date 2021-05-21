@@ -32,7 +32,7 @@ my %count = (
   my %in_oldest;
 
   {
-    my $version = '3.0.2';
+    my $version = ref_config->{OLDEST};
     local $CWD = "/opt/libarchive/$version/lib";
     my $so = "libarchive.so";
     $so = readlink $so if -l $so;
