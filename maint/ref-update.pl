@@ -99,7 +99,7 @@ sub process_functions ($href)
     $function{$function->{name}} = $function;
   }
 
-  delete $function->{$_} keys %manual;
+  delete $function{$_} for keys %manual;
 
   say $_ for sort keys %function;
 }
