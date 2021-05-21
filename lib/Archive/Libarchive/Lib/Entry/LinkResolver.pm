@@ -33,9 +33,4 @@ my $ffi = Archive::Libarchive::Lib->ffi;
 
 $ffi->attach( set_strategy => ['archive_entry_linkresolver', 'int'] );
 
-$ffi->ignore_not_found(1);
-
-
-$ffi->ignore_not_found(0);
-
 1;

@@ -39,9 +39,4 @@ $ffi->attach( set_standard_lookup => ['archive_write_disk'] => 'int' );
 #$ffi->attach( set_user_lookup => ['archive_write_disk', 'opaque', undef, undef] => 'int' );
 $ffi->attach( uid => ['archive_write_disk', 'string', 'sint64'] => 'sint64' );
 
-$ffi->ignore_not_found(1);
-
-
-$ffi->ignore_not_found(0);
-
 1;
