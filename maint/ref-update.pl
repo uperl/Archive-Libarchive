@@ -275,7 +275,7 @@ sub process_functions ($href, $global, $bindings)
 
       if($arg_types[0] eq 'archive_entry_linkresolver' && $name =~ /^archive_entry_linkresolver_(.*)$/)
       {
-        $class = 'Entry::LinkResolver';
+        $class = 'EntryLinkResolver';
         $name = $1;
       }
 

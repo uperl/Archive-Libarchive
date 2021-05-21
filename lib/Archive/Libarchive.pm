@@ -9,7 +9,7 @@ use Archive::Libarchive::ArchiveWrite;
 use Archive::Libarchive::DiskRead;
 use Archive::Libarchive::DiskWrite;
 use Archive::Libarchive::Entry;
-use Archive::Libarchive::Entry::LinkResolver;
+use Archive::Libarchive::EntryLinkResolver;
 use parent qw( Exporter );
 
 # ABSTRACT: Modern Perl bindings to libarchive

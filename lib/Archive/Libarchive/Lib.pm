@@ -65,7 +65,7 @@ sub ffi
     });
 
     $ffi->type( 'object(Archive::Libarchive::Entry)' => 'archive_entry' );
-    $ffi->type( 'object(Archive::Libarchive::Entry::LinkResolver)' => 'archive_entry_linkresolver' );
+    $ffi->type( 'object(Archive::Libarchive::EntryLinkResolver)' => 'archive_entry_linkresolver' );
 
     $ffi;
   };

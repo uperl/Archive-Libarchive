@@ -1,4 +1,4 @@
-package Archive::Libarchive::Entry::LinkResolver;
+package Archive::Libarchive::EntryLinkResolver;
 
 use strict;
 use warnings;
@@ -19,7 +19,7 @@ my $ffi = Archive::Libarchive::Lib->ffi;
 
 =head2 new
 
- my $r = Archive::Libarchive::Entry::LinkResolver->new;
+ my $r = Archive::Libarchive::EntryLinkResolver->new;
 
 Create a new entry link resolver object.
 
@@ -36,6 +36,6 @@ $ffi->attach( new => [] => 'opaque' => sub {
 # TODO: warn if doesn't return ARCHIVE_OK
 $ffi->attach( [ free => 'DESTROY' ] => ['archive_entry_linkresolver'] => 'void' );
 
-require Archive::Libarchive::Lib::Entry::LinkResolver unless $Archive::Libarchive::no_gen;
+require Archive::Libarchive::Lib::EntryLinkResolver unless $Archive::Libarchive::no_gen;
 
 1;
