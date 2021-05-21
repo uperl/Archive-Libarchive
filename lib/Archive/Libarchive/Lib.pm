@@ -44,11 +44,12 @@ sub ffi
     $ffi->lib(__PACKAGE__->lib);
 
     # type
-    $ffi->load_custom_type( '::PtrObject', 'archive_t'       => 'Archive::Libarchive'        );
-    $ffi->load_custom_type( '::PtrObject', 'archive_read_t'  => 'Archive::Libarchive::Read'  );
-    $ffi->load_custom_type( '::PtrObject', 'archive_write_t' => 'Archive::Libarchive::Write' );
+    $ffi->load_custom_type( '::PtrObject', 'archive'       => 'Archive::Libarchive::Archive' );
+    $ffi->load_custom_type( '::PtrObject', 'archive_read'  => 'Archive::Libarchive::Read'    );
+    $ffi->load_custom_type( '::PtrObject', 'archive_write' => 'Archive::Libarchive::Write'   );
 
-    $ffi->type( 'object(Archive::Libarchive::Entry)' => 'archive_entry_t' );
+    $ffi->type( 'object(Archive::Libarchive::Entry)' => 'archive_entry' );
+    $ffi->type( 'object(Archive::Libarchive::Entry::LinkResolver)' => 'archive_entry_linkresolver' );
 
     $ffi;
   };

@@ -1,4 +1,4 @@
-package Archive::Libarchive::Entry;
+package Archive::Libarchive::Entry::LinkResolver;
 
 use strict;
 use warnings;
@@ -6,7 +6,7 @@ use 5.020;
 use Archive::Libarchive::Lib;
 use experimental qw( signatures );
 
-# ABSTRACT: Libarchive entry class
+# ABSTRACT: Libarchive entry link resolver class
 # VERSION
 
 my $ffi = Archive::Libarchive::Lib->ffi;
@@ -19,13 +19,13 @@ my $ffi = Archive::Libarchive::Lib->ffi;
 
 =head2 new
 
- my $e = Archive::Libarchive::Entry->new;
-
-Create a new Entry object.
+ my $r = Archive::Libarchive::Entry::LinkResolver->new;
+ 
+Create a new entry link resolver object.
 
 =cut
 
-$ffi->mangler(sub ($name) { "archive_entry_$name"  });
+$ffi->mangler(sub ($name) { "archive_entry_linkresolver_$name"  });
 
 $ffi->attach( new => [] => 'opaque' => sub {
   my($xsub, $class) = @_;
@@ -33,6 +33,6 @@ $ffi->attach( new => [] => 'opaque' => sub {
   bless \$ptr, $class;
 });
 
-$ffi->attach( [ free => 'DESTROY' ] => ['archive_entry'] => 'void' );
+$ffi->attach( [ free => 'DESTROY' ] => ['archive_entry_linkresolver'] => 'void' );
 
 1;

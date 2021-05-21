@@ -2,18 +2,6 @@
 
 Modern Perl bindings to libarchive
 
-# SYNOPSIS
-
-# DESCRIPTION
-
-# METHODS
-
-## entry
-
-```perl
-my $e = $archive->entry;
-```
-
 # AUTHOR
 
 Graham Ollis <plicease@cpan.org>
