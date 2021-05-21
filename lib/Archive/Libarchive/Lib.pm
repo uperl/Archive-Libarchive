@@ -44,9 +44,9 @@ sub ffi
     $ffi->lib(__PACKAGE__->lib);
 
     # type
-    $ffi->load_custom_type( '::PtrObject', 'archive'       => 'Archive::Libarchive::Archive' );
-    $ffi->load_custom_type( '::PtrObject', 'archive_read'  => 'Archive::Libarchive::Read'    );
-    $ffi->load_custom_type( '::PtrObject', 'archive_write' => 'Archive::Libarchive::Write'   );
+    $ffi->load_custom_type( '::PtrObject', 'archive'       => 'Archive::Libarchive::Archive'      );
+    $ffi->load_custom_type( '::PtrObject', 'archive_read'  => 'Archive::Libarchive::ArchiveRead'  );
+    $ffi->load_custom_type( '::PtrObject', 'archive_write' => 'Archive::Libarchive::ArchiveWrite' );
 
     $ffi->type( 'object(Archive::Libarchive::Entry)' => 'archive_entry' );
     $ffi->type( 'object(Archive::Libarchive::Entry::LinkResolver)' => 'archive_entry_linkresolver' );

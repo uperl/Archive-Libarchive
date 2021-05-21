@@ -1,4 +1,4 @@
-package Archive::Libarchive::Write;
+package Archive::Libarchive::ArchiveRead;
 
 use strict;
 use warnings;
@@ -7,7 +7,7 @@ use Archive::Libarchive::Lib;
 use experimental qw( signatures );
 use parent qw( Archive::Libarchive::Archive );
 
-# ABSTRACT: Libarchive write archive class
+# ABSTRACT: Libarchive read archive class
 # VERSION
 
 my $ffi = Archive::Libarchive::Lib->ffi;
@@ -20,13 +20,13 @@ my $ffi = Archive::Libarchive::Lib->ffi;
 
 =head2 new
 
- my $w = Archive::Libarchive::Write->new;
+ my $r = Archive::Libarchive::ArchiveRead->new;
 
-Create a new archive write object.
+Create a new archive read object.
 
 =cut
 
-$ffi->mangler(sub ($name) { "archive_write_$name"  });
+$ffi->mangler(sub ($name) { "archive_read_$name"  });
 
 $ffi->attach( new => [] => 'opaque' => sub {
   my($xsub, $class) = @_;
@@ -34,6 +34,6 @@ $ffi->attach( new => [] => 'opaque' => sub {
   bless { ptr => $ptr }, $class;
 });
 
-$ffi->attach( [ free => 'DESTROY' ] => ['archive_write'] => 'void' );
+$ffi->attach( [ free => 'DESTROY' ] => ['archive_read'] => 'void' );
 
 1;
