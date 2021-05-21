@@ -21,3 +21,9 @@ jobs:
 
       - name: Build libarchive reference docker image
         run: ./maint/ref-build
+
+      - name: Run symbols script
+        run: ./maint/ref-symbols
+
+      - name: Run update script
+        run: ./maint/ref-update
