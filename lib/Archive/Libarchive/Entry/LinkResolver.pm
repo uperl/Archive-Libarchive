@@ -26,7 +26,6 @@ Create a new entry link resolver object.
 =cut
 
 $ffi->mangler(sub ($name) { "archive_entry_linkresolver_$name"  });
-$ffi->ignore_not_found(0);
 
 $ffi->attach( new => [] => 'opaque' => sub {
   my($xsub, $class) = @_;
@@ -35,5 +34,7 @@ $ffi->attach( new => [] => 'opaque' => sub {
 });
 
 $ffi->attach( [ free => 'DESTROY' ] => ['archive_entry_linkresolver'] => 'void' );
+
+require Archive::Libarchive::Generated::Entry::LinkResolver unless $Archive::Libarchive::no_gen;
 
 1;

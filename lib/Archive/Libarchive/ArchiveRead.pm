@@ -27,7 +27,6 @@ Create a new archive read object.
 =cut
 
 $ffi->mangler(sub ($name) { "archive_read_$name"  });
-$ffi->ignore_not_found(0);
 
 $ffi->attach( new => [] => 'opaque' => sub {
   my($xsub, $class) = @_;

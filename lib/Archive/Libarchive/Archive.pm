@@ -24,7 +24,6 @@ my $ffi = Archive::Libarchive::Lib->ffi;
 =cut
 
 $ffi->mangler(sub ($name) { "archive_$name" });
-$ffi->ignore_not_found(0);
 
 $ffi->attach( [ entry_new2 => 'entry' ] => ['archive'] => 'opaque' => sub {
   my($xsub, $self) = @_;
