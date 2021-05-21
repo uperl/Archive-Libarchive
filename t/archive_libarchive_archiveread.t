@@ -42,7 +42,7 @@ subtest 'next_header' => sub {
   is($e->pathname, 'archive/foo.txt', '$entry->pathname (2)');
   la_ok $r, 'data_skip';
 
-  is($r->next_header($e), ARCHIVE_EOF);
+  la_eof $r, 'next_header', [$e];
 };
 
 subtest 'open_memory' => sub {
