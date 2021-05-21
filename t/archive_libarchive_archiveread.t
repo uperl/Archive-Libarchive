@@ -2,6 +2,7 @@ use Test2::V0 -no_srand => 1;
 use 5.020;
 use Path::Tiny qw( path );
 use Archive::Libarchive::ArchiveRead;
+use Test::Archive::Libarchive;
 
 subtest 'basic' => sub {
 
@@ -24,22 +25,22 @@ subtest 'next_header' => sub {
   require Archive::Libarchive::Entry;
 
   my $r = Archive::Libarchive::ArchiveRead->new;
-  is($r->support_format_tar, ARCHIVE_OK);
+  la_ok $r, 'support_format_tar';
 
   my $e = Archive::Libarchive::Entry->new;
-  is($r->open_filename("examples/archive.tar", 10240), ARCHIVE_OK);
+  la_ok $r, 'open_filename', ["examples/archive.tar", 10240];
 
-  is($r->next_header($e), ARCHIVE_OK);
-  is($e->pathname, 'archive/');
-  is($r->data_skip, ARCHIVE_OK);
+  la_ok $r, 'next_header', [$e];
+  is($e->pathname, 'archive/', '$entry->pathname');
+  la_ok $r, 'data_skip';
 
-  is($r->next_header($e), ARCHIVE_OK);
-  is($e->pathname, 'archive/bar.txt');
-  is($r->data_skip, ARCHIVE_OK);
+  la_ok $r, 'next_header', [$e];
+  is($e->pathname, 'archive/bar.txt', '$entry->pathname (2)');
+  la_ok $r, 'data_skip';
 
-  is($r->next_header($e), ARCHIVE_OK);
-  is($e->pathname, 'archive/foo.txt');
-  is($r->data_skip, ARCHIVE_OK);
+  la_ok $r, 'next_header', [$e];
+  is($e->pathname, 'archive/foo.txt', '$entry->pathname (2)');
+  la_ok $r, 'data_skip';
 
   is($r->next_header($e), ARCHIVE_EOF);
 };
@@ -47,12 +48,12 @@ subtest 'next_header' => sub {
 subtest 'open_memory' => sub {
 
   my $r = Archive::Libarchive::ArchiveRead->new;
-  is($r->support_format_tar, ARCHIVE_OK);
-  is($r->open_memory( \path("examples/archive.tar")->slurp_raw ), ARCHIVE_OK);
+  la_ok $r, 'support_format_tar';
+  la_ok $r, 'open_memory', [\path("examples/archive.tar")->slurp_raw];
 
   my $e = Archive::Libarchive::Entry->new;
-  is($r->next_header($e), ARCHIVE_OK);
-  is($e->pathname, 'archive/');
+  la_ok $r, 'next_header', [$e];
+  is($e->pathname, 'archive/', '$entry->pathname');
 
 };
 
