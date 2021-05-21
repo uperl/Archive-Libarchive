@@ -38,6 +38,7 @@ require Archive::Libarchive::Lib::DiskWrite unless $Archive::Libarchive::no_gen;
 
 $ffi->mangler(sub ($name) { "archive_write_$name"  });
 
+# TODO: warn if doesn't return ARCHIVE_OK
 $ffi->attach( [ free => 'DESTROY' ] => ['archive_write_disk'] => 'void' );
 
 1;

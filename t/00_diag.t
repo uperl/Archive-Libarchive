@@ -14,7 +14,9 @@ $modules{$_} = $_ for qw(
   FFI::CheckLib
   FFI::Platypus
   FFI::Platypus::Type::PtrObject
+  File::chdir
   Test2::V0
+  Test::Script
 );
 
 $post_diag = sub {

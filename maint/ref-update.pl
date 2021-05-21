@@ -38,7 +38,7 @@ my %count = (
     my $so = "libarchive.so";
     $so = readlink $so if -l $so;
     say "# libarchive $version, so=$so";
-    
+
     extract_symbols($so,
       code => sub ($symbol, $) {
         return unless $symbol =~ /^archive_/;
@@ -53,7 +53,7 @@ my %count = (
     my $so = "libarchive.so";
     $so = readlink $so if -l $so;
     say "# libarchive $version, so=$so";
-    
+
     extract_symbols($so,
       code => sub ($symbol, $) {
         return unless $symbol =~ /^archive_/;
@@ -197,6 +197,9 @@ sub process_functions ($href, $global, $bindings)
       # Return an opaque ACL object.
       # There's not yet anything clients can actually do with this...
       push @prune, $name if $name eq 'archive_entry_acl';
+
+      # we use the newer next_header2 method
+      push @prune, $name if $name eq 'archive_read_next_header';
     }
 
     foreach my $name (@prune)

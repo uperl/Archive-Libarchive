@@ -38,6 +38,7 @@ require Archive::Libarchive::Lib::DiskRead unless $Archive::Libarchive::no_gen;
 
 $ffi->mangler(sub ($name) { "archive_read_$name"  });
 
+# TODO: warn if doesn't return ARCHIVE_OK
 $ffi->attach( [ free => 'DESTROY' ] => ['archive_read_disk'] => 'void' );
 
 1;

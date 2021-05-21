@@ -33,6 +33,7 @@ $ffi->attach( new => [] => 'opaque' => sub {
   bless \$ptr, $class;
 });
 
+# TODO: warn if doesn't return ARCHIVE_OK
 $ffi->attach( [ free => 'DESTROY' ] => ['archive_entry'] => 'void' );
 
 require Archive::Libarchive::Lib::Entry unless $Archive::Libarchive::no_gen;
