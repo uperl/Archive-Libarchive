@@ -13,8 +13,11 @@ $modules{$_} = $_ for qw(
   ExtUtils::MakeMaker
   FFI::CheckLib
   FFI::Platypus
+  FFI::Platypus::Buffer
   FFI::Platypus::Type::PtrObject
   File::chdir
+  Path::Tiny
+  Ref::Util
   Test2::V0
   Test::Script
 );

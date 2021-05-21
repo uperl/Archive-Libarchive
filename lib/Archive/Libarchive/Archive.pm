@@ -31,4 +31,6 @@ $ffi->attach( [ entry_new2 => 'entry' ] => ['archive'] => 'opaque' => sub {
   bless \$ptr, 'Archive::Libarchive::Entry';
 });
 
+require Archive::Libarchive::Lib::Archive unless $Archive::Libarchive::no_gen;
+
 1;

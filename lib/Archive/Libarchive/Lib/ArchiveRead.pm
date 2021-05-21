@@ -50,8 +50,6 @@ $ffi->attach( open_fd => ['archive_read', 'int', 'size_t'] => 'int' );
 $ffi->attach( open_file => ['archive_read', 'string', 'size_t'] => 'int' );
 $ffi->attach( open_filename => ['archive_read', 'string', 'size_t'] => 'int' );
 $ffi->attach( open_filename_w => ['archive_read', 'wstring', 'size_t'] => 'int' );
-$ffi->attach( open_memory => ['archive_read', 'opaque', 'size_t'] => 'int' );
-$ffi->attach( open_memory2 => ['archive_read', 'opaque', 'size_t', 'size_t'] => 'int' );
 $ffi->attach( set_callback_data => ['archive_read', 'opaque'] => 'int' );
 #$ffi->attach( set_close_callback => ['archive_read', undef] => 'int' );
 $ffi->attach( set_filter_option => ['archive_read', 'string', 'string', 'string'] => 'int' );
