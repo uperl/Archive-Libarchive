@@ -27,3 +27,6 @@ jobs:
 
       - name: Run update script
         run: ./maint/ref-update
+
+      - name: Test oldest and latest
+        run: ./maint/ref-test
