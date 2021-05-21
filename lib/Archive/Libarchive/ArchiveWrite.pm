@@ -27,7 +27,6 @@ Create a new archive write object.
 =cut
 
 $ffi->mangler(sub ($name) { "archive_write_$name"  });
-$ffi->ignore_not_found(0);
 
 $ffi->attach( new => [] => 'opaque' => sub {
   my($xsub, $class) = @_;

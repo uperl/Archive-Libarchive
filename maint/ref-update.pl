@@ -11,6 +11,8 @@ use Clang::CastXML;
 use Const::Introspect::C;
 use YAML qw( Dump );
 use List::Util 1.33 qw( all );
+use PerlX::Maybe;
+use Template;
 use 5.020;
 use experimental qw( signatures );
 
@@ -75,6 +77,7 @@ my $const;
       $manual{$symbol} = 1;
       return $original->($handle, $symbol);
     };
+    $Archive::Libarchive::no_gen = 1;
     require Archive::Libarchive;
   }
 
@@ -191,40 +194,66 @@ sub process_functions ($href)
   {
     my $function = $function{$name};
     my $ret_type = $get_type->($name, $function->{returns});
-    my @arg_type = map { $get_type->($name, $_->{type} ) } $function->{inner}->@*;
+    my @arg_types = map { $get_type->($name, $_->{type} ) } $function->{inner}->@*;
 
-    if(defined $ret_type && all { defined $_ } @arg_type)
+    if(defined $ret_type && all { defined $_ } @arg_types)
     {
       my $class;
       my $orig = $name;
-      my $opt = $optional{$orig} ? 1 : 0;
-      $orig .= " (optional)" if $opt;
-      my $perl_name = $name;
+      my $opt = $optional{$orig} ? 1 : undef;
+      my $perl_name;
 
-      if($arg_type[0] eq 'archive_entry' && $name =~ /^archive_entry_(.*)$/)
+      if($arg_types[0] eq 'archive_entry' && $name =~ /^archive_entry_(.*)$/)
       {
         $class = 'Entry';
-        $perl_name = $name = $1;
+        $name = $1;
         $name = $1;
       }
 
-      if($arg_type[0] eq 'archive_entry_linkresolver' && $name =~ /^archive_entry_linkresolver_(.*)$/)
+      if($arg_types[0] eq 'archive_entry_linkresolver' && $name =~ /^archive_entry_linkresolver_(.*)$/)
       {
-        $class = 'LinkResolver';
-        $perl_name = $name = $1;
+        $class = 'Entry::LinkResolver';
+        $name = $1;
         $name = $1;
       }
 
       $class //= "unbound";
 
-      push $bindings{$class}->@*, [
-        { orig => $orig, opt => $opt },
-        $perl_name ne $name ? [ $name => $perl_name ] : $name,
-        \@arg_type,
-        $ret_type,
-      ];
+      push $bindings{$class}->@*, {
+              symbol_name => $orig,
+        maybe optional    => $opt,
+              name        => $name,
+        maybe perl_name   => $perl_name,
+              arg_types   => \@arg_types,
+              ret_type    => $ret_type,
+      };
     }
   }
 
-  say Dump(\%bindings);
+  my $tt = Template->new({
+    INCLUDE_PATH => [path(__FILE__)->parent->child('tt')->stringify],
+  });
+
+  foreach my $class (sort keys %bindings)
+  {
+    next if $class eq 'unbound';
+    my $path = path(qw( lib Archive Libarchive Generated ), do {
+      my @name = split /::/, $class;
+      $name[-1] .= ".pm";
+      @name
+    });
+    $path->parent->mkpath;
+    $tt->process('Code.pm.tt', {
+      class => $class,
+      bindings => {
+        required => [grep { !$_->{optional} } $bindings{$class}->@*],
+        optional => [grep { $_->{optional} } $bindings{$class}->@*],
+      }
+    }, "$path") or do {
+      say "Error generating $path @{[ $tt->error ]}";
+      exit 2;
+    };
+  }
+
+  say Dump($bindings{unbound});
 }
