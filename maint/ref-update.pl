@@ -273,6 +273,7 @@ sub process_functions ($href, $global, $bindings)
 
     if($name =~ /^(.*)_utf8$/)
     {
+      $ret_type = 'string_utf8' if $ret_type eq 'string';
       $perl_name = $1;
     }
 
