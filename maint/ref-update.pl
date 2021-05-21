@@ -21,7 +21,6 @@ my %manual;
 my $ffi;
 my $archive_h;
 my $entry_h;
-my $const;
 my %count = (
   manual     => 0,
   generated  => 0,
@@ -71,12 +70,6 @@ my %count = (
   }
 
   {
-    $const = Const::Introspect::C->new(
-      headers => ['archive.h'],
-    );
-  }
-
-  {
     my $original = \&FFI::Platypus::DL::dlsym;
     no warnings 'redefine';
     local *FFI::Platypus::DL::dlsym = sub ($handle, $symbol) {
@@ -92,12 +85,48 @@ my %count = (
   $ffi = Archive::Libarchive::Lib->ffi;
 }
 
+my $tt = Template->new({
+  INCLUDE_PATH => [path(__FILE__)->parent->child('tt')->stringify],
+  FILTERS => {
+    type => sub ($name) {
+      $name ne '' ? "'$name'" : 'undef';
+    },
+  },
+});
+
 {
   my %bindings;
   my %functions;
   process_functions($archive_h, \%functions, \%bindings);
   process_functions($entry_h,   \%functions, \%bindings);
   generate(\%functions, \%bindings);
+}
+
+{
+  my $c = Const::Introspect::C->new(
+    headers => ['archive.h','archive_entry.h'],
+  );
+
+  my @const;
+
+  foreach my $const ($c->get_macro_constants)
+  {
+    next unless $const->name =~ /^ARCHIVE_/;
+    next unless $const->type eq 'int';
+    push @const, $const;
+  }
+
+  my $path = 'lib/Archive/Libarchive/Lib/Constants.pm';
+
+  $tt->process('Const.pm.tt', {
+    class => 'Constants',
+    constants => [sort { $a->name cmp $b->name } @const],
+  }, $path) or do {
+    say "Error generating $path @{[ $tt->error ]}";
+    exit 2;
+  };
+
+
 }
 
 sub process_functions ($href, $global, $bindings)
@@ -301,15 +330,6 @@ sub process_functions ($href, $global, $bindings)
 
 sub generate ($function, $bindings)
 {
-  my $tt = Template->new({
-    INCLUDE_PATH => [path(__FILE__)->parent->child('tt')->stringify],
-    FILTERS => {
-      type => sub ($name) {
-        $name ne '' ? "'$name'" : 'undef';
-      },
-    },
-  });
-
   foreach my $class (sort keys %$bindings)
   {
     my $path = path(qw( lib Archive Libarchive Lib ), do {

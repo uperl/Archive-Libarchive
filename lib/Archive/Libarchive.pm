@@ -10,8 +10,17 @@ use Archive::Libarchive::DiskRead;
 use Archive::Libarchive::DiskWrite;
 use Archive::Libarchive::Entry;
 use Archive::Libarchive::Entry::LinkResolver;
+use parent qw( Exporter );
 
 # ABSTRACT: Modern Perl bindings to libarchive
 # VERSION
+
+require Archive::Libarchive::Lib::Constants unless $Archive::Libarchive::no_gen;
+
+our @EXPORT_OK = grep /^ARCHIVE_/, keys %Archive::Libarchive::;
+our %EXPORT_TAGS = (
+  all => \@EXPORT_OK,
+  const => \@EXPORT_OK,
+);
 
 1;
