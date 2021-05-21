@@ -26,6 +26,7 @@ Create a new entry link resolver object.
 =cut
 
 $ffi->mangler(sub ($name) { "archive_entry_linkresolver_$name"  });
+$ffi->ignore_not_found(0);
 
 $ffi->attach( new => [] => 'opaque' => sub {
   my($xsub, $class) = @_;

@@ -92,4 +92,6 @@ RUN cpanm -n \
   FFI::ExtractSymbols                              \
   Const::Introspect::C                             \
   Clang::CastXML                                   \
+  Data::Section::Simple                            \
+  Template                                         \
   https://dist.wdlabs.com/App-castyml-0.01.tar.gz
