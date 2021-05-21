@@ -31,7 +31,7 @@ use Archive::Libarchive::Lib;
 
 my $ffi = Archive::Libarchive::Lib->ffi;
 
-$ffi->attach( set_strategy => ['archive_entry_linkresolver', 'int'] => 'void' );
+$ffi->attach( set_strategy => ['archive_entry_linkresolver', 'int'] );
 
 $ffi->ignore_not_found(1);
 
