@@ -43,6 +43,8 @@ sub ffi
     # use libarchive dynamic lib
     $ffi->lib(__PACKAGE__->lib);
 
+    $ffi->load_custom_type( '::WideString', 'wstring', access => 'read' );
+
     # type
     $ffi->load_custom_type( '::PtrObject', 'archive'       => 'Archive::Libarchive::Archive'      );
     $ffi->load_custom_type( '::PtrObject', 'archive_read'  => 'Archive::Libarchive::ArchiveRead'  );
