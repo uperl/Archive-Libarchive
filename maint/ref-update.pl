@@ -217,6 +217,11 @@ sub process_functions ($href)
         $name = $1;
       }
 
+      if($name =~ /^(.*)_utf8$/)
+      {
+        $perl_name = $1;
+      }
+
       $class //= "unbound";
 
       push $bindings{$class}->@*, {
