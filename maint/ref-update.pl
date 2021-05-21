@@ -10,7 +10,7 @@ use Path::Tiny qw( path );
 use Clang::CastXML;
 use Const::Introspect::C;
 use YAML qw( Dump );
-use List::Util 1.33 qw( all );
+use List::Util 1.33 qw( all sum0 );
 use PerlX::Maybe;
 use Template;
 use 5.020;
@@ -22,6 +22,12 @@ my $ffi;
 my $archive_h;
 my $entry_h;
 my $const;
+my %count = (
+  manual     => 0,
+  generated  => 0,
+  incomplete => 0,
+  removed    => 0,
+);
 
 {
   my %in_oldest;
@@ -82,6 +88,7 @@ my $const;
     require Archive::Libarchive;
   }
 
+  $count{manual} = scalar keys %manual;
   $ffi = Archive::Libarchive::Lib->ffi;
 }
 
@@ -191,7 +198,14 @@ sub process_functions ($href, $global, $bindings)
       # There's not yet anything clients can actually do with this...
       push @prune, $name if $name eq 'archive_entry_acl';
     }
-    delete $functions{$_} for @prune;
+
+    foreach my $name (@prune)
+    {
+      if(delete $functions{$name})
+      {
+        $count{removed}++;
+      }
+    }
   }
 
   foreach my $name (sort keys %functions)
@@ -204,6 +218,11 @@ sub process_functions ($href, $global, $bindings)
     my $orig = $name;
     my $opt = $optional{$orig} ? 1 : undef;
     my $perl_name;
+
+    if($ret_type =~ /^archive/)
+    {
+      say "warning: $name returns $ret_type (check ownership)";
+    }
 
     if(defined $arg_types[0])
     {
@@ -259,6 +278,9 @@ sub process_functions ($href, $global, $bindings)
 
     $class //= "Unbound";
 
+    my $incomplete = (defined $ret_type && all { defined $_ } @arg_types) ? undef : 1;
+    $count{$incomplete ? 'incomplete' : 'generated'}++;
+
     push $bindings->{$class}->@*, {
             symbol_name => $orig,
       maybe optional    => $opt,
@@ -266,7 +288,7 @@ sub process_functions ($href, $global, $bindings)
       maybe perl_name   => $perl_name,
             arg_types   => \@arg_types,
             ret_type    => $ret_type,
-      maybe incomplete  => !(defined $ret_type && all { defined $_ } @arg_types),
+      maybe incomplete  => $incomplete,
     };
   }
 
@@ -305,3 +327,9 @@ sub generate ($function, $bindings)
   }
 
 }
+
+foreach my $key (sort keys %count)
+{
+  printf "%10s | %3s\n", $key, $count{$key};
+}
+printf "%10s | %3s\n", 'total', sum0 values %count;
