@@ -1,4 +1,4 @@
-package Archive::Libarchive::Lib::Entry::LinkResolver;
+package Archive::Libarchive::Lib::EntryLinkResolver;
 
 use strict;
 use warnings;
@@ -25,7 +25,7 @@ This is a private class for L<Archive::Libarchive> see the main documentation fo
 
 =cut
 
-package Archive::Libarchive::Entry::LinkResolver;
+package Archive::Libarchive::EntryLinkResolver;
 
 use Archive::Libarchive::Lib;
 
