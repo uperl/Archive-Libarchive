@@ -312,7 +312,7 @@ sub process_functions ($href, $global, $bindings)
         elsif($name =~ /^archive_match_(.*)$/)
         {
           $arg_types[0] = 'archive_match';
-          $class = 'ArchiveMatch';
+          $class = 'Match';
           $name = $1;
         }
 
