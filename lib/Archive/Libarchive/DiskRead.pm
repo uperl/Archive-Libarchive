@@ -34,8 +34,10 @@ $ffi->attach( new => [] => 'opaque' => sub {
   bless { ptr => $ptr }, $class;
 });
 
-#$ffi->attach( [ free => 'DESTROY' ] => ['archive_disk_read'] => 'void' );
-
 require Archive::Libarchive::Generated::DiskRead unless $Archive::Libarchive::no_gen;
+
+$ffi->mangler(sub ($name) { "archive_read_$name"  });
+
+$ffi->attach( [ free => 'DESTROY' ] => ['archive_read_disk'] => 'void' );
 
 1;

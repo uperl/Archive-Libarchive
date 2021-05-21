@@ -34,8 +34,10 @@ $ffi->attach( new => [] => 'opaque' => sub {
   bless { ptr => $ptr }, $class;
 });
 
-#$ffi->attach( [ free => 'DESTROY' ] => ['archive_disk_write'] => 'void' );
-
 require Archive::Libarchive::Generated::DiskWrite unless $Archive::Libarchive::no_gen;
+
+$ffi->mangler(sub ($name) { "archive_write_$name"  });
+
+$ffi->attach( [ free => 'DESTROY' ] => ['archive_write_disk'] => 'void' );
 
 1;
