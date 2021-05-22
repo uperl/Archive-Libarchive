@@ -77,7 +77,7 @@ subtest 'open_FILE' => sub {
       unless eval { require FFI::C::File; 1 };
 
     my $path = path( tempdir(CLEANUP=>1), 'archive.tar');
-    my $fp = FFI::C::File->fopen("$path", "w");
+    my $fp = FFI::C::File->fopen("$path", "wb");
 
     my $w = Archive::Libarchive::ArchiveWrite->new;
 
@@ -85,6 +85,9 @@ subtest 'open_FILE' => sub {
     la_ok $w, 'open_FILE' => [$fp];
 
     la_write_ok($w);
+
+    $fp->fclose;
+
     la_readback_ok($path->slurp_raw);
   };
 
@@ -92,7 +95,7 @@ subtest 'open_FILE' => sub {
     my $path = path( tempdir(CLEANUP=>1), 'archive.tar');
 
     my $ffi = FFI::Platypus->new( api => 1, lib => [undef] );
-    my $fp = $ffi->function( fopen => ['string','string'] => 'opaque' )->call("$path", "w");
+    my $fp = $ffi->function( fopen => ['string','string'] => 'opaque' )->call("$path", "wb");
 
     my $w = Archive::Libarchive::ArchiveWrite->new;
 
@@ -100,6 +103,9 @@ subtest 'open_FILE' => sub {
     la_ok $w, 'open_FILE' => [$fp];
 
     la_write_ok($w);
+
+    $ffi->function( fclose => ['opaque'] => 'int' )->call($fp);
+
     la_readback_ok($path->slurp_raw);
   };
 
