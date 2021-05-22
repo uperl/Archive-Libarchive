@@ -105,6 +105,30 @@ subtest 'open_FILE' => sub {
 
 };
 
+subtest 'open_memory' => sub {
+  my $image;
+
+  my $w = Archive::Libarchive::ArchiveWrite->new;
+  la_ok $w, 'set_format_pax_restricted';
+  la_ok $w, 'open_memory' => [\$image];
+
+  la_write_ok($w);
+  la_readback_ok($image);
+};
+
+subtest 'open_perlfile' => sub {
+
+  my $path = path( tempdir(CLEANUP=>1), 'archive.tar');
+  open my $fh, '>', "$path";
+
+  my $w = Archive::Libarchive::ArchiveWrite->new;
+  la_ok $w, 'set_format_pax_restricted';
+  la_ok $w, 'open_perlfile' => [$fh];
+
+  la_write_ok($w);
+  la_readback_ok($path->slurp_raw);
+};
+
 sub la_write_ok ($w)
 {
   my $ctx = context();
