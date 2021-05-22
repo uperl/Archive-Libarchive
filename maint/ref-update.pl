@@ -230,6 +230,9 @@ sub process_functions ($href, $global, $bindings)
       # we use the newer next_header2 method
       push @prune, $name if $name eq 'archive_read_next_header';
 
+      # This was renamed to archive_write_openfile
+      push @prune, $name if $name eq 'archive_write_open_file';
+
       # From the header file:
       # A more involved version that is only used for internal testing.
       push @prune, $name if $name eq 'archive_read_open_memory2';
