@@ -31,6 +31,17 @@ $ffi->attach( [ entry_new2 => 'entry' ] => ['archive'] => 'opaque' => sub {
   bless \$ptr, 'Archive::Libarchive::Entry';
 });
 
+=head2 set_error
+
+ $archive->set_error($str);
+
+=cut
+
+$ffi->attach( set_error => ['archive', 'int', 'string'] => [] => sub {
+  my($xsub, $self, $errno, $string) = @_;
+  $xsub->($self, $errno, $string =~ s/%/%%/gr);
+});
+
 require Archive::Libarchive::Lib::Archive unless $Archive::Libarchive::no_gen;
 
 1;
