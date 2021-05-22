@@ -37,8 +37,12 @@ $ffi->attach( new => [] => 'opaque' => sub {
   bless { ptr => $ptr }, $class;
 });
 
-# TODO: warn if doesn't return ARCHIVE_OK
-$ffi->attach( [ free => 'DESTROY' ] => ['archive_read'] => 'void' );
+$ffi->attach( [ free => 'DESTROY' ] => ['archive_read'] => 'int' => sub {
+  my($xsub, $self) = @_;
+  return if $self->{cb};  # inside a callback, we don't own the archive pointer
+  my $ret = $xsub->($self);
+  warn "destroying archive pointer did not return ARCHIVE_OK" unless $ret == 0;
+});
 
 =head1 METHODS
 

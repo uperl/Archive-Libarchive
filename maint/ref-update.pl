@@ -211,11 +211,10 @@ sub process_functions ($href, $global, $bindings)
     foreach my $name (keys %functions)
     {
       # if there is a _utf8 variant we don't really want
-      # to muck with the ASCII or wchar_t variant since
-      # Perl uses UTF-8 internally.
+      # to muck with the wchar_t variant since Perl uses UTF-8 internally.
       if($name =~ /^(.*)_utf8$/)
       {
-        push @prune, $1, "${1}_w";
+        push @prune, "${1}_w";
       }
 
       # Some methods need to be implemented manually with
@@ -336,7 +335,7 @@ sub process_functions ($href, $global, $bindings)
     if($name =~ /^(.*)_utf8$/)
     {
       $ret_type = 'string_utf8' if $ret_type eq 'string';
-      $perl_name = $1;
+      #$perl_name = $1;
     }
 
     $class //= "Unbound";
