@@ -5,7 +5,7 @@ use warnings;
 use 5.020;
 use Archive::Libarchive::Lib;
 use Carp ();
-use Ref::Util qw( is_plain_coderef );
+use Ref::Util qw( is_plain_coderef is_blessed_ref );
 use FFI::Platypus::Buffer qw( window scalar_to_buffer );
 use experimental qw( signatures );
 use parent qw( Archive::Libarchive::Archive );
@@ -122,6 +122,23 @@ $ffi->attach( open => ['archive_write', 'opaque', 'archive_open_callback', 'arch
   }
 
   $xsub->($self, undef, $opener, $writer, $closer);
+});
+
+=head2 open_FILE
+
+ $w->open_FILE($file_pointer);
+
+This takes either a L<FFI::C::File>, or an opaque pointer to a libc file pointer.
+
+=cut
+
+$ffi->attach( open_FILE => ['archive_write', 'opaque'] => 'int' => sub {
+  my($xsub, $self, $fp) = @_;
+  if(is_blessed_ref $fp && $fp->isa('FFI::C::File'))
+  {
+    $fp = $fp->take;
+  }
+  $xsub->($self, $fp);
 });
 
 =head2 data
