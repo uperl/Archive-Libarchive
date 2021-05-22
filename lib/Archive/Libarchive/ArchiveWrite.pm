@@ -136,7 +136,7 @@ $ffi->attach( open_FILE => ['archive_write', 'opaque'] => 'int' => sub {
   my($xsub, $self, $fp) = @_;
   if(is_blessed_ref $fp && $fp->isa('FFI::C::File'))
   {
-    $fp = $fp->take;
+    $fp = $$fp;
   }
   $xsub->($self, $fp);
 });
