@@ -134,10 +134,7 @@ This takes either a L<FFI::C::File>, or an opaque pointer to a libc file pointer
 
 $ffi->attach( open_FILE => ['archive_write', 'opaque'] => 'int' => sub {
   my($xsub, $self, $fp) = @_;
-  if(is_blessed_ref $fp && $fp->isa('FFI::C::File'))
-  {
-    $fp = $$fp;
-  }
+  $fp = $$fp if is_blessed_ref $fp && $fp->isa('FFI::C::File');
   $xsub->($self, $fp);
 });
 
