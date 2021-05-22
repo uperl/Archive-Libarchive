@@ -238,6 +238,14 @@ sub process_functions ($href, $global, $bindings)
       # We don't call this version, since it wasn't in 3.0.2 and
       # it is a shortcut for archive_*_free functions.
       push @prune, $name if $name eq 'archive_free';
+
+      # The set_compression functions are being renamed to add_filter
+      # in 3.x and will be removed in 4.x
+      push @prune, $name if $name =~ /^archive_write_set_compression/;
+
+      # The _finish forms were renamed to _Free in 3.x and will be
+      # removed in 4.x
+      push @prune, $name if $name =~ /^archive_(read|write)_finish$/;
     }
 
     foreach my $name (@prune)
