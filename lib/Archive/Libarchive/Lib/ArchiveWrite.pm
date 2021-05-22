@@ -57,7 +57,6 @@ $ffi->attach( header => ['archive_write', 'archive_entry'] => 'int' );
 $ffi->attach( open_fd => ['archive_write', 'int'] => 'int' );
 $ffi->attach( open_filename => ['archive_write', 'string'] => 'int' );
 $ffi->attach( open_filename_w => ['archive_write', 'wstring'] => 'int' );
-$ffi->attach( open_memory => ['archive_write', 'opaque', 'size_t', 'size_t*'] => 'int' );
 $ffi->attach( set_bytes_in_last_block => ['archive_write', 'int'] => 'int' );
 $ffi->attach( set_bytes_per_block => ['archive_write', 'int'] => 'int' );
 $ffi->attach( set_filter_option => ['archive_write', 'string', 'string', 'string'] => 'int' );

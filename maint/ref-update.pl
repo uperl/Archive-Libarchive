@@ -233,6 +233,10 @@ sub process_functions ($href, $global, $bindings)
       # This was renamed to archive_write_openfile
       push @prune, $name if $name eq 'archive_write_open_file';
 
+      # This ... doesn't really work or make sense for Perl the
+      # way it is implemented.
+      push @prune, $name if $name eq 'archive_write_open_memory';
+
       # From the header file:
       # A more involved version that is only used for internal testing.
       push @prune, $name if $name eq 'archive_read_open_memory2';

@@ -141,11 +141,53 @@ $ffi->attach( open_FILE => ['archive_write', 'opaque'] => 'int' => sub {
   $xsub->($self, $fp);
 });
 
+=head2 open_memory
+
+ $w->open_memory(\$buffer);
+
+This takes a reference to scalar and stores the archive in memory there.
+
+=cut
+
+sub open_memory ($self, $ref)
+{
+  # TODO: it would be nice to pre-allocate $$ref with grow (FFI::Platypus::Buffer)
+  # but that gave me scary errors, so look into it later.
+  $self->open(
+    write => sub ($w, $buffer) {
+      $$ref .= $buffer;
+      return length $buffer;
+    },
+  );
+}
+
+=head2 open_perlfile
+
+ $w->open_perlfile(*FILE);
+
+This takes a perl file handle and stores the archive there.
+
+=cut
+
+sub open_perlfile ($self, $fh)
+{
+  $self->open(
+    write => sub ($w, $buffer) {
+      return syswrite $fh, $buffer;
+    },
+    close => sub ($w) {
+      close $fh;
+    },
+  );
+}
+
 =head2 data
 
  $w->data($buffer);
 
 =cut
+
+# TODO: data_block?
 
 $ffi->attach( data => ['archive_write', 'opaque', 'size_t'] => 'ssize_t' => sub {
   my $xsub = shift;
