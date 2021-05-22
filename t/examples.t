@@ -23,4 +23,6 @@ use File::Spec;
   }
 }
 
+unlink 'examples/outarchive.tar';
+
 done_testing;

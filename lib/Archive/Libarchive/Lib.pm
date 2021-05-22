@@ -55,6 +55,9 @@ sub ffi
     $ffi->load_custom_type( '::PtrObject', 'archive_read_disk'  => 'Archive::Libarchive::DiskRead'     );
     $ffi->load_custom_type( '::PtrObject', 'archive_write_disk' => 'Archive::Libarchive::DiskWrite'    );
 
+    $ffi->type( 'object(Archive::Libarchive::Entry)' => 'archive_entry' );
+    $ffi->type( 'object(Archive::Libarchive::EntryLinkResolver)' => 'archive_entry_linkresolver' );
+
     $ffi->attach_cast( '_ptr_to_str', opaque => 'string' );
 
     $ffi->custom_type(string_utf8 => {
@@ -65,8 +68,17 @@ sub ffi
       },
     });
 
-    $ffi->type( 'object(Archive::Libarchive::Entry)' => 'archive_entry' );
-    $ffi->type( 'object(Archive::Libarchive::EntryLinkResolver)' => 'archive_entry_linkresolver' );
+    # callbacks for both read/write
+    $ffi->type('(opaque,opaque)->int' => 'archive_open_callback');
+    $ffi->type('(opaque,opaque)->int' => 'archive_close_callback');
+
+    # callbacks for write
+    $ffi->type('(opaque,opaque,opaque,size_t)->ssize_t' => 'archive_write_callback');
+
+    # callbacks for read
+    $ffi->type('(opaque,opaque,opaque)->ssize_t' => 'archive_read_callback');
+    $ffi->type('(opaque,opaque,sint64)->ssize_t' => 'archive_skip_callback');
+    $ffi->type('(opaque,opaque,sint64,int)->sint64' => 'archive_seek_callback');
 
     $ffi;
   };

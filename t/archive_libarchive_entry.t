@@ -13,8 +13,8 @@ subtest 'basic' => sub {
 subtest 'utf-8' => sub {
 
   my $e = Archive::Libarchive::Entry->new;
-  $e->set_pathname('Привет.txt');
-  my $ret = $e->pathname;
+  $e->set_pathname_utf8('Привет.txt');
+  my $ret = $e->pathname_utf8;
 
   use Encode qw( decode );
 

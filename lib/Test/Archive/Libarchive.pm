@@ -13,7 +13,7 @@ use parent qw( Exporter );
 # ABSTRACT: Testing tools for Archive::Libarchive
 # VERSION
 
-our @EXPORT = qw( la_ok la_eof );
+our @EXPORT = qw( la_ok la_eof la_warn la_failed la_fatal );
 
 my %code;
 
@@ -29,7 +29,42 @@ sub _ok
 
   $test_name //= do {
     my $name = "\$archive->$method";
-    $name .= "(@$arguments)" if @$arguments;
+    if(@$arguments)
+    {
+      my $first = 1;
+      $name .= '(';
+      foreach my $arg (@$arguments)
+      {
+        $name .= ", " unless $first;
+        $first = 0;
+
+        my $ref = ref $arg;
+        if($ref eq '')
+        {
+          if(length $arg > 34)
+          {
+            $name .= "'@{[ substr($arg, 0, 30) =~ s/\n/\\n/rg ]}...'";
+          }
+          else
+          {
+            $name .= "'@{[ $arg =~ s/\n/\\n/rg ]}'";
+          }
+        }
+        elsif($ref eq 'HASH')
+        {
+          $name .= "{...}";
+        }
+        elsif($ref eq 'ARRAY')
+        {
+          $name .= "[...]";
+        }
+        elsif($ref eq 'CODE')
+        {
+          $name .= "sub {...}";
+        }
+      }
+      $name .= ')';
+    }
     $name .= " == ARCHIVE_@{[ uc $code ]}";
     $name;
   };
@@ -52,13 +87,20 @@ sub _ok
 
   unless($ret)
   {
-    if($archive->can('errno'))
+    if(defined $archive)
     {
-      diag("error: @{[ $archive->errno ]}");
+      if($archive->can('errno'))
+      {
+        diag("error: @{[ $archive->errno ]}");
+      }
+      if($archive->can('error_string'))
+      {
+        diag("error: @{[ $archive->error_string ]}");
+      }
     }
-    if($archive->can('error_string'))
+    else
     {
-      diag("error: @{[ $archive->error_string ]}");
+      diag("archive is not defined");
     }
   }
 
@@ -75,15 +117,13 @@ sub _ok
 
 Tests that calling the method C<$method> on the archive object C<$a> returns ARCHIVE_OK.
 
-=cut
+=head2 la_warn
 
-sub la_ok ($archive, $method, $arguments=[], $test_name=undef)
-{
-  my $ctx = context();
-  my $ret = _ok('ok', $archive, $method, $arguments, $test_name=undef);
-  $ctx->release;
-  return $ret;
-}
+ la_eof $a, $method;
+ la_eof $a, $method, \@arguments;
+ la_eof $a, $method, \@arguments, $test_name;
+
+Tests that calling the method C<$method> on the archive object C<$a> returns ARCHIVE_WARN.
 
 =head2 la_eof
 
@@ -95,12 +135,18 @@ Tests that calling the method C<$method> on the archive object C<$a> returns ARC
 
 =cut
 
-sub la_eof ($archive, $method, $arguments=[], $test_name=undef)
-{
-  my $ctx = context();
-  my $ret = _ok('eof', $archive, $method, $arguments, $test_name=undef);
-  $ctx->release;
-  return $ret;
+foreach my $code (qw( ok eof retry warn failed fatal )) {
+
+  my $sub = sub ($archive, $method, $arguments=[], $test_name=undef)
+  {
+    my $ctx = context();
+    my $ret = _ok($code, $archive, $method, $arguments, $test_name=undef);
+    $ctx->release;
+    return $ret;
+  };
+
+  no strict 'refs';
+  *{"la_$code"} = $sub;
 }
 
 1;
