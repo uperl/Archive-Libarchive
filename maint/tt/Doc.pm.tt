@@ -1,0 +1,28 @@
+package Archive::Libarchive::API;
+
+use strict;
+use warnings;
+
+# ABSTRACT: Comprehensive API documentation for Archive::Libarchive
+# VERSION
+
+1;
+
+__END__
+
+=head1 SYNOPSIS
+
+=head1 DESCRIPTION
+
+[% FOREACH class IN classes -%]
+=head1 Archive::Libarchive::[% class.name %]
+
+[% FOREACH method IN class.methods -%]
+=head2 [% method.name %]
+
+ # [% method.symbol_name %][% IF method.optional %] (optional)[% END %]
+ $[% class.var %]->[% method.name %];
+
+[% END -%]
+[% END -%]
+=cut
