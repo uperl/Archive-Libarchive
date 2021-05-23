@@ -38,3 +38,7 @@ use constant {
 };
 
 1;
+
+__END__
+
+[% INCLUDE seealso.tt -%]
