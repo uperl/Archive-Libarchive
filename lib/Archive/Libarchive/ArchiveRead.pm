@@ -72,8 +72,28 @@ $ffi->attach( open_memory => ['archive_read','opaque','size_t'] => 'int' => sub 
   Carp::croak("buffer must be a scalar reference")
     unless defined $ref && is_plain_scalarref $ref;
   push @{ $self->{keep} }, \($$ref);
-  my($ptr, $size) = scalar_to_buffer($$ref);
+  my($ptr, $size) = scalar_to_buffer $$ref;
   $xsub->($self, $ptr, $size);
+});
+
+=head2 read_data
+
+ my $code = $r->read_data(\$buffer, $size);
+ my $code = $r->read_data(\$buffer);
+
+=cut
+
+$ffi->attach( [data => 'read_data'] => ['archive_read', 'opaque', 'size_t'] => 'ssize_t' => sub {
+  my($xsub, $self, $ref, $size) = @_;
+  $size ||= 1024;
+
+  # TODO: this is highly non-performant!
+  $$ref = "\0" x $size;
+  my $rsize = $xsub->($self, (scalar_to_buffer $$ref));
+
+  $$ref = substr $$ref, 0, $rsize if $size != $rsize;
+
+  return $rsize;
 });
 
 require Archive::Libarchive::Lib::ArchiveRead unless $Archive::Libarchive::no_gen;

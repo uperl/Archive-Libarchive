@@ -24,5 +24,6 @@ use File::Spec;
 }
 
 unlink 'examples/outarchive.tar';
+unlink 'examples/hello.txt';
 
 done_testing;
