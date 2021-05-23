@@ -47,6 +47,5 @@ $ffi->attach( format_name => ['archive'] => 'string' );
 $ffi->attach( position_compressed => ['archive'] => 'sint64' );
 $ffi->attach( position_uncompressed => ['archive'] => 'sint64' );
 $ffi->attach( seek_data => ['archive', 'sint64', 'int'] => 'sint64' );
-#$ffi->attach( set_error => ['archive', 'int', 'string', undef] );
 
 1;

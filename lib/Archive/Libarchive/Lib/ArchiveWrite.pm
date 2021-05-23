@@ -53,7 +53,7 @@ $ffi->attach( fail => ['archive_write'] => 'int' );
 $ffi->attach( finish_entry => ['archive_write'] => 'int' );
 $ffi->attach( get_bytes_in_last_block => ['archive_write'] => 'int' );
 $ffi->attach( get_bytes_per_block => ['archive_write'] => 'int' );
-$ffi->attach( header => ['archive_write', 'archive_entry'] => 'int' );
+$ffi->attach( [header => 'write_header'] => ['archive_write', 'archive_entry'] => 'int' );
 $ffi->attach( open_fd => ['archive_write', 'int'] => 'int' );
 $ffi->attach( open_filename => ['archive_write', 'string'] => 'int' );
 $ffi->attach( open_filename_w => ['archive_write', 'wstring'] => 'int' );

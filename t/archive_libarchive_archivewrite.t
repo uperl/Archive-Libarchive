@@ -147,10 +147,10 @@ sub la_write_ok ($w)
   $e->set_filetype(oct('0100000'));
   $e->set_perm(oct('0644'));
 
-  la_ok $w, 'header' => [$e];
+  la_ok $w, 'write_header' => [$e];
 
   my $data = path(__FILE__)->slurp_raw;
-  is( $w->data($data), length($data), '$archive->data(...)');
+  is( $w->write_data($data), length($data), '$archive->data(...)');
 
   la_ok $w, 'close';
 
