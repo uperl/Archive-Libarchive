@@ -8,6 +8,21 @@ pod_spelling_system:
   stopwords:
     - libarchive
     - libc
+    - birthtime
+    - dev
+    - devmajor
+    - devminor
+    - fflags
+    - filetype
+    - gname
+    - hardlink
+    - ino
+    - nlink
+    - rdev
+    - rdevmajor
+    - rdevminor
+    - sourcepath
+    - strmode
 
 pod_coverage:
   skip: 0
