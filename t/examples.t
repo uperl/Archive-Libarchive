@@ -23,6 +23,9 @@ use File::Spec;
   }
 }
 
+unlink 'examples/archive/foo.txt';
+unlink 'examples/archive/bar.txt';
+rmdir 'examples/archive';
 unlink 'examples/outarchive.tar';
 unlink 'examples/hello.txt';
 

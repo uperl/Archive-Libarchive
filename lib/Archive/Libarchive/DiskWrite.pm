@@ -28,7 +28,7 @@ Create a new disk write object.
 
 $ffi->mangler(sub ($name) { "archive_write_$name"  });
 
-$ffi->attach( new => [] => 'opaque' => sub {
+$ffi->attach( [ disk_new => 'new' ] => [] => 'opaque' => sub {
   my($xsub, $class) = @_;
   my $ptr = $xsub->();
   bless { ptr => $ptr }, $class;
