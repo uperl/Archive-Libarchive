@@ -19,14 +19,6 @@ use 5.020;
 
 This is a private class for L<Archive::Libarchive> see the main documentation for the public interface.
 
-=head1 SEE ALSO
-
-=over 4
-
-=item L<Archive::Libarchive>
-
-=back
-
 =cut
 
 package Archive::Libarchive::Unbound;
