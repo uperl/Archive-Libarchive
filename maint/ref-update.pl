@@ -102,6 +102,7 @@ my $tt = Template->new({
   generate(\%functions, \%bindings);
 }
 
+if(0)
 {
   my $c = Const::Introspect::C->new(
     headers => ['archive.h','archive_entry.h'],
@@ -388,6 +389,24 @@ sub generate ($function, $bindings)
     };
   }
 
+  my @classes = map {
+    my %h = (
+      name => $_,
+      var  => 'x',
+      methods => [
+        sort { $a->{name} cmp $b->{name} } map { $_->{perl_name} ? { %$_, name => $_->{perl_name} } : $_ } $bindings->{$_}->@*
+      ] 
+    );
+    \%h;
+  } sort keys %$bindings;
+
+  my $path = 'lib/Archive/Libarchive/API.pm';
+  $tt->process('Doc.pm.tt', {
+    classes => \@classes,
+  }, $path) or do {
+    say "Error generating $path @{[ $tt->error ]}";
+    exit 2;
+  };
 }
 
 foreach my $key (sort keys %count)
