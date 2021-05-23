@@ -28,6 +28,8 @@ my %count = (
   removed    => 0,
 );
 
+my %removed;
+
 {
   my %in_oldest;
 
@@ -260,6 +262,7 @@ sub process_functions ($href, $global, $bindings)
       if(delete $functions{$name})
       {
         $count{removed}++;
+        $removed{$name}++ unless $manual{$name};
       }
     }
   }
@@ -411,9 +414,15 @@ sub generate ($function, $bindings)
     \%h;
   } sort grep { $_ ne 'Unbound' } keys %$bindings;
 
+  foreach my $binding ($bindings->{'Unbound'}->@*)
+  {
+    $removed{$binding->{name}} = 1;
+  }
+
   my $path = 'lib/Archive/Libarchive/API.pm';
   $tt->process('Doc.pm.tt', {
     classes => \@classes,
+    removed => [sort keys %removed],
   }, $path) or do {
     say "Error generating $path @{[ $tt->error ]}";
     exit 2;
