@@ -389,16 +389,27 @@ sub generate ($function, $bindings)
     };
   }
 
+  my %varnames = (
+    Archive           => 'ar',
+    ArchiveRead       => 'r',
+    ArchiveWrite      => 'w',
+    DiskRead          => 'dr',
+    DiskWrite         => 'dw',
+    Entry             => 'e',
+    Match             => 'm',
+    EntryLinkResolver => 'lr',
+  );
+
   my @classes = map {
     my %h = (
       name => $_,
-      var  => 'x',
+      var  => $varnames{$_} // do { say "set a varname for $_"; exit 2 },
       methods => [
         sort { $a->{name} cmp $b->{name} } map { $_->{perl_name} ? { %$_, name => $_->{perl_name} } : $_ } $bindings->{$_}->@*
-      ] 
+      ]
     );
     \%h;
-  } sort keys %$bindings;
+  } sort grep { $_ ne 'Unbound' } keys %$bindings;
 
   my $path = 'lib/Archive/Libarchive/API.pm';
   $tt->process('Doc.pm.tt', {
