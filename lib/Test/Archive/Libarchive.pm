@@ -19,22 +19,22 @@ use parent qw( Exporter );
  use Archive::Libarchive;
  use Test::Archive::Libarchive;
  use Path::Tiny qw( path );
-
+ 
  my $w = Archive::Libarchive->new;
  la_ok $w, 'add_filter_gzip';
  la_ok $w, 'set_format_pax_restricted';
  la_ok $w, 'open_filename' => ['foo.tar.gz'];
-
+ 
  my $e = Archive::Libarchive::Entry->new;
  $e->set_pathname(__FILE__);
  $e->set_size(-s __FILE__);
  $e->set_filetype(oct('0644'));
-
+ 
  la_ok $w, 'write_header' => [$e];
  is($w->write_data(path(__FILE__)->slurp_raw), -s __FILE__);
-
+ 
  la_ok $w, 'close';
-
+ 
  done_testing;
 
 =head1 DESCRIPTION
@@ -53,7 +53,7 @@ pattern.
 
 our @EXPORT = qw( la_ok la_eof la_warn la_failed la_fatal );
 
-my %code = (
+our %code = (
   eof    =>   1,
   ok     =>   0,
   retry  => -10,
