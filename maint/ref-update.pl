@@ -295,14 +295,14 @@ sub process_functions ($href, $global, $bindings)
 
       if($arg_types[0] eq 'archive')
       {
-        if($name =~ /^archive_write_disk_(.*)$/)
+        if($name =~ /^archive_write_(disk_.*)$/)
         {
           $arg_types[0] = 'archive_write_disk';
           $class = 'DiskWrite';
           $name = $1;
         }
 
-        elsif($name =~ /^archive_read_disk_(.*)$/)
+        elsif($name =~ /^archive_read_(disk_.*)$/)
         {
           $arg_types[0] = 'archive_read_disk';
           $class = 'DiskRead';

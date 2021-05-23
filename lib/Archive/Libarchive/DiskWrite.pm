@@ -5,7 +5,7 @@ use warnings;
 use 5.020;
 use Archive::Libarchive::Lib;
 use experimental qw( signatures );
-use parent qw( Archive::Libarchive::Archive );
+use parent qw( Archive::Libarchive::ArchiveWrite );
 
 # ABSTRACT: Libarchive disk write class
 # VERSION
@@ -26,7 +26,7 @@ Create a new disk write object.
 
 =cut
 
-$ffi->mangler(sub ($name) { "archive_write_disk_$name"  });
+$ffi->mangler(sub ($name) { "archive_write_$name"  });
 
 $ffi->attach( new => [] => 'opaque' => sub {
   my($xsub, $class) = @_;
@@ -35,10 +35,5 @@ $ffi->attach( new => [] => 'opaque' => sub {
 });
 
 require Archive::Libarchive::Lib::DiskWrite unless $Archive::Libarchive::no_gen;
-
-$ffi->mangler(sub ($name) { "archive_write_$name"  });
-
-# TODO: warn if doesn't return ARCHIVE_OK
-$ffi->attach( [ free => 'DESTROY' ] => ['archive_write_disk'] => 'void' );
 
 1;

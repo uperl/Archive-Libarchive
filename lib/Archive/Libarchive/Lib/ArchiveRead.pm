@@ -38,7 +38,6 @@ $ffi->attach( append_filter => ['archive_read', 'int'] => 'int' );
 $ffi->attach( append_filter_program => ['archive_read', 'string'] => 'int' );
 $ffi->attach( append_filter_program_signature => ['archive_read', 'string', 'opaque', 'size_t'] => 'int' );
 $ffi->attach( close => ['archive_read'] => 'int' );
-$ffi->attach( [data => 'read_data'] => ['archive_read', 'opaque', 'size_t'] => 'ssize_t' );
 #$ffi->attach( data_block => ['archive_read', undef, 'size_t*', 'sint64*'] => 'int' );
 $ffi->attach( data_into_fd => ['archive_read', 'int'] => 'int' );
 $ffi->attach( data_skip => ['archive_read'] => 'int' );

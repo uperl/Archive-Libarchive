@@ -5,7 +5,7 @@ use warnings;
 use 5.020;
 use Archive::Libarchive::Lib;
 use experimental qw( signatures );
-use parent qw( Archive::Libarchive::Archive );
+use parent qw( Archive::Libarchive::ArchiveRead );
 
 # ABSTRACT: Libarchive disk read class
 # VERSION
@@ -26,7 +26,7 @@ Create a new disk read object.
 
 =cut
 
-$ffi->mangler(sub ($name) { "archive_read_disk_$name"  });
+$ffi->mangler(sub ($name) { "archive_read_$name"  });
 
 $ffi->attach( new => [] => 'opaque' => sub {
   my($xsub, $class) = @_;
@@ -35,10 +35,5 @@ $ffi->attach( new => [] => 'opaque' => sub {
 });
 
 require Archive::Libarchive::Lib::DiskRead unless $Archive::Libarchive::no_gen;
-
-$ffi->mangler(sub ($name) { "archive_read_$name"  });
-
-# TODO: warn if doesn't return ARCHIVE_OK
-$ffi->attach( [ free => 'DESTROY' ] => ['archive_read_disk'] => 'void' );
 
 1;

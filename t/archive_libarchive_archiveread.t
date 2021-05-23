@@ -57,5 +57,37 @@ subtest 'open_memory' => sub {
 
 };
 
+subtest 'read_data' => sub {
+
+  my $r = Archive::Libarchive::ArchiveRead->new;
+  la_ok $r, 'support_compression_all';
+  la_ok $r, 'support_format_raw';
+  la_ok $r, 'open_filename' => ['examples/hello.txt.uu', 10240];
+  la_ok $r, 'next_header' => [Archive::Libarchive::Entry->new];
+
+  my $image;
+
+  while(1)
+  {
+    my $buffer;
+    my $size = $r->read_data(\$buffer);
+    if($size > 0)
+    {
+      $image .= $buffer;
+    }
+    elsif($size == 0)
+    {
+      last;
+    }
+    else
+    {
+      fail "error!";
+    }
+  }
+
+  is $image, "Hello World!\n", 'content matches!';
+
+};
+
 done_testing;
 

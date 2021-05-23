@@ -31,12 +31,12 @@ use Archive::Libarchive::Lib;
 
 my $ffi = Archive::Libarchive::Lib->ffi;
 
-$ffi->attach( gid => ['archive_write_disk', 'string', 'sint64'] => 'sint64' );
-#$ffi->attach( set_group_lookup => ['archive_write_disk', 'opaque', undef, undef] => 'int' );
-$ffi->attach( set_options => ['archive_write_disk', 'int'] => 'int' );
-$ffi->attach( set_skip_file => ['archive_write_disk', 'sint64', 'sint64'] => 'int' );
-$ffi->attach( set_standard_lookup => ['archive_write_disk'] => 'int' );
-#$ffi->attach( set_user_lookup => ['archive_write_disk', 'opaque', undef, undef] => 'int' );
-$ffi->attach( uid => ['archive_write_disk', 'string', 'sint64'] => 'sint64' );
+$ffi->attach( disk_gid => ['archive_write_disk', 'string', 'sint64'] => 'sint64' );
+#$ffi->attach( disk_set_group_lookup => ['archive_write_disk', 'opaque', undef, undef] => 'int' );
+$ffi->attach( disk_set_options => ['archive_write_disk', 'int'] => 'int' );
+$ffi->attach( disk_set_skip_file => ['archive_write_disk', 'sint64', 'sint64'] => 'int' );
+$ffi->attach( disk_set_standard_lookup => ['archive_write_disk'] => 'int' );
+#$ffi->attach( disk_set_user_lookup => ['archive_write_disk', 'opaque', undef, undef] => 'int' );
+$ffi->attach( disk_uid => ['archive_write_disk', 'string', 'sint64'] => 'sint64' );
 
 1;
