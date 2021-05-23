@@ -52,3 +52,7 @@ $ffi->ignore_not_found(0);
 
 [% END -%]
 1;
+
+__END__
+
+[% INCLUDE seealso.tt -%]

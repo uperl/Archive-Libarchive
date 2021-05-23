@@ -104,3 +104,33 @@ $ffi->attach( add_filter_zstd => ['archive_write'] => 'int' );
 $ffi->ignore_not_found(0);
 
 1;
+
+__END__
+
+=head1 SEE ALSO
+
+=over 4
+
+=item L<Archive::Libarchive>
+
+=item L<Archive::Libarchive::API>
+
+=item L<Archive::Libarchive::Archive>
+
+=item L<Archive::Libarchive::ArchiveRead>
+
+=item L<Archive::Libarchive::ArchiveWrite>
+
+=item L<Archive::Libarchive::DiskRead>
+
+=item L<Archive::Libarchive::DiskWrite>
+
+=item L<Archive::Libarchive::Entry>
+
+=item L<Archive::Libarchive::EntryLinkResolver>
+
+=item L<Archive::Libarchive::Match>
+
+=back
+
+=cut

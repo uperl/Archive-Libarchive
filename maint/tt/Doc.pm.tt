@@ -48,4 +48,4 @@ to writing bindings for them.
 =back
 
 [% END -%]
-=cut
+[% INCLUDE seealso.tt -%]
