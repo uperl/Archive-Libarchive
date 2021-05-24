@@ -38,7 +38,7 @@ __END__
 =head2 copy_error
 
  # archive_copy_error
- $ar->copy_error($archive);
+ $ar->copy_error($ar);
 
 =head2 errno
 
@@ -150,12 +150,12 @@ __END__
 =head2 extract
 
  # archive_read_extract
- my $int = $r->extract($archive_entry, $int);
+ my $int = $r->extract($e, $int);
 
 =head2 extract2
 
  # archive_read_extract2
- my $int = $r->extract2($archive_entry, $archive);
+ my $int = $r->extract2($e, $ar);
 
 =head2 extract_set_skip_file
 
@@ -787,7 +787,7 @@ __END__
 =head2 write_header
 
  # archive_write_header
- my $int = $w->write_header($archive_entry);
+ my $int = $w->write_header($e);
 
 =head2 zip_set_compression_deflate
 
@@ -1003,12 +1003,12 @@ __END__
 =head2 clear
 
  # archive_entry_clear
- my $archive_entry = $e->clear;
+ my $e = $e->clear;
 
 =head2 clone
 
  # archive_entry_clone
- my $archive_entry = $e->clone;
+ my $e = $e->clone;
 
 =head2 copy_fflags_text
 
@@ -1602,7 +1602,7 @@ __END__
 =head2 exclude_entry
 
  # archive_match_exclude_entry
- my $int = $m->exclude_entry($int, $archive_entry);
+ my $int = $m->exclude_entry($int, $e);
 
 =head2 exclude_pattern
 
@@ -1627,7 +1627,7 @@ __END__
 =head2 excluded
 
  # archive_match_excluded
- my $int = $m->excluded($archive_entry);
+ my $int = $m->excluded($e);
 
 =head2 include_date
 
@@ -1707,12 +1707,12 @@ __END__
 =head2 owner_excluded
 
  # archive_match_owner_excluded
- my $int = $m->owner_excluded($archive_entry);
+ my $int = $m->owner_excluded($e);
 
 =head2 path_excluded
 
  # archive_match_path_excluded
- my $int = $m->path_excluded($archive_entry);
+ my $int = $m->path_excluded($e);
 
 =head2 path_unmatched_inclusions
 
@@ -1732,7 +1732,7 @@ __END__
 =head2 time_excluded
 
  # archive_match_time_excluded
- my $int = $m->time_excluded($archive_entry);
+ my $int = $m->time_excluded($e);
 
 =head1 NOT IMPLEMENTED
 
