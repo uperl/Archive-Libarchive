@@ -199,6 +199,12 @@ __END__
  # archive_read_header_position
  my $sint64 = $r->header_position;
 
+=head2 new
+
+ my $r = Archive::Libarchive::ArchiveRead->new;
+
+Create a new archive read object.
+
 =head2 next_header
 
  my $code = $r->next_header($e);
@@ -665,6 +671,12 @@ Open's the in-memory archive.
  # archive_write_get_bytes_per_block
  my $int = $w->get_bytes_per_block;
 
+=head2 new
+
+ my $w = Archive::Libarchive::ArchiveWrite->new;
+
+Create a new archive write object.
+
 =head2 open
 
  $w->open(%callbacks);
@@ -979,6 +991,12 @@ This takes a perl file handle and stores the archive there.
  # archive_read_disk_uname
  my $string = $dr->disk_uname($sint64);
 
+=head2 new
+
+ my $r = Archive::Libarchive::DiskRead->new;
+
+Create a new disk read object.
+
 =head1 Archive::Libarchive::DiskWrite
 
 =over 4
@@ -1013,6 +1031,12 @@ This takes a perl file handle and stores the archive there.
 
  # archive_write_disk_uid
  my $sint64_1 = $dw->disk_uid($string, $sint64_2);
+
+=head2 new
+
+ my $r = Archive::Libarchive::DiskWrite->new;
+
+Create a new disk write object.
 
 =head1 Archive::Libarchive::Entry
 
@@ -1341,6 +1365,12 @@ This takes a perl file handle and stores the archive there.
 
  # archive_entry_mtime_nsec
  my $long = $e->mtime_nsec;
+
+=head2 new
+
+ my $e = Archive::Libarchive::Entry->new;
+
+Create a new Entry object.
 
 =head2 nlink
 
@@ -1715,6 +1745,12 @@ This takes a perl file handle and stores the archive there.
 
 =back
 
+=head2 new
+
+ my $r = Archive::Libarchive::EntryLinkResolver->new;
+
+Create a new entry link resolver object.
+
 =head2 set_strategy
 
  # archive_entry_linkresolver_set_strategy
@@ -1834,6 +1870,12 @@ This takes a perl file handle and stores the archive there.
 
  # archive_match_include_uname_w
  my $int = $m->include_uname_w($wstring);
+
+=head2 new
+
+ my $r = Archive::Libarchive::Match->new;
+
+Create a new archive match object.
 
 =head2 owner_excluded
 
