@@ -22,6 +22,46 @@ use parent qw( Exporter );
 
 =head1 CONSTANTS
 
+This module provides all of the constants used by C<libarchive>.  The most common one are the return
+of status codes from most functions:
+
+=over 4
+
+=item C<ARCHIVE_EOF>
+
+is returned only from
+L<read_data|Archive::Libarchive::ArchiveRead/read_data> and
+L<read_data_block|Archive::Libarchive::ArchiveRead/read_data_block> from the
+L<Archive::Libarchive::ArchiveRead> class when you reach the end of a structure.
+
+=item C<ARCHIVE_OK>
+
+The operation completed successfully.
+
+=item C<ARCHIVE_WARN>
+
+If the operation completed with some surprises. You may want to report the issue to your user.
+The L<error_string|Archive::Libarchive::Archive/error_string> method on most classes will return
+a suitable text message; the
+L<errno|Archive::Libarchive::Archive/errno> method on most classes returns an associated system
+C<errno> value. (Since not all errors are caused by failing system calls, this is not always
+meaningful).
+
+=item C<ARCHIVE_FAILED>
+
+If this operation failed. In particular, this means that further operations on this entry are
+impossible. This is returned, for example, if you try to write an entry type that's not supported
+by this archive format. Recovery usually consists of simply going on to the next entry.
+
+=item C<ARCHIVE_FATAL>
+
+If the archive object itself is no longer usable, typically because of an I/O failure or memory
+allocation failure.
+
+=back
+
+Other constants are listed in L<Archive::Libarchive::API>.
+
 =head1 EXAMPLES
 
 These examples are translated from the C<libarchive> C examples, which can be found here:
