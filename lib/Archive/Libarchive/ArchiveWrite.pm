@@ -44,6 +44,8 @@ $ffi->attach( [ free => 'DESTROY' ] => ['archive_write'] => 'int' => sub {
   warn "destroying archive pointer did not return ARCHIVE_OK" unless $ret == 0;
 });
 
+=head1 METHODS
+
 =head2 open
 
  $w->open(%callbacks);

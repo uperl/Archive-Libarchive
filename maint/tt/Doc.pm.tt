@@ -32,12 +32,16 @@ __END__
 =back
 
 [% FOREACH method IN class.methods -%]
+[% IF method.pod -%]
+[% method.pod -%]
+[% ELSE -%]
 =head2 [% method.name %]
 
  # [% method.symbol_name %][% IF method.optional %] (optional)[% END %]
  [% IF method.ret_type != '$void' %]my [% method.ret_type %] = [% END %]$[% class.var %]->[% method.name -%]
    [%- IF method.arg_types.size > 0 %]([% FOREACH type IN method.arg_types %][% type %][% UNLESS loop.last %], [% END %][% END %])[% END %];
 
+[% END -%]
 [% END -%]
 [% END -%]
 [% IF constants.size > 0 -%]
