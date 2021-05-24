@@ -50,7 +50,7 @@ when used as a universal archiver/extractor.  Supported formats include:
 =back
 
 This distribution is split up into several classes, that correspond to C<libarchive> classes.  Probably the best
-place to start when learning how to use this module is to look at the C</EXAMPLES> section below, but you
+place to start when learning how to use this module is to look at the L</EXAMPLES> section below, but you
 can also take a look at the main class documentation for the operation that you are interested in as well:
 
 =over 4

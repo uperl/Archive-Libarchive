@@ -423,9 +423,9 @@ sub munge_types (@types)
   return (ret_type => $ret_type, arg_types => \@munged);
 }
 
-sub man_made_methods ($class)
+sub man_made_methods ($class=undef)
 {
-  my $pa = Pod::Abstract->load_file("lib/Archive/Libarchive/$class.pm");
+  my $pa = Pod::Abstract->load_file(defined $class ? "lib/Archive/Libarchive/$class.pm" : 'lib/Archive/Libarchive.pm');
 
   $_->detach for $pa->select('//#cut');
 
@@ -492,6 +492,13 @@ sub generate ($function, $bindings)
     );
     \%h;
   } sort grep { $_ ne 'Unbound' } keys %$bindings;
+
+  unshift @classes, {
+    name => undef,
+    methods => [
+      sort { $a->{name} cmp $b->{name} } man_made_methods()
+    ],
+  };
 
   foreach my $binding ($bindings->{'Unbound'}->@*)
   {
