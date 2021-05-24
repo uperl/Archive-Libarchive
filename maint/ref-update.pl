@@ -348,7 +348,6 @@ sub process_functions ($href, $global, $bindings)
     if($name =~ /^(.*)_utf8$/)
     {
       $ret_type = 'string_utf8' if $ret_type eq 'string';
-      #$perl_name = $1;
     }
 
     $class //= "Unbound";
@@ -368,6 +367,26 @@ sub process_functions ($href, $global, $bindings)
   }
 
   %$global = (%$global, %functions);
+}
+
+sub munge_types (@types)
+{
+  my @munged;
+
+  splice @types, 1, 1;
+
+  foreach my $type (@types)
+  {
+    $type = "\$$type";
+    if($type =~ /^(.*)\*$/)
+    {
+      $type = "\\$1";
+    }
+    push @munged, $type;
+  }
+
+  my $ret_type = shift @munged;
+  return (ret_type => $ret_type, arg_types => \@munged);
 }
 
 sub generate ($function, $bindings)
@@ -411,7 +430,10 @@ sub generate ($function, $bindings)
       name => $_,
       var  => $varnames{$_} // do { say "set a varname for $_"; exit 2 },
       methods => [
-        sort { $a->{name} cmp $b->{name} } map { $_->{perl_name} ? { %$_, name => $_->{perl_name} } : $_ } $bindings->{$_}->@*
+        sort { $a->{name} cmp $b->{name} }
+        map { { %$_, name => $_->{perl_name} // $_->{name}, munge_types($_->{ret_type}, $_->{arg_types}->@*) } }
+        grep { ! $_->{incomplete} }
+        $bindings->{$_}->@*
       ]
     );
     \%h;
