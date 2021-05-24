@@ -463,7 +463,11 @@ sub generate ($function, $bindings)
         map { { %$_, name => $_->{perl_name} // $_->{name}, munge_types($_->{ret_type}, $_->{arg_types}->@*) } }
         grep { ! $_->{incomplete} }
         $bindings->{$_}->@*
-      ]
+      ],
+      parent => do {
+        no strict 'refs';
+        ${"Archive::Libarchive::${_}::ISA"}[0];
+      },
     );
     \%h;
   } sort grep { $_ ne 'Unbound' } keys %$bindings;
