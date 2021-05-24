@@ -53,6 +53,91 @@ old, then you can force a share install of L<Alien::Libarchive3>.
 
  env ALIEN_INSTALL_TYPE=share cpanm --reinstall Alien::Libarchive3
 
+=head1 Archive::Libarchive
+
+=over 4
+
+=item Main documentation and examples: L<Archive::Libarchive>
+
+=back
+
+=head2 archive_bzlib_version
+
+ # archive_bzlib_version
+ my $string = archive_bzlib_version();
+
+The C<bzlib> version that C<libarchive> was built with.  This will return C<undef> if the library was
+not found at build time.
+
+=head2 archive_liblz4_version
+
+ # archive_liblz4_version
+ my $string = archive_liblz4_version();
+
+The C<liblz4> version that C<libarchive> was built with.  This will return C<undef> if the library was
+not found at build time.
+
+=head2 archive_liblzma_version
+
+ # archive_liblzma_version
+ my $string = archive_liblzma_version();
+
+The C<liblzma> version that C<libarchive> was built with.  This will return C<undef> if the library was
+not found at build time.
+
+=head2 archive_libzstd_version
+
+ # archive_libzstd_version (optional)
+ my $string = archive_libzstd_version();
+
+The C<zstd> version that C<libarchive> was built with.  This will return C<undef> if the library was
+not found at build time.
+
+=head2 archive_version_details
+
+ # archive_version_details
+ my $string = archive_version_details();
+
+Detailed textual name/version of the library and its dependencies. This has the form:
+
+=over 4
+
+=item C<libarchive x.y.z zlib/a.b.c liblzma/d.e.f ... etc ...>
+
+=back
+
+the list of libraries described here will vary depending on how libarchive was compiled.
+
+=head2 archive_version_number
+
+ # archive_version_number
+ my $int = archive_version_number();
+
+The C<libarchive> version expressed as an integer.  This will be the major, minor and patch
+levels each using up to three digits, so 3.5.1 will be C<3005001>.
+
+=head2 archive_version_string
+
+ # archive_version_string
+ my $string = archive_version_string();
+
+The C<libarchive> version as a string.
+
+=head2 archive_zlib_version
+
+ # archive_zlib_version
+ my $string = archive_zlib_version();
+
+The C<zlib> version that C<libarchive> was built with.  This will return C<undef> if the library was
+not found at build time.
+
+=head2 versions
+
+ my %versions = Archive::Libarchive->versions();
+
+This returns a hash of C<libarchive> and L<Archive::Libarchive> versions and dependency versions.  This
+may be useful in a test report diagnostic.
+
 =head1 Archive::Libarchive::Archive
 
 =over 4

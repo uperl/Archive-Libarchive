@@ -54,11 +54,11 @@ old, then you can force a share install of L<Alien::Libarchive3>.
  env ALIEN_INSTALL_TYPE=share cpanm --reinstall Alien::Libarchive3
 
 [% FOREACH class IN classes -%]
-=head1 Archive::Libarchive::[% class.name %]
+=head1 Archive::Libarchive[% IF class.name %]::[% class.name %][% END %]
 
 =over 4
 
-=item Main documentation and examples: L<Archive::Libarchive::[% class.name %]>
+=item Main documentation and examples: L<Archive::Libarchive[% IF class.name %]::[% class.name %][% END %]>
 
 [% IF class.parent -%]
 =item Parent class: L<[% class.parent %]>
