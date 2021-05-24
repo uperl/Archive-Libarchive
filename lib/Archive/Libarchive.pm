@@ -22,6 +22,44 @@ use parent qw( Exporter );
 
 =head1 DESCRIPTION
 
+=head1 EXAMPLES
+
+These examples are translated from the C<libarchive> C examples, which can be found here:
+
+=over 4
+
+=item L<https://github.com/libarchive/libarchive/wiki/Examples#List_contents_of_Archive_stored_in_File>
+
+=back
+
+=head2 List contents of archive stored in file
+
+# EXAMPLE: examples/list.pl
+
+=head2 List contents of archive stored in memory
+
+# EXAMPLE: examples/list_memory.pl
+
+=head2 List contents of archive with custom read functions
+
+# EXAMPLE: examples/custom.pl
+
+=head2 A universal decompressor / defilter-er
+
+# EXAMPLE: examples/defilter.pl
+
+=head2 A basic write example
+
+# EXAMPLE: examples/write.pl
+
+=head2 Constructing objects on disk
+
+# EXAMPLE: examples/disk.pl
+
+=head2 A complete extractor
+
+# EXAMPLE: examples/extract.pl
+
 =head1 CONSTANTS
 
 This module provides all of the constants used by C<libarchive>.  These typically
@@ -68,44 +106,6 @@ If the archive object itself is no longer usable, typically because of an I/O fa
 allocation failure.
 
 =back
-
-=head1 EXAMPLES
-
-These examples are translated from the C<libarchive> C examples, which can be found here:
-
-=over 4
-
-=item L<https://github.com/libarchive/libarchive/wiki/Examples#List_contents_of_Archive_stored_in_File>
-
-=back
-
-=head2 List contents of archive stored in file
-
-# EXAMPLE: examples/list.pl
-
-=head2 List contents of archive stored in memory
-
-# EXAMPLE: examples/list_memory.pl
-
-=head2 List contents of archive with custom read functions
-
-# EXAMPLE: examples/custom.pl
-
-=head2 A universal decompressor / defilter-er
-
-# EXAMPLE: examples/defilter.pl
-
-=head2 A basic write example
-
-# EXAMPLE: examples/write.pl
-
-=head2 Constructing objects on disk
-
-# EXAMPLE: examples/disk.pl
-
-=head2 A complete extractor
-
-# EXAMPLE: examples/extract.pl
 
 =cut
 
