@@ -42,7 +42,7 @@ These examples are translated from the C<libarchive> C examples, which can be fo
 
 =head2 List contents of archive with custom read functions
 
- # TODO
+# EXAMPLE: examples/custom.pl
 
 =head2 A universal decompressor / defilter-er
 
