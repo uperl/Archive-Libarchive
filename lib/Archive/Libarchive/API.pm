@@ -1734,17 +1734,6 @@ __END__
  # archive_match_time_excluded
  my $int = $m->time_excluded($e);
 
-=head1 NOT IMPLEMENTED
-
-The following methods are not currently implemented.  The reason for this
-is usually for one of 1) the method doesn't make sense in the context of
-Perl 2) the methods have been renamed, and this is the old name kept for
-compatibility in C<libarchive> 3) the methods have deprecated and will
-be removed in a future version of C<libarchive> 4) we haven't gotten around
-to writing bindings for them.
-
-=over 4
-
 =head1 CONSTANTS
 
 The status code constants are documented in the main documentation page
@@ -2064,6 +2053,17 @@ documentation.
 =item ARCHIVE_WARN
 
 =back
+
+=head1 NOT IMPLEMENTED
+
+The following methods are not currently implemented.  The reason for this
+is usually for one of 1) the method doesn't make sense in the context of
+Perl 2) the methods have been renamed, and this is the old name kept for
+compatibility in C<libarchive> 3) the methods have deprecated and will
+be removed in a future version of C<libarchive> 4) we haven't gotten around
+to writing bindings for them.
+
+=over 4
 
 =item archive_bzlib_version
 
