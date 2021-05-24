@@ -205,7 +205,7 @@ __END__
 =head2 open_filenames
 
  # archive_read_open_filenames
- my $int = $r->open_filenames($string*, $size_t);
+ my $int = $r->open_filenames(\$string, $size_t);
 
 =head2 prepend_callback_data
 
@@ -938,7 +938,7 @@ __END__
 =head2 acl_next
 
  # archive_entry_acl_next
- my $int = $e->acl_next($int, $int*, $int*, $int*, $int*, $string*);
+ my $int = $e->acl_next($int, \$int, \$int, \$int, \$int, \$string);
 
 =head2 acl_reset
 
@@ -958,12 +958,12 @@ __END__
 =head2 acl_to_text
 
  # archive_entry_acl_to_text (optional)
- my $string = $e->acl_to_text($ssize_t*, $int);
+ my $string = $e->acl_to_text(\$ssize_t, $int);
 
 =head2 acl_to_text_w
 
  # archive_entry_acl_to_text_w (optional)
- my $wstring = $e->acl_to_text_w($ssize_t*, $int);
+ my $wstring = $e->acl_to_text_w(\$ssize_t, $int);
 
 =head2 acl_types
 
@@ -1133,7 +1133,7 @@ __END__
 =head2 fflags
 
  # archive_entry_fflags
- $e->fflags($ulong*, $ulong*);
+ $e->fflags(\$ulong, \$ulong);
 
 =head2 fflags_text
 
@@ -1203,7 +1203,7 @@ __END__
 =head2 mac_metadata
 
  # archive_entry_mac_metadata
- my $opaque = $e->mac_metadata($size_t*);
+ my $opaque = $e->mac_metadata(\$size_t);
 
 =head2 mode
 
@@ -1473,7 +1473,7 @@ __END__
 =head2 sparse_next
 
  # archive_entry_sparse_next
- my $int = $e->sparse_next($sint64*, $sint64*);
+ my $int = $e->sparse_next(\$sint64, \$sint64);
 
 =head2 sparse_reset
 
@@ -1722,7 +1722,7 @@ __END__
 =head2 path_unmatched_inclusions_next
 
  # archive_match_path_unmatched_inclusions_next
- my $int = $m->path_unmatched_inclusions_next($string*);
+ my $int = $m->path_unmatched_inclusions_next(\$string);
 
 =head2 set_inclusion_recursion
 
