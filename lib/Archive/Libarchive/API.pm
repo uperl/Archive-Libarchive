@@ -38,7 +38,7 @@ __END__
 =head2 copy_error
 
  # archive_copy_error
- $ar->copy_error;
+ $ar->copy_error($archive);
 
 =head2 errno
 
@@ -58,12 +58,12 @@ __END__
 =head2 filter_bytes
 
  # archive_filter_bytes
- my $sint64 = $ar->filter_bytes;
+ my $sint64 = $ar->filter_bytes($int);
 
 =head2 filter_code
 
  # archive_filter_code
- my $int = $ar->filter_code;
+ my $int = $ar->filter_code($int);
 
 =head2 filter_count
 
@@ -73,7 +73,7 @@ __END__
 =head2 filter_name
 
  # archive_filter_name
- my $string = $ar->filter_name;
+ my $string = $ar->filter_name($int);
 
 =head2 format
 
@@ -98,54 +98,49 @@ __END__
 =head2 seek_data
 
  # archive_seek_data
- my $sint64 = $ar->seek_data;
+ my $sint64 = $ar->seek_data($sint64, $int);
 
 =head1 Archive::Libarchive::ArchiveRead
 
 =head2 add_callback_data
 
  # archive_read_add_callback_data
- my $int = $r->add_callback_data;
+ my $int = $r->add_callback_data($opaque, $uint);
 
 =head2 add_passphrase
 
  # archive_read_add_passphrase
- my $int = $r->add_passphrase;
+ my $int = $r->add_passphrase($string);
 
 =head2 append_callback_data
 
  # archive_read_append_callback_data
- my $int = $r->append_callback_data;
+ my $int = $r->append_callback_data($opaque);
 
 =head2 append_filter
 
  # archive_read_append_filter
- my $int = $r->append_filter;
+ my $int = $r->append_filter($int);
 
 =head2 append_filter_program
 
  # archive_read_append_filter_program
- my $int = $r->append_filter_program;
+ my $int = $r->append_filter_program($string);
 
 =head2 append_filter_program_signature
 
  # archive_read_append_filter_program_signature
- my $int = $r->append_filter_program_signature;
+ my $int = $r->append_filter_program_signature($string, $opaque, $size_t);
 
 =head2 close
 
  # archive_read_close
  my $int = $r->close;
 
-=head2 data_block
-
- # archive_read_data_block
- my $int = $r->data_block;
-
 =head2 data_into_fd
 
  # archive_read_data_into_fd
- my $int = $r->data_into_fd;
+ my $int = $r->data_into_fd($int);
 
 =head2 data_skip
 
@@ -155,22 +150,17 @@ __END__
 =head2 extract
 
  # archive_read_extract
- my $int = $r->extract;
+ my $int = $r->extract($archive_entry, $int);
 
 =head2 extract2
 
  # archive_read_extract2
- my $int = $r->extract2;
-
-=head2 extract_set_progress_callback
-
- # archive_read_extract_set_progress_callback
- $r->extract_set_progress_callback;
+ my $int = $r->extract2($archive_entry, $archive);
 
 =head2 extract_set_skip_file
 
  # archive_read_extract_set_skip_file
- $r->extract_set_skip_file;
+ $r->extract_set_skip_file($sint64, $sint64);
 
 =head2 format_capabilities
 
@@ -187,125 +177,75 @@ __END__
  # archive_read_header_position
  my $sint64 = $r->header_position;
 
-=head2 open
-
- # archive_read_open
- my $int = $r->open;
-
 =head2 open1
 
  # archive_read_open1
  my $int = $r->open1;
 
-=head2 open2
-
- # archive_read_open2
- my $int = $r->open2;
-
-=head2 open_FILE
-
- # archive_read_open_FILE
- my $int = $r->open_FILE;
-
 =head2 open_fd
 
  # archive_read_open_fd
- my $int = $r->open_fd;
+ my $int = $r->open_fd($int, $size_t);
 
 =head2 open_file
 
  # archive_read_open_file
- my $int = $r->open_file;
+ my $int = $r->open_file($string, $size_t);
 
 =head2 open_filename
 
  # archive_read_open_filename
- my $int = $r->open_filename;
+ my $int = $r->open_filename($string, $size_t);
 
 =head2 open_filename_w
 
  # archive_read_open_filename_w
- my $int = $r->open_filename_w;
+ my $int = $r->open_filename_w($wstring, $size_t);
 
 =head2 open_filenames
 
  # archive_read_open_filenames
- my $int = $r->open_filenames;
+ my $int = $r->open_filenames($string*, $size_t);
 
 =head2 prepend_callback_data
 
  # archive_read_prepend_callback_data
- my $int = $r->prepend_callback_data;
+ my $int = $r->prepend_callback_data($opaque);
 
 =head2 set_callback_data
 
  # archive_read_set_callback_data
- my $int = $r->set_callback_data;
+ my $int = $r->set_callback_data($opaque);
 
 =head2 set_callback_data2
 
  # archive_read_set_callback_data2
- my $int = $r->set_callback_data2;
-
-=head2 set_close_callback
-
- # archive_read_set_close_callback
- my $int = $r->set_close_callback;
+ my $int = $r->set_callback_data2($opaque, $uint);
 
 =head2 set_filter_option
 
  # archive_read_set_filter_option
- my $int = $r->set_filter_option;
+ my $int = $r->set_filter_option($string, $string, $string);
 
 =head2 set_format
 
  # archive_read_set_format
- my $int = $r->set_format;
+ my $int = $r->set_format($int);
 
 =head2 set_format_option
 
  # archive_read_set_format_option
- my $int = $r->set_format_option;
-
-=head2 set_open_callback
-
- # archive_read_set_open_callback
- my $int = $r->set_open_callback;
+ my $int = $r->set_format_option($string, $string, $string);
 
 =head2 set_option
 
  # archive_read_set_option
- my $int = $r->set_option;
+ my $int = $r->set_option($string, $string, $string);
 
 =head2 set_options
 
  # archive_read_set_options
- my $int = $r->set_options;
-
-=head2 set_passphrase_callback
-
- # archive_read_set_passphrase_callback
- my $int = $r->set_passphrase_callback;
-
-=head2 set_read_callback
-
- # archive_read_set_read_callback
- my $int = $r->set_read_callback;
-
-=head2 set_seek_callback
-
- # archive_read_set_seek_callback
- my $int = $r->set_seek_callback;
-
-=head2 set_skip_callback
-
- # archive_read_set_skip_callback
- my $int = $r->set_skip_callback;
-
-=head2 set_switch_callback
-
- # archive_read_set_switch_callback
- my $int = $r->set_switch_callback;
+ my $int = $r->set_options($string);
 
 =head2 support_compression_all
 
@@ -345,12 +285,12 @@ __END__
 =head2 support_compression_program
 
  # archive_read_support_compression_program
- my $int = $r->support_compression_program;
+ my $int = $r->support_compression_program($string);
 
 =head2 support_compression_program_signature
 
  # archive_read_support_compression_program_signature
- my $int = $r->support_compression_program_signature;
+ my $int = $r->support_compression_program_signature($string, $opaque, $size_t);
 
 =head2 support_compression_rpm
 
@@ -375,7 +315,7 @@ __END__
 =head2 support_filter_by_code
 
  # archive_read_support_filter_by_code (optional)
- my $int = $r->support_filter_by_code;
+ my $int = $r->support_filter_by_code($int);
 
 =head2 support_filter_bzip2
 
@@ -430,12 +370,12 @@ __END__
 =head2 support_filter_program
 
  # archive_read_support_filter_program
- my $int = $r->support_filter_program;
+ my $int = $r->support_filter_program($string);
 
 =head2 support_filter_program_signature
 
  # archive_read_support_filter_program_signature
- my $int = $r->support_filter_program_signature;
+ my $int = $r->support_filter_program_signature($string, $opaque, $size_t);
 
 =head2 support_filter_rpm
 
@@ -475,7 +415,7 @@ __END__
 =head2 support_format_by_code
 
  # archive_read_support_format_by_code
- my $int = $r->support_format_by_code;
+ my $int = $r->support_format_by_code($int);
 
 =head2 support_format_cab
 
@@ -562,7 +502,7 @@ __END__
 =head2 add_filter
 
  # archive_write_add_filter
- my $int = $w->add_filter;
+ my $int = $w->add_filter($int);
 
 =head2 add_filter_b64encode
 
@@ -572,7 +512,7 @@ __END__
 =head2 add_filter_by_name
 
  # archive_write_add_filter_by_name
- my $int = $w->add_filter_by_name;
+ my $int = $w->add_filter_by_name($string);
 
 =head2 add_filter_bzip2
 
@@ -627,7 +567,7 @@ __END__
 =head2 add_filter_program
 
  # archive_write_add_filter_program
- my $int = $w->add_filter_program;
+ my $int = $w->add_filter_program($string);
 
 =head2 add_filter_uuencode
 
@@ -652,7 +592,7 @@ __END__
 =head2 data_block
 
  # archive_write_data_block
- my $ssize_t = $w->data_block;
+ my $ssize_t = $w->data_block($opaque, $size_t, $sint64);
 
 =head2 fail
 
@@ -674,45 +614,40 @@ __END__
  # archive_write_get_bytes_per_block
  my $int = $w->get_bytes_per_block;
 
-=head2 open2
-
- # archive_write_open2 (optional)
- my $int = $w->open2;
-
 =head2 open_fd
 
  # archive_write_open_fd
- my $int = $w->open_fd;
+ my $int = $w->open_fd($int);
 
 =head2 open_filename
 
  # archive_write_open_filename
- my $int = $w->open_filename;
+ my $int = $w->open_filename($string);
 
 =head2 open_filename_w
 
  # archive_write_open_filename_w
- my $int = $w->open_filename_w;
+ my $int = $w->open_filename_w($wstring);
 
 =head2 set_bytes_in_last_block
 
  # archive_write_set_bytes_in_last_block
- my $int = $w->set_bytes_in_last_block;
+ my $int = $w->set_bytes_in_last_block($int);
 
 =head2 set_bytes_per_block
 
  # archive_write_set_bytes_per_block
- my $int = $w->set_bytes_per_block;
+ my $int = $w->set_bytes_per_block($int);
 
 =head2 set_filter_option
 
  # archive_write_set_filter_option
- my $int = $w->set_filter_option;
+ my $int = $w->set_filter_option($string, $string, $string);
 
 =head2 set_format
 
  # archive_write_set_format
- my $int = $w->set_format;
+ my $int = $w->set_format($int);
 
 =head2 set_format_7zip
 
@@ -732,7 +667,7 @@ __END__
 =head2 set_format_by_name
 
  # archive_write_set_format_by_name
- my $int = $w->set_format_by_name;
+ my $int = $w->set_format_by_name($string);
 
 =head2 set_format_cpio
 
@@ -747,12 +682,12 @@ __END__
 =head2 set_format_filter_by_ext
 
  # archive_write_set_format_filter_by_ext
- my $int = $w->set_format_filter_by_ext;
+ my $int = $w->set_format_filter_by_ext($string);
 
 =head2 set_format_filter_by_ext_def
 
  # archive_write_set_format_filter_by_ext_def
- my $int = $w->set_format_filter_by_ext_def;
+ my $int = $w->set_format_filter_by_ext_def($string, $string);
 
 =head2 set_format_gnutar
 
@@ -777,7 +712,7 @@ __END__
 =head2 set_format_option
 
  # archive_write_set_format_option
- my $int = $w->set_format_option;
+ my $int = $w->set_format_option($string, $string, $string);
 
 =head2 set_format_pax
 
@@ -832,32 +767,27 @@ __END__
 =head2 set_option
 
  # archive_write_set_option
- my $int = $w->set_option;
+ my $int = $w->set_option($string, $string, $string);
 
 =head2 set_options
 
  # archive_write_set_options
- my $int = $w->set_options;
+ my $int = $w->set_options($string);
 
 =head2 set_passphrase
 
  # archive_write_set_passphrase
- my $int = $w->set_passphrase;
-
-=head2 set_passphrase_callback
-
- # archive_write_set_passphrase_callback
- my $int = $w->set_passphrase_callback;
+ my $int = $w->set_passphrase($string);
 
 =head2 set_skip_file
 
  # archive_write_set_skip_file
- my $int = $w->set_skip_file;
+ my $int = $w->set_skip_file($sint64, $sint64);
 
 =head2 write_header
 
  # archive_write_header
- my $int = $w->write_header;
+ my $int = $w->write_header($archive_entry);
 
 =head2 zip_set_compression_deflate
 
@@ -896,25 +826,20 @@ __END__
  # archive_read_disk_descend
  my $int = $dr->disk_descend;
 
-=head2 disk_entry_from_file
-
- # archive_read_disk_entry_from_file
- my $int = $dr->disk_entry_from_file;
-
 =head2 disk_gname
 
  # archive_read_disk_gname
- my $string = $dr->disk_gname;
+ my $string = $dr->disk_gname($sint64);
 
 =head2 disk_open
 
  # archive_read_disk_open
- my $int = $dr->disk_open;
+ my $int = $dr->disk_open($string);
 
 =head2 disk_open_w
 
  # archive_read_disk_open_w
- my $int = $dr->disk_open_w;
+ my $int = $dr->disk_open_w($wstring);
 
 =head2 disk_set_atime_restored
 
@@ -924,22 +849,7 @@ __END__
 =head2 disk_set_behavior
 
  # archive_read_disk_set_behavior
- my $int = $dr->disk_set_behavior;
-
-=head2 disk_set_gname_lookup
-
- # archive_read_disk_set_gname_lookup
- my $int = $dr->disk_set_gname_lookup;
-
-=head2 disk_set_matching
-
- # archive_read_disk_set_matching
- my $int = $dr->disk_set_matching;
-
-=head2 disk_set_metadata_filter_callback
-
- # archive_read_disk_set_metadata_filter_callback
- my $int = $dr->disk_set_metadata_filter_callback;
+ my $int = $dr->disk_set_behavior($int);
 
 =head2 disk_set_standard_lookup
 
@@ -961,64 +871,49 @@ __END__
  # archive_read_disk_set_symlink_physical
  my $int = $dr->disk_set_symlink_physical;
 
-=head2 disk_set_uname_lookup
-
- # archive_read_disk_set_uname_lookup
- my $int = $dr->disk_set_uname_lookup;
-
 =head2 disk_uname
 
  # archive_read_disk_uname
- my $string = $dr->disk_uname;
+ my $string = $dr->disk_uname($sint64);
 
 =head1 Archive::Libarchive::DiskWrite
 
 =head2 disk_gid
 
  # archive_write_disk_gid
- my $sint64 = $dw->disk_gid;
-
-=head2 disk_set_group_lookup
-
- # archive_write_disk_set_group_lookup
- my $int = $dw->disk_set_group_lookup;
+ my $sint64 = $dw->disk_gid($string, $sint64);
 
 =head2 disk_set_options
 
  # archive_write_disk_set_options
- my $int = $dw->disk_set_options;
+ my $int = $dw->disk_set_options($int);
 
 =head2 disk_set_skip_file
 
  # archive_write_disk_set_skip_file
- my $int = $dw->disk_set_skip_file;
+ my $int = $dw->disk_set_skip_file($sint64, $sint64);
 
 =head2 disk_set_standard_lookup
 
  # archive_write_disk_set_standard_lookup
  my $int = $dw->disk_set_standard_lookup;
 
-=head2 disk_set_user_lookup
-
- # archive_write_disk_set_user_lookup
- my $int = $dw->disk_set_user_lookup;
-
 =head2 disk_uid
 
  # archive_write_disk_uid
- my $sint64 = $dw->disk_uid;
+ my $sint64 = $dw->disk_uid($string, $sint64);
 
 =head1 Archive::Libarchive::Entry
 
 =head2 acl_add_entry
 
  # archive_entry_acl_add_entry
- my $int = $e->acl_add_entry;
+ my $int = $e->acl_add_entry($int, $int, $int, $int, $string);
 
 =head2 acl_add_entry_w
 
  # archive_entry_acl_add_entry_w
- my $int = $e->acl_add_entry_w;
+ my $int = $e->acl_add_entry_w($int, $int, $int, $int, $wstring);
 
 =head2 acl_clear
 
@@ -1028,47 +923,47 @@ __END__
 =head2 acl_count
 
  # archive_entry_acl_count
- my $int = $e->acl_count;
+ my $int = $e->acl_count($int);
 
 =head2 acl_from_text
 
  # archive_entry_acl_from_text (optional)
- my $int = $e->acl_from_text;
+ my $int = $e->acl_from_text($string, $int);
 
 =head2 acl_from_text_w
 
  # archive_entry_acl_from_text_w (optional)
- my $int = $e->acl_from_text_w;
+ my $int = $e->acl_from_text_w($wstring, $int);
 
 =head2 acl_next
 
  # archive_entry_acl_next
- my $int = $e->acl_next;
+ my $int = $e->acl_next($int, $int*, $int*, $int*, $int*, $string*);
 
 =head2 acl_reset
 
  # archive_entry_acl_reset
- my $int = $e->acl_reset;
+ my $int = $e->acl_reset($int);
 
 =head2 acl_text
 
  # archive_entry_acl_text
- my $string = $e->acl_text;
+ my $string = $e->acl_text($int);
 
 =head2 acl_text_w
 
  # archive_entry_acl_text_w
- my $wstring = $e->acl_text_w;
+ my $wstring = $e->acl_text_w($int);
 
 =head2 acl_to_text
 
  # archive_entry_acl_to_text (optional)
- my $string = $e->acl_to_text;
+ my $string = $e->acl_to_text($ssize_t*, $int);
 
 =head2 acl_to_text_w
 
  # archive_entry_acl_to_text_w (optional)
- my $wstring = $e->acl_to_text_w;
+ my $wstring = $e->acl_to_text_w($ssize_t*, $int);
 
 =head2 acl_types
 
@@ -1118,92 +1013,87 @@ __END__
 =head2 copy_fflags_text
 
  # archive_entry_copy_fflags_text
- my $string = $e->copy_fflags_text;
+ my $string = $e->copy_fflags_text($string);
 
 =head2 copy_fflags_text_w
 
  # archive_entry_copy_fflags_text_w
- my $wstring = $e->copy_fflags_text_w;
+ my $wstring = $e->copy_fflags_text_w($wstring);
 
 =head2 copy_gname
 
  # archive_entry_copy_gname
- $e->copy_gname;
+ $e->copy_gname($string);
 
 =head2 copy_gname_w
 
  # archive_entry_copy_gname_w
- $e->copy_gname_w;
+ $e->copy_gname_w($wstring);
 
 =head2 copy_hardlink
 
  # archive_entry_copy_hardlink
- $e->copy_hardlink;
+ $e->copy_hardlink($string);
 
 =head2 copy_hardlink_w
 
  # archive_entry_copy_hardlink_w
- $e->copy_hardlink_w;
+ $e->copy_hardlink_w($wstring);
 
 =head2 copy_link
 
  # archive_entry_copy_link
- $e->copy_link;
+ $e->copy_link($string);
 
 =head2 copy_link_w
 
  # archive_entry_copy_link_w
- $e->copy_link_w;
+ $e->copy_link_w($wstring);
 
 =head2 copy_mac_metadata
 
  # archive_entry_copy_mac_metadata
- $e->copy_mac_metadata;
+ $e->copy_mac_metadata($opaque, $size_t);
 
 =head2 copy_pathname
 
  # archive_entry_copy_pathname
- $e->copy_pathname;
+ $e->copy_pathname($string);
 
 =head2 copy_pathname_w
 
  # archive_entry_copy_pathname_w
- $e->copy_pathname_w;
+ $e->copy_pathname_w($wstring);
 
 =head2 copy_sourcepath
 
  # archive_entry_copy_sourcepath
- $e->copy_sourcepath;
+ $e->copy_sourcepath($string);
 
 =head2 copy_sourcepath_w
 
  # archive_entry_copy_sourcepath_w
- $e->copy_sourcepath_w;
-
-=head2 copy_stat
-
- # archive_entry_copy_stat
- $e->copy_stat;
+ $e->copy_sourcepath_w($wstring);
 
 =head2 copy_symlink
 
  # archive_entry_copy_symlink
- $e->copy_symlink;
+ $e->copy_symlink($string);
 
 =head2 copy_symlink_w
 
  # archive_entry_copy_symlink_w
- $e->copy_symlink_w;
+ $e->copy_symlink_w($wstring);
 
 =head2 copy_uname
 
  # archive_entry_copy_uname
- $e->copy_uname;
+ $e->copy_uname($string);
 
 =head2 copy_uname_w
 
  # archive_entry_copy_uname_w
- $e->copy_uname_w;
+ $e->copy_uname_w($wstring);
 
 =head2 ctime
 
@@ -1240,15 +1130,10 @@ __END__
  # archive_entry_devminor
  my $dev_t = $e->devminor;
 
-=head2 digest
-
- # archive_entry_digest (optional)
- my $ = $e->digest;
-
 =head2 fflags
 
  # archive_entry_fflags
- $e->fflags;
+ $e->fflags($ulong*, $ulong*);
 
 =head2 fflags_text
 
@@ -1318,7 +1203,7 @@ __END__
 =head2 mac_metadata
 
  # archive_entry_mac_metadata
- my $opaque = $e->mac_metadata;
+ my $opaque = $e->mac_metadata($size_t*);
 
 =head2 mode
 
@@ -1378,177 +1263,177 @@ __END__
 =head2 set_atime
 
  # archive_entry_set_atime
- $e->set_atime;
+ $e->set_atime($time_t, $long);
 
 =head2 set_birthtime
 
  # archive_entry_set_birthtime
- $e->set_birthtime;
+ $e->set_birthtime($time_t, $long);
 
 =head2 set_ctime
 
  # archive_entry_set_ctime
- $e->set_ctime;
+ $e->set_ctime($time_t, $long);
 
 =head2 set_dev
 
  # archive_entry_set_dev
- $e->set_dev;
+ $e->set_dev($dev_t);
 
 =head2 set_devmajor
 
  # archive_entry_set_devmajor
- $e->set_devmajor;
+ $e->set_devmajor($dev_t);
 
 =head2 set_devminor
 
  # archive_entry_set_devminor
- $e->set_devminor;
+ $e->set_devminor($dev_t);
 
 =head2 set_fflags
 
  # archive_entry_set_fflags
- $e->set_fflags;
+ $e->set_fflags($ulong, $ulong);
 
 =head2 set_filetype
 
  # archive_entry_set_filetype
- $e->set_filetype;
+ $e->set_filetype($uint);
 
 =head2 set_gid
 
  # archive_entry_set_gid
- $e->set_gid;
+ $e->set_gid($sint64);
 
 =head2 set_gname
 
  # archive_entry_set_gname
- $e->set_gname;
+ $e->set_gname($string);
 
 =head2 set_gname_utf8
 
  # archive_entry_set_gname_utf8
- $e->set_gname_utf8;
+ $e->set_gname_utf8($string);
 
 =head2 set_hardlink
 
  # archive_entry_set_hardlink
- $e->set_hardlink;
+ $e->set_hardlink($string);
 
 =head2 set_hardlink_utf8
 
  # archive_entry_set_hardlink_utf8
- $e->set_hardlink_utf8;
+ $e->set_hardlink_utf8($string);
 
 =head2 set_ino
 
  # archive_entry_set_ino
- $e->set_ino;
+ $e->set_ino($sint64);
 
 =head2 set_ino64
 
  # archive_entry_set_ino64
- $e->set_ino64;
+ $e->set_ino64($sint64);
 
 =head2 set_is_data_encrypted
 
  # archive_entry_set_is_data_encrypted
- $e->set_is_data_encrypted;
+ $e->set_is_data_encrypted($char);
 
 =head2 set_is_metadata_encrypted
 
  # archive_entry_set_is_metadata_encrypted
- $e->set_is_metadata_encrypted;
+ $e->set_is_metadata_encrypted($char);
 
 =head2 set_link
 
  # archive_entry_set_link
- $e->set_link;
+ $e->set_link($string);
 
 =head2 set_link_utf8
 
  # archive_entry_set_link_utf8
- $e->set_link_utf8;
+ $e->set_link_utf8($string);
 
 =head2 set_mode
 
  # archive_entry_set_mode
- $e->set_mode;
+ $e->set_mode($mode_t);
 
 =head2 set_mtime
 
  # archive_entry_set_mtime
- $e->set_mtime;
+ $e->set_mtime($time_t, $long);
 
 =head2 set_nlink
 
  # archive_entry_set_nlink
- $e->set_nlink;
+ $e->set_nlink($uint);
 
 =head2 set_pathname
 
  # archive_entry_set_pathname
- $e->set_pathname;
+ $e->set_pathname($string);
 
 =head2 set_pathname_utf8
 
  # archive_entry_set_pathname_utf8
- $e->set_pathname_utf8;
+ $e->set_pathname_utf8($string);
 
 =head2 set_perm
 
  # archive_entry_set_perm
- $e->set_perm;
+ $e->set_perm($mode_t);
 
 =head2 set_rdev
 
  # archive_entry_set_rdev
- $e->set_rdev;
+ $e->set_rdev($dev_t);
 
 =head2 set_rdevmajor
 
  # archive_entry_set_rdevmajor
- $e->set_rdevmajor;
+ $e->set_rdevmajor($dev_t);
 
 =head2 set_rdevminor
 
  # archive_entry_set_rdevminor
- $e->set_rdevminor;
+ $e->set_rdevminor($dev_t);
 
 =head2 set_size
 
  # archive_entry_set_size
- $e->set_size;
+ $e->set_size($sint64);
 
 =head2 set_symlink
 
  # archive_entry_set_symlink
- $e->set_symlink;
+ $e->set_symlink($string);
 
 =head2 set_symlink_type
 
  # archive_entry_set_symlink_type (optional)
- $e->set_symlink_type;
+ $e->set_symlink_type($int);
 
 =head2 set_symlink_utf8
 
  # archive_entry_set_symlink_utf8
- $e->set_symlink_utf8;
+ $e->set_symlink_utf8($string);
 
 =head2 set_uid
 
  # archive_entry_set_uid
- $e->set_uid;
+ $e->set_uid($sint64);
 
 =head2 set_uname
 
  # archive_entry_set_uname
- $e->set_uname;
+ $e->set_uname($string);
 
 =head2 set_uname_utf8
 
  # archive_entry_set_uname_utf8
- $e->set_uname_utf8;
+ $e->set_uname_utf8($string);
 
 =head2 size
 
@@ -1573,7 +1458,7 @@ __END__
 =head2 sparse_add_entry
 
  # archive_entry_sparse_add_entry
- $e->sparse_add_entry;
+ $e->sparse_add_entry($sint64, $sint64);
 
 =head2 sparse_clear
 
@@ -1588,17 +1473,12 @@ __END__
 =head2 sparse_next
 
  # archive_entry_sparse_next
- my $int = $e->sparse_next;
+ my $int = $e->sparse_next($sint64*, $sint64*);
 
 =head2 sparse_reset
 
  # archive_entry_sparse_reset
  my $int = $e->sparse_reset;
-
-=head2 stat
-
- # archive_entry_stat
- my $ = $e->stat;
 
 =head2 strmode
 
@@ -1663,37 +1543,37 @@ __END__
 =head2 update_gname_utf8
 
  # archive_entry_update_gname_utf8
- my $int = $e->update_gname_utf8;
+ my $int = $e->update_gname_utf8($string);
 
 =head2 update_hardlink_utf8
 
  # archive_entry_update_hardlink_utf8
- my $int = $e->update_hardlink_utf8;
+ my $int = $e->update_hardlink_utf8($string);
 
 =head2 update_link_utf8
 
  # archive_entry_update_link_utf8
- my $int = $e->update_link_utf8;
+ my $int = $e->update_link_utf8($string);
 
 =head2 update_pathname_utf8
 
  # archive_entry_update_pathname_utf8
- my $int = $e->update_pathname_utf8;
+ my $int = $e->update_pathname_utf8($string);
 
 =head2 update_symlink_utf8
 
  # archive_entry_update_symlink_utf8
- my $int = $e->update_symlink_utf8;
+ my $int = $e->update_symlink_utf8($string);
 
 =head2 update_uname_utf8
 
  # archive_entry_update_uname_utf8
- my $int = $e->update_uname_utf8;
+ my $int = $e->update_uname_utf8($string);
 
 =head2 xattr_add_entry
 
  # archive_entry_xattr_add_entry
- $e->xattr_add_entry;
+ $e->xattr_add_entry($string, $opaque, $size_t);
 
 =head2 xattr_clear
 
@@ -1705,11 +1585,6 @@ __END__
  # archive_entry_xattr_count
  my $int = $e->xattr_count;
 
-=head2 xattr_next
-
- # archive_entry_xattr_next
- my $int = $e->xattr_next;
-
 =head2 xattr_reset
 
  # archive_entry_xattr_reset
@@ -1720,124 +1595,124 @@ __END__
 =head2 set_strategy
 
  # archive_entry_linkresolver_set_strategy
- $lr->set_strategy;
+ $lr->set_strategy($int);
 
 =head1 Archive::Libarchive::Match
 
 =head2 exclude_entry
 
  # archive_match_exclude_entry
- my $int = $m->exclude_entry;
+ my $int = $m->exclude_entry($int, $archive_entry);
 
 =head2 exclude_pattern
 
  # archive_match_exclude_pattern
- my $int = $m->exclude_pattern;
+ my $int = $m->exclude_pattern($string);
 
 =head2 exclude_pattern_from_file
 
  # archive_match_exclude_pattern_from_file
- my $int = $m->exclude_pattern_from_file;
+ my $int = $m->exclude_pattern_from_file($string, $int);
 
 =head2 exclude_pattern_from_file_w
 
  # archive_match_exclude_pattern_from_file_w
- my $int = $m->exclude_pattern_from_file_w;
+ my $int = $m->exclude_pattern_from_file_w($wstring, $int);
 
 =head2 exclude_pattern_w
 
  # archive_match_exclude_pattern_w
- my $int = $m->exclude_pattern_w;
+ my $int = $m->exclude_pattern_w($wstring);
 
 =head2 excluded
 
  # archive_match_excluded
- my $int = $m->excluded;
+ my $int = $m->excluded($archive_entry);
 
 =head2 include_date
 
  # archive_match_include_date
- my $int = $m->include_date;
+ my $int = $m->include_date($int, $string);
 
 =head2 include_date_w
 
  # archive_match_include_date_w
- my $int = $m->include_date_w;
+ my $int = $m->include_date_w($int, $wstring);
 
 =head2 include_file_time
 
  # archive_match_include_file_time
- my $int = $m->include_file_time;
+ my $int = $m->include_file_time($int, $string);
 
 =head2 include_file_time_w
 
  # archive_match_include_file_time_w
- my $int = $m->include_file_time_w;
+ my $int = $m->include_file_time_w($int, $wstring);
 
 =head2 include_gid
 
  # archive_match_include_gid
- my $int = $m->include_gid;
+ my $int = $m->include_gid($sint64);
 
 =head2 include_gname
 
  # archive_match_include_gname
- my $int = $m->include_gname;
+ my $int = $m->include_gname($string);
 
 =head2 include_gname_w
 
  # archive_match_include_gname_w
- my $int = $m->include_gname_w;
+ my $int = $m->include_gname_w($wstring);
 
 =head2 include_pattern
 
  # archive_match_include_pattern
- my $int = $m->include_pattern;
+ my $int = $m->include_pattern($string);
 
 =head2 include_pattern_from_file
 
  # archive_match_include_pattern_from_file
- my $int = $m->include_pattern_from_file;
+ my $int = $m->include_pattern_from_file($string, $int);
 
 =head2 include_pattern_from_file_w
 
  # archive_match_include_pattern_from_file_w
- my $int = $m->include_pattern_from_file_w;
+ my $int = $m->include_pattern_from_file_w($wstring, $int);
 
 =head2 include_pattern_w
 
  # archive_match_include_pattern_w
- my $int = $m->include_pattern_w;
+ my $int = $m->include_pattern_w($wstring);
 
 =head2 include_time
 
  # archive_match_include_time
- my $int = $m->include_time;
+ my $int = $m->include_time($int, $time_t, $long);
 
 =head2 include_uid
 
  # archive_match_include_uid
- my $int = $m->include_uid;
+ my $int = $m->include_uid($sint64);
 
 =head2 include_uname
 
  # archive_match_include_uname
- my $int = $m->include_uname;
+ my $int = $m->include_uname($string);
 
 =head2 include_uname_w
 
  # archive_match_include_uname_w
- my $int = $m->include_uname_w;
+ my $int = $m->include_uname_w($wstring);
 
 =head2 owner_excluded
 
  # archive_match_owner_excluded
- my $int = $m->owner_excluded;
+ my $int = $m->owner_excluded($archive_entry);
 
 =head2 path_excluded
 
  # archive_match_path_excluded
- my $int = $m->path_excluded;
+ my $int = $m->path_excluded($archive_entry);
 
 =head2 path_unmatched_inclusions
 
@@ -1847,22 +1722,17 @@ __END__
 =head2 path_unmatched_inclusions_next
 
  # archive_match_path_unmatched_inclusions_next
- my $int = $m->path_unmatched_inclusions_next;
-
-=head2 path_unmatched_inclusions_next_w
-
- # archive_match_path_unmatched_inclusions_next_w
- my $int = $m->path_unmatched_inclusions_next_w;
+ my $int = $m->path_unmatched_inclusions_next($string*);
 
 =head2 set_inclusion_recursion
 
  # archive_match_set_inclusion_recursion (optional)
- my $int = $m->set_inclusion_recursion;
+ my $int = $m->set_inclusion_recursion($int);
 
 =head2 time_excluded
 
  # archive_match_time_excluded
- my $int = $m->time_excluded;
+ my $int = $m->time_excluded($archive_entry);
 
 =head1 NOT IMPLEMENTED
 
