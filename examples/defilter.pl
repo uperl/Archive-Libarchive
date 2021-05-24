@@ -1,5 +1,6 @@
 use strict;
 use warnings;
+use 5.020;
 use Archive::Libarchive;
 
 my $r = Archive::Libarchive::ArchiveRead->new;

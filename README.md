@@ -2,6 +2,224 @@
 
 Modern Perl bindings to libarchive
 
+# SYNOPSIS
+
+# DESCRIPTION
+
+# CONSTANTS
+
+# EXAMPLES
+
+These examples are translated from the `libarchive` C examples, which can be found here:
+
+- [https://github.com/libarchive/libarchive/wiki/Examples#List\_contents\_of\_Archive\_stored\_in\_File](https://github.com/libarchive/libarchive/wiki/Examples#List_contents_of_Archive_stored_in_File)
+
+## List contents of archive stored in file
+
+```perl
+use 5.020;
+use Archive::Libarchive qw( ARCHIVE_OK );
+
+my $r = Archive::Libarchive::ArchiveRead->new;
+$r->support_filter_all;
+$r->support_format_all;
+
+my $ret = $r->open_filename("archive.tar", 10240);
+if($ret != ARCHIVE_OK) {
+  exit 1;
+}
+
+my $e = Archive::Libarchive::Entry->new;
+while($r->next_header($e) == ARCHIVE_OK) {
+  say $e->pathname;
+  $r->data_skip;
+}
+```
+
+## List contents of archive stored in memory
+
+```perl
+use 5.020;
+use Path::Tiny qw( path );
+use Archive::Libarchive qw( ARCHIVE_OK );
+
+my $r = Archive::Libarchive::ArchiveRead->new;
+$r->support_filter_all;
+$r->support_format_all;
+
+my $buffer = path('archive.tar')->slurp_raw;
+
+my $ret = $r->open_memory(\$buffer);
+if($ret != ARCHIVE_OK) {
+  exit 1;
+}
+
+my $e = Archive::Libarchive::Entry->new;
+while($r->next_header($e) == ARCHIVE_OK) {
+  say $e->pathname;
+  $r->data_skip;
+}
+```
+
+## List contents of archive with custom read functions
+
+```
+# TODO
+```
+
+## A universal decompressor / defilter-er
+
+```perl
+use 5.020;
+use Archive::Libarchive;
+
+my $r = Archive::Libarchive::ArchiveRead->new;
+$r->support_compression_all;
+$r->support_format_raw;
+$r->open_filename("hello.txt.uu");
+$r->next_header(Archive::Libarchive::Entry->new);
+
+my $buffer;
+while($r->read_data(\$buffer)) {
+  print $buffer;
+}
+
+$r->close;
+```
+
+## A basic write example
+
+```perl
+use 5.020;
+use experimental qw( signatures );
+use Archive::Libarchive qw( AE_IFREG );
+use Path::Tiny qw( path );
+
+my $w = Archive::Libarchive::ArchiveWrite->new;
+$w->set_format_pax_restricted;
+$w->open_filename("outarchive.tar");
+
+path('.')->visit(sub ($path, $) {
+  return if $path->is_dir;
+
+  my $e = Archive::Libarchive::Entry->new;
+  $e->set_pathname("$path");
+  $e->set_size(-s $path);
+  $e->set_filetype(AE_IFREG);
+  $e->set_perm( oct('0644') );
+  $w->write_header($e);
+  $w->write_data($path->slurp_raw);
+
+}, { recurse => 1 });
+
+$w->close;
+```
+
+## Constructing objects on disk
+
+```perl
+use 5.020;
+use Archive::Libarchive qw( ARCHIVE_EXTRACT_TIME AE_IFREG );
+
+my $dw = Archive::Libarchive::DiskWrite->new;
+$dw->disk_set_options(ARCHIVE_EXTRACT_TIME);
+
+my $text = "Hello World!\n";
+
+my $e = Archive::Libarchive::Entry->new;
+$e->set_pathname("hello.txt");
+$e->set_filetype(AE_IFREG);
+$e->set_size(length $text);
+$e->set_mtime(time);
+$e->set_mode(oct('0644'));
+
+$dw->write_header($e);
+$dw->write_data($text);
+$dw->finish_entry;
+```
+
+## A complete extractor
+
+```perl
+use 5.020;
+use Archive::Libarchive qw( :all );
+
+my $tarball = 'archive.tar';
+
+my $r = Archive::Libarchive::ArchiveRead->new;
+$r->support_format_all;
+$r->support_compression_all;
+
+my $dw = Archive::Libarchive::DiskWrite->new;
+$dw->disk_set_options(
+  ARCHIVE_EXTRACT_TIME | ARCHIVE_EXTRACT_PERM | ARCHIVE_EXTRACT_ACL | ARCHIVE_EXTRACT_FFLAGS
+);
+$dw->disk_set_standard_lookup;
+
+$r->open_filename($tarball) == ARCHIVE_OK
+  or die "unable to open $tarball @{[ $r->error_string ]}";
+
+my $e = Archive::Libarchive::Entry->new;
+while(1) {
+  my $ret = $r->next_header($e);
+  last if $ret == ARCHIVE_EOF;
+  if($ret < ARCHIVE_OK) {
+    if($ret < ARCHIVE_WARN) {
+      die "header read error on $tarball @{[ $r->error_string ]}";
+    } else {
+      warn "header read warning on $tarball @{[ $r->error_string ]}";
+    }
+  }
+
+  $ret = $dw->write_header($e);
+  if($ret < ARCHIVE_OK) {
+    if($ret < ARCHIVE_WARN) {
+      die "header write error on disk @{[ $dw->error_string ]}";
+    } else {
+      warn "header write warning disk @{[ $dw->error_string ]}";
+    }
+  }
+
+  if($e->size > 0)
+  {
+    my $buffer;
+    while(1) {
+
+      $ret = $r->read_data(\$buffer);
+      last if $ret == 0;
+      if($ret < ARCHIVE_OK) {
+        if($ret < ARCHIVE_WARN) {
+          die "file read error on member @{[ $e->pathname ]} @{[ $r->error_string ]}";
+        } else {
+          warn "file read warning on member @{[ $e->pathname ]} @{[ $r->error_string ]}";
+        }
+      }
+
+      $ret = $dw->write_data($buffer);
+      if($ret < ARCHIVE_OK) {
+        if($ret < ARCHIVE_WARN) {
+          die "file write error on member @{[ $e->pathname ]} @{[ $dw->error_string ]}";
+        } else {
+          warn "file write warning on member @{[ $e->pathname ]} @{[ $dw->error_string ]}";
+        }
+      }
+    }
+  }
+
+  $dw->finish_entry;
+  if($ret < ARCHIVE_OK) {
+    if($ret < ARCHIVE_WARN) {
+      die "finish error on disk @{[ $dw->error_string ]}";
+    } else {
+      warn "finish warning disk @{[ $dw->error_string ]}";
+    }
+  }
+}
+
+$r->close;
+$dw->close;
+```
+
 # SEE ALSO
 
 - [Archive::Libarchive::API](https://metacpan.org/pod/Archive::Libarchive::API)
