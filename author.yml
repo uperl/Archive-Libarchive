@@ -25,6 +25,7 @@ pod_spelling_system:
     - strmode
     - decompressor
     - defilter
+    - masse
 
 pod_coverage:
   skip: 0

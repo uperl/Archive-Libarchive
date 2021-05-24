@@ -8,8 +8,15 @@ Modern Perl bindings to libarchive
 
 # CONSTANTS
 
-This module provides all of the constants used by `libarchive`.  The most common one are the return
-of status codes from most functions:
+This module provides all of the constants used by `libarchive`.  These typically
+are prefixed either `ARCHIVE_` or `AE_` and can be imported into your code
+individually, or _en masse_ using the `:const` export tag.  The will also be imported
+if you use the `:all` export tag to import everything.\]
+
+The complete list of available constants is listed in
+[Archive::Libarchive::API](https://metacpan.org/pod/Archive::Libarchive::API).
+
+The most common constants are the return of status codes from most functions:
 
 - `ARCHIVE_EOF`
 
@@ -41,8 +48,6 @@ of status codes from most functions:
 
     If the archive object itself is no longer usable, typically because of an I/O failure or memory
     allocation failure.
-
-Other constants are listed in [Archive::Libarchive::API](https://metacpan.org/pod/Archive::Libarchive::API).
 
 # EXAMPLES
 

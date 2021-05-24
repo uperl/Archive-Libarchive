@@ -30,18 +30,7 @@ __END__
 
 [% END -%]
 [% END -%]
-[% IF removed.size > 0 -%]
-=head1 NOT IMPLEMENTED
-
-The following methods are not currently implemented.  The reason for this
-is usually for one of 1) the method doesn't make sense in the context of
-Perl 2) the methods have been renamed, and this is the old name kept for
-compatibility in C<libarchive> 3) the methods have deprecated and will
-be removed in a future version of C<libarchive> 4) we haven't gotten around
-to writing bindings for them.
-
-=over 4
-
+[% IF constants.size > 0 -%]
 =head1 CONSTANTS
 
 The status code constants are documented in the main documentation page
@@ -55,6 +44,19 @@ documentation.
 
 [% END -%]
 =back
+
+[% END -%]
+[% IF removed.size > 0 -%]
+=head1 NOT IMPLEMENTED
+
+The following methods are not currently implemented.  The reason for this
+is usually for one of 1) the method doesn't make sense in the context of
+Perl 2) the methods have been renamed, and this is the old name kept for
+compatibility in C<libarchive> 3) the methods have deprecated and will
+be removed in a future version of C<libarchive> 4) we haven't gotten around
+to writing bindings for them.
+
+=over 4
 
 [% FOREACH method IN removed -%]
 =item [% method %]
