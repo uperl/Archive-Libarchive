@@ -20,6 +20,12 @@ __END__
 
 =head1 Archive::Libarchive::Archive
 
+=over 4
+
+=item Main documentation and examples: L<Archive::Libarchive::Archive>
+
+=back
+
 =head2 clear_error
 
  # archive_clear_error
@@ -101,6 +107,14 @@ __END__
  my $sint64_1 = $ar->seek_data($sint64_2, $int);
 
 =head1 Archive::Libarchive::ArchiveRead
+
+=over 4
+
+=item Main documentation and examples: L<Archive::Libarchive::ArchiveRead>
+
+=item Parent class: L<Archive::Libarchive::Archive>
+
+=back
 
 =head2 add_callback_data
 
@@ -499,6 +513,14 @@ __END__
 
 =head1 Archive::Libarchive::ArchiveWrite
 
+=over 4
+
+=item Main documentation and examples: L<Archive::Libarchive::ArchiveWrite>
+
+=item Parent class: L<Archive::Libarchive::Archive>
+
+=back
+
 =head2 add_filter
 
  # archive_write_add_filter
@@ -801,6 +823,14 @@ __END__
 
 =head1 Archive::Libarchive::DiskRead
 
+=over 4
+
+=item Main documentation and examples: L<Archive::Libarchive::DiskRead>
+
+=item Parent class: L<Archive::Libarchive::ArchiveRead>
+
+=back
+
 =head2 disk_can_descend
 
  # archive_read_disk_can_descend
@@ -878,6 +908,14 @@ __END__
 
 =head1 Archive::Libarchive::DiskWrite
 
+=over 4
+
+=item Main documentation and examples: L<Archive::Libarchive::DiskWrite>
+
+=item Parent class: L<Archive::Libarchive::ArchiveWrite>
+
+=back
+
 =head2 disk_gid
 
  # archive_write_disk_gid
@@ -904,6 +942,12 @@ __END__
  my $sint64_1 = $dw->disk_uid($string, $sint64_2);
 
 =head1 Archive::Libarchive::Entry
+
+=over 4
+
+=item Main documentation and examples: L<Archive::Libarchive::Entry>
+
+=back
 
 =head2 acl_add_entry
 
@@ -1592,12 +1636,26 @@ __END__
 
 =head1 Archive::Libarchive::EntryLinkResolver
 
+=over 4
+
+=item Main documentation and examples: L<Archive::Libarchive::EntryLinkResolver>
+
+=back
+
 =head2 set_strategy
 
  # archive_entry_linkresolver_set_strategy
  $lr->set_strategy($int);
 
 =head1 Archive::Libarchive::Match
+
+=over 4
+
+=item Main documentation and examples: L<Archive::Libarchive::Match>
+
+=item Parent class: L<Archive::Libarchive::Archive>
+
+=back
 
 =head2 exclude_entry
 
@@ -1737,7 +1795,13 @@ __END__
 =head1 CONSTANTS
 
 The status code constants are documented in the main documentation page
-L<Archive::Libarchive>.  For the rest please consult the C<libarchive>
+L<Archive::Libarchive>.
+
+These constants can be imported individually from L<Archive::Libarchive> using
+the normal L<Exporter> interface, or all of them can be imported with the C<:const>
+export tag or along with functions with the C<:all> tag.
+
+For the rest please consult the C<libarchive>
 documentation.
 
 =over 4

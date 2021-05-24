@@ -21,6 +21,16 @@ __END__
 [% FOREACH class IN classes -%]
 =head1 Archive::Libarchive::[% class.name %]
 
+=over 4
+
+=item Main documentation and examples: L<Archive::Libarchive::[% class.name %]>
+
+[% IF class.parent -%]
+=item Parent class: L<[% class.parent %]>
+
+[% END -%]
+=back
+
 [% FOREACH method IN class.methods -%]
 =head2 [% method.name %]
 
@@ -34,7 +44,13 @@ __END__
 =head1 CONSTANTS
 
 The status code constants are documented in the main documentation page
-L<Archive::Libarchive>.  For the rest please consult the C<libarchive>
+L<Archive::Libarchive>.
+
+These constants can be imported individually from L<Archive::Libarchive> using
+the normal L<Exporter> interface, or all of them can be imported with the C<:const>
+export tag or along with functions with the C<:all> tag.
+
+For the rest please consult the C<libarchive>
 documentation.
 
 =over 4
