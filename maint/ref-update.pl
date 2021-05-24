@@ -432,14 +432,16 @@ sub generate ($function, $bindings)
     exit 2;
   };
 
-  foreach my $pm (sort grep { $_->basename =~ /\.pm/ } (path('lib/Archive/Libarchive.pm'), path('lib/Archive/Libarchive')->children))
+  foreach my $pm (sort grep { $_->basename =~ /\.pm$/ } (path('lib/Archive/Libarchive.pm'), path('lib/Archive/Libarchive')->children))
   {
     next if $pm->basename eq 'API.pm';
     my $tmp;
     my($content) = split /__END__/, $pm->slurp_utf8;
+    my $docname = $pm->basename =~ s/\.pm$//r;
+    say "docname = $docname";
     $tt->process('SeeAlso.pm.tt', {
       content => $content,
-      docname => $pm->basename =~ s/\.pm$//r,
+      docname => $docname,
     }, "$pm") or do {
       say "Error updating $path @{[ $tt->error ]}";
     };
