@@ -16,6 +16,8 @@ __END__
 
 =head1 SYNOPSIS
 
+# EXAMPLE: examples/synopsis/synopsis.pl
+
 =head1 DESCRIPTION
 
 =head1 Archive::Libarchive::Archive

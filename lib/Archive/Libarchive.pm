@@ -18,6 +18,8 @@ use parent qw( Exporter );
 
 =head1 SYNOPSIS
 
+# EXAMPLE: examples/synopsis/synopsis.pl
+
 =head1 DESCRIPTION
 
 =head1 CONSTANTS
