@@ -2279,8 +2279,6 @@ to writing bindings for them.
 
 =over 4
 
-=item archive_bzlib_version
-
 =item archive_entry_acl
 
 =item archive_entry_gname_w
@@ -2299,12 +2297,6 @@ to writing bindings for them.
 
 =item archive_free
 
-=item archive_liblz4_version
-
-=item archive_liblzma_version
-
-=item archive_libzstd_version
-
 =item archive_read_finish
 
 =item archive_read_next_header
@@ -2312,12 +2304,6 @@ to writing bindings for them.
 =item archive_read_open_memory2
 
 =item archive_utility_string_sort
-
-=item archive_version_details
-
-=item archive_version_number
-
-=item archive_version_string
 
 =item archive_write_finish
 
@@ -2340,8 +2326,6 @@ to writing bindings for them.
 =item archive_write_set_compression_program
 
 =item archive_write_set_compression_xz
-
-=item archive_zlib_version
 
 =back
 
