@@ -20,6 +20,41 @@ say $e->pathname while $r->next_header($e) == ARCHIVE_OK;
 
 # DESCRIPTION
 
+This module provides a Perl object-oriented interface to the `libarchive` library.  The `libarchive`
+library is the API used to implemnt `bsdtar`, the default tar implementation on a number of operating systems,
+including FreeBSD, macOS and Windows.  It can also be installed on most Linux distributions.  But wait, there
+is more, `libarchive` supports a number of formats, compressors and filters transparently, so it can be a useful
+when used as a universal archiver/extractor.  Supported formats include:
+
+- various tar formats, including the oldest forms and the newest extensions
+- zip
+- ISO 9660 (CD-ROM image format)
+- gzip
+- bzip2
+- ... and many many more
+
+This distribution is split up into several classes, that correspond to `libarchive` classes.  Probably the best
+place to start when learning how to use this module is to look at the `/EXAMPLES` section below, but you
+can also take a look at the main class documentation for the operation that you are interested in as well:
+
+- [Archive](https://metacpan.org/pod/Archive::Libarchive::Archive) -> [Archive::Libarchive::ArchiveRead](https://metacpan.org/pod/Archive::Libarchive::ArchiveRead)
+- [Archive](https://metacpan.org/pod/Archive::Libarchive::Archive) -> [Archive::Libarchive::ArchiveWrite](https://metacpan.org/pod/Archive::Libarchive::ArchiveWrite)
+- [Archive](https://metacpan.org/pod/Archive::Libarchive::Archive) -> [ArchiveRead](https://metacpan.org/pod/Archive::Libarchive::ArchiveRead) -> [ArchiveRead](https://metacpan.org/pod/Archive::Libarchive::DiskRead)
+- [Archive](https://metacpan.org/pod/Archive::Libarchive::Archive) -> [ArchiveWrite](https://metacpan.org/pod/Archive::Libarchive::ArchiveWrite) -> [ArchiveRead](https://metacpan.org/pod/Archive::Libarchive::DiskWrite)
+
+This module attempts to provide comprehensive bindings to the `libarchive` library.  For more details on
+the history and alternatives to this project see the ["HISTORY"](#history) section below.  All recent versions of
+`libarchive` should be supported, although some methods are only available when you have the most recent
+version of `libarchive` installed.  For methods not available on older versions please consult
+[Archive::Libarchive::API](https://metacpan.org/pod/Archive::Libarchive::API), which will list these methods as `(optional)`.  If you need to support both
+older versions of `libarchive` and exploit the newer methods on newer versions of `libarchive` you can use
+the `can` method to check if they are available.  If you need the latest version of `libarchive`, and
+your system provides an older version, then you can force a `share` install of [Alien::Libarchive3](https://metacpan.org/pod/Alien::Libarchive3):
+
+```
+env ALIEN_INSTALL_TYPE=share cpanm Alien::Libarchive3
+```
+
 # EXAMPLES
 
 These examples are translated from the `libarchive` C examples, which can be found here:
@@ -303,6 +338,10 @@ The most common constants are the return of status codes from most functions:
 
     If the archive object itself is no longer usable, typically because of an I/O failure or memory
     allocation failure.
+
+# HISTORY
+
+TODO
 
 # SEE ALSO
 
