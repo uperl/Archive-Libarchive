@@ -333,6 +333,23 @@ $dw->close;
 
     This class exposes the `libarchive` match API.
 
+- [Alien::Libarchive3](https://metacpan.org/pod/Alien::Libarchive3)
+
+    If a suitable system `libarchive` can't be found, then this
+    [Alien](https://metacpan.org/pod/Alien) will be installed to provide it.
+
+- [libarchive.org](http://libarchive.org/)
+
+    The `libarchive` project home page.
+
+- [https://github.com/libarchive/libarchive/wiki](https://github.com/libarchive/libarchive/wiki)
+
+    The `libarchive` project wiki.
+
+- [https://github.com/libarchive/libarchive/wiki/ManualPages](https://github.com/libarchive/libarchive/wiki/ManualPages)
+
+    Some of the `libarchive` man pages are listed here.
+
 # AUTHOR
 
 Graham Ollis <plicease@cpan.org>

@@ -86,6 +86,24 @@ This class exposes the C<libarchive> link resolver API.
 
 This class exposes the C<libarchive> match API.
 
+
+=item L<Alien::Libarchive3>
+
+If a suitable system C<libarchive> can't be found, then this
+L<Alien> will be installed to provide it.
+
+=item L<libarchive.org|http://libarchive.org/>
+
+The C<libarchive> project home page.
+
+=item L<https://github.com/libarchive/libarchive/wiki>
+
+The C<libarchive> project wiki.
+
+=item L<https://github.com/libarchive/libarchive/wiki/ManualPages>
+
+Some of the C<libarchive> man pages are listed here.
+
 =back
 
 =cut
