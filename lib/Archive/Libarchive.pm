@@ -22,8 +22,15 @@ use parent qw( Exporter );
 
 =head1 CONSTANTS
 
-This module provides all of the constants used by C<libarchive>.  The most common one are the return
-of status codes from most functions:
+This module provides all of the constants used by C<libarchive>.  These typically
+are prefixed either C<ARCHIVE_> or C<AE_> and can be imported into your code
+individually, or I<en masse> using the C<:const> export tag.  The will also be imported
+if you use the C<:all> export tag to import everything.]
+
+The complete list of available constants is listed in
+L<Archive::Libarchive::API>.
+
+The most common constants are the return of status codes from most functions:
 
 =over 4
 
@@ -59,8 +66,6 @@ If the archive object itself is no longer usable, typically because of an I/O fa
 allocation failure.
 
 =back
-
-Other constants are listed in L<Archive::Libarchive::API>.
 
 =head1 EXAMPLES
 

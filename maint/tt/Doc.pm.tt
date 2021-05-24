@@ -42,6 +42,20 @@ to writing bindings for them.
 
 =over 4
 
+=head1 CONSTANTS
+
+The status code constants are documented in the main documentation page
+L<Archive::Libarchive>.  For the rest please consult the C<libarchive>
+documentation.
+
+=over 4
+
+[% FOREACH constant IN constants -%]
+=item [% constant.name %]
+
+[% END -%]
+=back
+
 [% FOREACH method IN removed -%]
 =item [% method %]
 

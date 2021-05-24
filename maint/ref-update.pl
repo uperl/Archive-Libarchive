@@ -96,21 +96,12 @@ my $tt = Template->new({
   },
 });
 
-{
-  my %bindings;
-  my %functions;
-  process_functions($archive_h, \%functions, \%bindings);
-  process_functions($entry_h,   \%functions, \%bindings);
-  generate(\%functions, \%bindings);
-}
+my @const;
 
-if(0)
 {
   my $c = Const::Introspect::C->new(
     headers => ['archive.h','archive_entry.h'],
   );
-
-  my @const;
 
   foreach my $const ($c->get_macro_constants)
   {
@@ -122,15 +113,24 @@ if(0)
 
   my $path = 'lib/Archive/Libarchive/Lib/Constants.pm';
 
+  @const = sort { $a->name cmp $b->name } @const;
+
   $tt->process('Const.pm.tt', {
     class => 'Constants',
-    constants => [sort { $a->name cmp $b->name } @const],
+    constants => \@const,
   }, $path) or do {
     say "Error generating $path @{[ $tt->error ]}";
     exit 2;
   };
 
+}
 
+{
+  my %bindings;
+  my %functions;
+  process_functions($archive_h, \%functions, \%bindings);
+  process_functions($entry_h,   \%functions, \%bindings);
+  generate(\%functions, \%bindings);
 }
 
 sub process_functions ($href, $global, $bindings)
@@ -478,6 +478,7 @@ sub generate ($function, $bindings)
     classes => \@classes,
     removed => [sort keys %removed],
     docname => 'API',
+    constants => \@const,
   }, $path) or do {
     say "Error generating $path @{[ $tt->error ]}";
     exit 2;
