@@ -33,6 +33,8 @@ pod_spelling_system:
     - macOS
     - shar
     - uuencoded
+    - ABI
+    - performant
 
 pod_coverage:
   skip: 0
