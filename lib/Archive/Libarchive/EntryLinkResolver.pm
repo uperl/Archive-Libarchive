@@ -91,7 +91,6 @@ This class represents a file in an archive, or on disk.
 
 This class exposes the C<libarchive> match API.
 
-
 =item L<Alien::Libarchive3>
 
 If a suitable system C<libarchive> can't be found, then this

@@ -2392,7 +2392,6 @@ This class exposes the C<libarchive> link resolver API.
 
 This class exposes the C<libarchive> match API.
 
-
 =item L<Alien::Libarchive3>
 
 If a suitable system C<libarchive> can't be found, then this
