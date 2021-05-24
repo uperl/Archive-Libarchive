@@ -421,8 +421,6 @@ sub munge_types (@types)
 
 sub man_made_methods ($class)
 {
-  #perl -MPod::Abstract -E 'my $pa = Pod::Abstract->load_file("lib/Archive/Libarchive/ArchiveWrite.pm"); say $_->param('heading')->pod for $pa->select(q{/head1[@heading =~ {METHODS}]/head2})'
-
   my $pa = Pod::Abstract->load_file("lib/Archive/Libarchive/$class.pm");
 
   $_->detach for $pa->select('//#cut');
@@ -433,7 +431,7 @@ sub man_made_methods ($class)
       pod  => $_->pod,
     );
     \%h;
-  } $pa->select(q{/head1[@heading =~ {METHODS}]/head2});
+  } $pa->select(q{/head1[@heading =~ {METHODS|CONSTRUCTOR}]/head2});
 }
 
 sub generate ($function, $bindings)
