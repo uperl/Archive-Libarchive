@@ -373,10 +373,22 @@ sub munge_types (@types)
 {
   my @munged;
 
+  state $varnames = {
+    archive                    => 'ar',
+    archive_read               => 'r',
+    archive_write              => 'w',
+    archive_read_disk          => 'dr',
+    archive_write_disk         => 'dw',
+    archive_match              => 'm',
+    archive_entry              => 'e',
+    archive_entry_linkresolver => 'lr',
+  };
+
   splice @types, 1, 1;
 
   foreach my $type (@types)
   {
+    $type = $varnames->{$type} if defined $varnames->{$type};
     $type = "\$$type";
     if($type =~ /^(.*)\*$/)
     {
@@ -414,7 +426,7 @@ sub generate ($function, $bindings)
     };
   }
 
-  my %varnames = (
+  state $varnames = {
     Archive           => 'ar',
     ArchiveRead       => 'r',
     ArchiveWrite      => 'w',
@@ -423,12 +435,12 @@ sub generate ($function, $bindings)
     Entry             => 'e',
     Match             => 'm',
     EntryLinkResolver => 'lr',
-  );
+  };
 
   my @classes = map {
     my %h = (
       name => $_,
-      var  => $varnames{$_} // do { say "set a varname for $_"; exit 2 },
+      var  => $varnames->{$_} // do { say "set a varname for $_"; exit 2 },
       methods => [
         sort { $a->{name} cmp $b->{name} }
         map { { %$_, name => $_->{perl_name} // $_->{name}, munge_types($_->{ret_type}, $_->{arg_types}->@*) } }
