@@ -50,13 +50,19 @@ can also take a look at the main class documentation for the operation that you 
 
 =over 4
 
-=item L<Archive|Archive::Libarchive::Archive> -E<gt> L<Archive::Libarchive::ArchiveRead>
+=item L<Archive|Archive::Libarchive::Archive> =E<gt> L<Archive::Libarchive::ArchiveRead>
 
-=item L<Archive|Archive::Libarchive::Archive> -E<gt> L<Archive::Libarchive::ArchiveWrite>
+=item L<Archive|Archive::Libarchive::Archive> =E<gt> L<Archive::Libarchive::ArchiveWrite>
 
-=item L<Archive|Archive::Libarchive::Archive> -E<gt> L<ArchiveRead|Archive::Libarchive::ArchiveRead> -E<gt> L<ArchiveRead|Archive::Libarchive::DiskRead>
+=item L<Archive|Archive::Libarchive::Archive> =E<gt> L<ArchiveRead|Archive::Libarchive::ArchiveRead> =E<gt> L<ArchiveRead|Archive::Libarchive::DiskRead>
 
-=item L<Archive|Archive::Libarchive::Archive> -E<gt> L<ArchiveWrite|Archive::Libarchive::ArchiveWrite> -E<gt> L<ArchiveRead|Archive::Libarchive::DiskWrite>
+=item L<Archive|Archive::Libarchive::Archive> =E<gt> L<ArchiveWrite|Archive::Libarchive::ArchiveWrite> =E<gt> L<ArchiveRead|Archive::Libarchive::DiskWrite>
+
+=item L<Archive::Libarchive::Entry>
+
+=item L<Archive::Libarchive::EntryLinkResolver>
+
+=item L<Archive|Archive::Libarchive::Archive> =E<gt>  L<Archive::Libarchive::Match>
 
 =back
 

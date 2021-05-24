@@ -37,10 +37,13 @@ This distribution is split up into several classes, that correspond to `libarchi
 place to start when learning how to use this module is to look at the `/EXAMPLES` section below, but you
 can also take a look at the main class documentation for the operation that you are interested in as well:
 
-- [Archive](https://metacpan.org/pod/Archive::Libarchive::Archive) -> [Archive::Libarchive::ArchiveRead](https://metacpan.org/pod/Archive::Libarchive::ArchiveRead)
-- [Archive](https://metacpan.org/pod/Archive::Libarchive::Archive) -> [Archive::Libarchive::ArchiveWrite](https://metacpan.org/pod/Archive::Libarchive::ArchiveWrite)
-- [Archive](https://metacpan.org/pod/Archive::Libarchive::Archive) -> [ArchiveRead](https://metacpan.org/pod/Archive::Libarchive::ArchiveRead) -> [ArchiveRead](https://metacpan.org/pod/Archive::Libarchive::DiskRead)
-- [Archive](https://metacpan.org/pod/Archive::Libarchive::Archive) -> [ArchiveWrite](https://metacpan.org/pod/Archive::Libarchive::ArchiveWrite) -> [ArchiveRead](https://metacpan.org/pod/Archive::Libarchive::DiskWrite)
+- [Archive](https://metacpan.org/pod/Archive::Libarchive::Archive) => [Archive::Libarchive::ArchiveRead](https://metacpan.org/pod/Archive::Libarchive::ArchiveRead)
+- [Archive](https://metacpan.org/pod/Archive::Libarchive::Archive) => [Archive::Libarchive::ArchiveWrite](https://metacpan.org/pod/Archive::Libarchive::ArchiveWrite)
+- [Archive](https://metacpan.org/pod/Archive::Libarchive::Archive) => [ArchiveRead](https://metacpan.org/pod/Archive::Libarchive::ArchiveRead) => [ArchiveRead](https://metacpan.org/pod/Archive::Libarchive::DiskRead)
+- [Archive](https://metacpan.org/pod/Archive::Libarchive::Archive) => [ArchiveWrite](https://metacpan.org/pod/Archive::Libarchive::ArchiveWrite) => [ArchiveRead](https://metacpan.org/pod/Archive::Libarchive::DiskWrite)
+- [Archive::Libarchive::Entry](https://metacpan.org/pod/Archive::Libarchive::Entry)
+- [Archive::Libarchive::EntryLinkResolver](https://metacpan.org/pod/Archive::Libarchive::EntryLinkResolver)
+- [Archive](https://metacpan.org/pod/Archive::Libarchive::Archive) =>  [Archive::Libarchive::Match](https://metacpan.org/pod/Archive::Libarchive::Match)
 
 This module attempts to provide comprehensive bindings to the `libarchive` library.  For more details on
 the history and alternatives to this project see the ["HISTORY"](#history) section below.  All recent versions of
