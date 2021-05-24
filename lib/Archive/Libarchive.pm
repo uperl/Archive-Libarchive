@@ -22,6 +22,55 @@ use parent qw( Exporter );
 
 =head1 DESCRIPTION
 
+This module provides a Perl object-oriented interface to the C<libarchive> library.  The C<libarchive>
+library is the API used to implemnt C<bsdtar>, the default tar implementation on a number of operating systems,
+including FreeBSD, macOS and Windows.  It can also be installed on most Linux distributions.  But wait, there
+is more, C<libarchive> supports a number of formats, compressors and filters transparently, so it can be a useful
+when used as a universal archiver/extractor.  Supported formats include:
+
+=over 4
+
+=item various tar formats, including the oldest forms and the newest extensions
+
+=item zip
+
+=item ISO 9660 (CD-ROM image format)
+
+=item gzip
+
+=item bzip2
+
+=item ... and many many more
+
+=back
+
+This distribution is split up into several classes, that correspond to C<libarchive> classes.  Probably the best
+place to start when learning how to use this module is to look at the C</EXAMPLES> section below, but you
+can also take a look at the main class documentation for the operation that you are interested in as well:
+
+=over 4
+
+=item L<Archive|Archive::Libarchive::Archive> -E<gt> L<Archive::Libarchive::ArchiveRead>
+
+=item L<Archive|Archive::Libarchive::Archive> -E<gt> L<Archive::Libarchive::ArchiveWrite>
+
+=item L<Archive|Archive::Libarchive::Archive> -E<gt> L<ArchiveRead|Archive::Libarchive::ArchiveRead> -E<gt> L<ArchiveRead|Archive::Libarchive::DiskRead>
+
+=item L<Archive|Archive::Libarchive::Archive> -E<gt> L<ArchiveWrite|Archive::Libarchive::ArchiveWrite> -E<gt> L<ArchiveRead|Archive::Libarchive::DiskWrite>
+
+=back
+
+This module attempts to provide comprehensive bindings to the C<libarchive> library.  For more details on
+the history and alternatives to this project see the L</HISTORY> section below.  All recent versions of
+C<libarchive> should be supported, although some methods are only available when you have the most recent
+version of C<libarchive> installed.  For methods not available on older versions please consult
+L<Archive::Libarchive::API>, which will list these methods as C<(optional)>.  If you need to support both
+older versions of C<libarchive> and exploit the newer methods on newer versions of C<libarchive> you can use
+the C<can> method to check if they are available.  If you need the latest version of C<libarchive>, and
+your system provides an older version, then you can force a C<share> install of L<Alien::Libarchive3>:
+
+ env ALIEN_INSTALL_TYPE=share cpanm Alien::Libarchive3
+
 =head1 EXAMPLES
 
 These examples are translated from the C<libarchive> C examples, which can be found here:
@@ -106,6 +155,10 @@ If the archive object itself is no longer usable, typically because of an I/O fa
 allocation failure.
 
 =back
+
+=head1 HISTORY
+
+TODO
 
 =cut
 

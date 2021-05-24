@@ -26,6 +26,11 @@ pod_spelling_system:
     - decompressor
     - defilter
     - masse
+    - ArchiveRead
+    - ArchiveWrite
+    - bzip
+    - implemnt
+    - macOS
 
 pod_coverage:
   skip: 0
