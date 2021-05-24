@@ -2,26 +2,46 @@
 
 =over 4
 
+[% IF docname != 'Libarchive' -%]
 =item L<Archive::Libarchive>
 
+[% END -%]
+[% IF docname != 'API' -%]
 =item L<Archive::Libarchive::API>
 
+[% END -%]
+[% IF docname != 'Archive' -%]
 =item L<Archive::Libarchive::Archive>
 
+[% END -%]
+[% IF docname != 'ArchiveRead' -%]
 =item L<Archive::Libarchive::ArchiveRead>
 
+[% END -%]
+[% IF docname != 'ArchiveWrite' -%]
 =item L<Archive::Libarchive::ArchiveWrite>
 
+[% END -%]
+[% IF docname != 'DiskRead' -%]
 =item L<Archive::Libarchive::DiskRead>
 
+[% END -%]
+[% IF docname != 'DiskWrite' -%]
 =item L<Archive::Libarchive::DiskWrite>
 
+[% END -%]
+[% IF docname != 'Entry' -%]
 =item L<Archive::Libarchive::Entry>
 
+[% END -%]
+[% IF docname != 'EntryLinkResolver' -%]
 =item L<Archive::Libarchive::EntryLinkResolver>
 
+[% END -%]
+[% IF docname != 'Metch' -%]
 =item L<Archive::Libarchive::Match>
 
+[% END -%]
 =back
 
 =cut
