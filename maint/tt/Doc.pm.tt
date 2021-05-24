@@ -20,6 +20,39 @@ __END__
 
 =head1 DESCRIPTION
 
+This document covers comprehensive list of methods and constants provided by
+L<Archive::Libarchive> classes.  The top level document L<Archive::Libarchive>
+is a better place to start, along with the main documentation pages for each
+class, as while not comprehensive, do cover in more detail the methods and
+features that you are most likely to use in practice, and they include examples.
+This document is intended primarily for reference.
+
+This document includes method signatures for each method provided by the API,
+but because of the large number of methods, the exact function of all methods
+is not provided.  You can usually get the idea from the method names, or
+consult the C<libarchive> documentation.  A familiarity with the C<libarchive>
+API is therefore helpful.
+
+Because C<libarchive> contains class name prefixes for its methods to provide
+a pseudo object oriented interface in C, and because this Perl interface is
+properly object oriented, the names of all methods have been changed.  (Mostly
+by removing the class prefix, although, some have been modified beyond that
+because simply removing the class prefix makes some method names confusing).
+To help you find the equivalent C<libarchive> documentation, the original
+C<libarchive> function names are included in the method usage.
+
+Some methods are marked as C<(optional)>.  These methods were added to
+C<libarchive> after the current minimum supported by L<Archive::Libarchive>,
+and therefore might not be available depending on the version of C<libarchive>
+you have installed.  If you need your code to work on both old code and to
+take advantage of these methods on new versions you can use the C<can> method
+to see if these methods are available.
+
+If you need one or more of these methods and your system C<libarchive> is too
+old, then you can force a share install of L<Alien::Libarchive3>.
+
+ env ALIEN_INSTALL_TYPE=share cpanm --reinstall Alien::Libarchive3
+
 [% FOREACH class IN classes -%]
 =head1 Archive::Libarchive::[% class.name %]
 
