@@ -182,7 +182,84 @@ allocation failure.
 
 =head1 HISTORY
 
-TODO
+I started working with C<libarchive> in order to experiment with FFI.  To that end I implemented bindings
+for C<libarchive> using both L<XS|Archive::Libarchive::XS> and L<FFI|Archive::Libarchive::FFI> to compare
+and contrast the process.  It was the basis for my first YAPC::NA talk back in 2014.
+
+=over 4
+
+=item L<Foreign Function Interface (FFI) : Never Need to Write XS Again!|https://www.youtube.com/watch?v=cY-yqQ_nmtw>
+
+=back
+
+When I was working on the XS and FFI implementations I recognized that some degree of automation would be
+required, mainly because the C<libarchive> is a C API of hundreds of methods, and new methods are being
+added all the time.  I also wanted both implementations to use the same test suite, since their interfaces
+should be identical.  While this work was useful, and I even ended up using both versions in production at
+a previous C<$work>, the tools that I chose to automate managing the large number of methods, and the common
+test suite made both modules quite difficult to maintain.
+
+I think also the interface that I chose was wrong.  I opted to provide a very thin layer over C<libarchive>,
+to avoid as much object-oriented overhead as possible.  I intended to one day make an object-oriented
+layer over this thin layer to make it easier to use, but I never found the time to do this.  I think a better
+approach would have been to bite the bullet provide only an object-oriented interface, because the ease of
+using a library that automatically free's its pointers when an object falls out of scope is worth the
+performance penalty of object oriented invocation.
+
+I did, however, learn a lot about XS and FFI, and I started to think about what would make FFI easier in Perl.
+At the time the only viable FFI on cpan was L<FFI::Raw>, and I contributed a number of enhancements and
+fixes to that project, and even got it working on Strawberry Perl.  But I was starting to crave a better
+experience writing FFI bindings in Perl.
+
+BULK88 was in the audience for a DC / Baltimore version of my I<Never Need to Write XS> talk and he pointed
+me to a feature in XS that would make FFI calls much faster than what was possible in L<FFI::Raw>.  Using
+the C<any_ptr> it is possible to remove method calls from an FFI interface, which, due to their dynamic
+nature.
+
+I was loosing faith in L<FFI::Raw> being tenable or performant for large APIs, so I I gathered up my ideas
+of what would make a better FFI experience in Perl and the C<any_ptr> feature that Bulk had shown me and
+I started working on a prototype FFI library.  I gave a talk at the Pittsburgh workshop based on the
+work of that prototype.
+
+=over 4
+
+=item L<FFI Performance|https://www.youtube.com/watch?v=uq2mgTOtbhM>
+
+=back
+
+I didn't release that prototype, because I kept hoping that FFI would catch fire and someone else
+would write a killer FFI for Perl.  Since it didn't seem to be happening I re-worked my prototype
+into what eventually became L<FFI::Platypus>.  I wrote lots of bindings for Perl using Platypus,
+and I always had the idea that I would circle back to my FFI bindings for C<libarchive>
+(L<Archive::Libarchive::FFI>) and rework it using Platypus instead of L<FFI::Raw>.  The problem is
+that the project has since atrophied, and the problems with the dual module and automation
+tools that I chose made this not really a viable enterprise.
+
+I next thing that FFI needs in Perl is some good tools to introspect C and generate bindings automatically.
+There are lots of challenges in this area.  One being that exactly what a function signature (assuming
+you can even introspect that) can be ambiguous.  For example a C<char> could either be a 8 bit integer value
+(it could even be signed or unsigned depending on architecture) or it could be a single character.
+A pointer C<int *> could actually be used by the callee as an array.  There are lots of things that are
+unsafe about C, and a ton of corner cases because of the way the C pre-processor works, but if we can
+surmount these challenges then it would be very useful, because even when two different non-C languages are
+trying to talk to each other, they are usually using the C ABI to do it.  This sort of drives me crazy
+but it is the way the world works, at least today.
+
+I've been working on some low-level tools that I'm hoping we can build on to do some of this introspection.
+L<Const::Introspect::C> is able to extract C<#define> constants from a C header file, and L<Clang::CastXML>
+uses the C<castxml> project to extract a model of the functions and C<strct>s in a C header file.  I'm hoping
+with a middle layer these modules could be used to write a C<h2ffi> tool similar to L<h2xs>.  I've had
+a number of false starts writing this middle layer: so I've decided to write some custom introspection
+with C<libarchive>, which is a very FFI-friendly library, and one that I am familiar with, but that also
+has some interesting challenges and edge cases.  I'm hoping this work will help design a more general middle
+layer that will be usable for other libraries.
+
+At the same time, I've decided to fix some of the design flaws of my original XS and FFI implementations.
+There really isn't a good way of doing this with the original implementations so I'm deprecating them in
+favor of this one.  I feel confident that the overall experience of using this library should be much
+better than using one of the older ones.  I also think this one will be more easily maintainable, because
+I am using C<castxml>, and I've created a reference build of C<libarchive> using docker, which should
+ensure that the code generation is done consistently.
 
 =cut
 
