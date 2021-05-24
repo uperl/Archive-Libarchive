@@ -40,6 +40,10 @@ when used as a universal archiver/extractor.  Supported formats include:
 
 =item bzip2
 
+=item uuencoded files
+
+=item shell archive (shar)
+
 =item ... and many many more
 
 =back
@@ -52,17 +56,31 @@ can also take a look at the main class documentation for the operation that you 
 
 =item L<Archive|Archive::Libarchive::Archive> =E<gt> L<Archive::Libarchive::ArchiveRead>
 
+Class for reading from archives.
+
 =item L<Archive|Archive::Libarchive::Archive> =E<gt> L<Archive::Libarchive::ArchiveWrite>
 
-=item L<Archive|Archive::Libarchive::Archive> =E<gt> L<ArchiveRead|Archive::Libarchive::ArchiveRead> =E<gt> L<ArchiveRead|Archive::Libarchive::DiskRead>
+Class for creating new archives.
 
-=item L<Archive|Archive::Libarchive::Archive> =E<gt> L<ArchiveWrite|Archive::Libarchive::ArchiveWrite> =E<gt> L<ArchiveRead|Archive::Libarchive::DiskWrite>
+=item L<Archive|Archive::Libarchive::Archive> =E<gt> L<ArchiveRead|Archive::Libarchive::ArchiveRead> =E<gt> L<Archive::Libarchive::DiskRead>
+
+Class for reading file entries from a local filesystem.
+
+=item L<Archive|Archive::Libarchive::Archive> =E<gt> L<ArchiveWrite|Archive::Libarchive::ArchiveWrite> =E<gt> L<Archive::Libarchive::DiskWrite>
+
+Class for writing file entries to a local filesystem.
 
 =item L<Archive::Libarchive::Entry>
 
+Class representing file meta data of a file inside an archive, or in the local filesystem.
+
 =item L<Archive::Libarchive::EntryLinkResolver>
 
+This is the C<libarchive> link resolver API.
+
 =item L<Archive|Archive::Libarchive::Archive> =E<gt>  L<Archive::Libarchive::Match>
+
+This is the C<libarchive> match API.
 
 =back
 
@@ -235,7 +253,6 @@ This class exposes the C<libarchive> link resolver API.
 =item L<Archive::Libarchive::Match>
 
 This class exposes the C<libarchive> match API.
-
 
 =item L<Alien::Libarchive3>
 

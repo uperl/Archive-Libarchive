@@ -31,6 +31,8 @@ pod_spelling_system:
     - bzip
     - implemnt
     - macOS
+    - shar
+    - uuencoded
 
 pod_coverage:
   skip: 0
