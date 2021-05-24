@@ -46,6 +46,10 @@ __END__
  # archive_copy_error
  $ar->copy_error($ar);
 
+=head2 entry
+
+ my $e = $archive->entry;
+
 =head2 errno
 
  # archive_errno
@@ -105,6 +109,10 @@ __END__
 
  # archive_seek_data
  my $sint64_1 = $ar->seek_data($sint64_2, $int);
+
+=head2 set_error
+
+ $archive->set_error($str);
 
 =head1 Archive::Libarchive::ArchiveRead
 
@@ -191,6 +199,12 @@ __END__
  # archive_read_header_position
  my $sint64 = $r->header_position;
 
+=head2 next_header
+
+ my $code = $r->next_header($e);
+
+Returns the next L<Archive::Libarchive::Entry> object.
+
 =head2 open1
 
  # archive_read_open1
@@ -221,10 +235,21 @@ __END__
  # archive_read_open_filenames
  my $int = $r->open_filenames(\$string, $size_t);
 
+=head2 open_memory
+
+ my $code = $r->open_memory(\$buffer);
+
+Open's the in-memory archive.
+
 =head2 prepend_callback_data
 
  # archive_read_prepend_callback_data
  my $int = $r->prepend_callback_data($opaque);
+
+=head2 read_data
+
+ my $code = $r->read_data(\$buffer, $size);
+ my $code = $r->read_data(\$buffer);
 
 =head2 set_callback_data
 
@@ -611,6 +636,10 @@ __END__
  # archive_write_close
  my $int = $w->close;
 
+=head2 data
+
+ $w->write_data($buffer);
+
 =head2 data_block
 
  # archive_write_data_block
@@ -636,6 +665,38 @@ __END__
  # archive_write_get_bytes_per_block
  my $int = $w->get_bytes_per_block;
 
+=head2 open
+
+ $w->open(%callbacks);
+
+=over 4
+
+=item open
+
+ $w->open(open => sub ($w) {
+   ...
+ });
+
+=item read
+
+ $w->open(read => sub ($w, $buffer) {
+   ...
+ });
+
+=item close
+
+ $w->open(open => sub ($w) {
+   ...
+ });
+
+=back
+
+=head2 open_FILE
+
+ $w->open_FILE($file_pointer);
+
+This takes either a L<FFI::C::File>, or an opaque pointer to a libc file pointer.
+
 =head2 open_fd
 
  # archive_write_open_fd
@@ -650,6 +711,18 @@ __END__
 
  # archive_write_open_filename_w
  my $int = $w->open_filename_w($wstring);
+
+=head2 open_memory
+
+ $w->open_memory(\$buffer);
+
+This takes a reference to scalar and stores the archive in memory there.
+
+=head2 open_perlfile
+
+ $w->open_perlfile(*FILE);
+
+This takes a perl file handle and stores the archive there.
 
 =head2 set_bytes_in_last_block
 

@@ -96,5 +96,6 @@ RUN cpanm -n \
   PerlX::Maybe                                     \
   Test2::V0                                        \
   Test::Script                                     \
+  Pod::Abstract                                    \
   https://dist.wdlabs.com/App-castyml-0.01.tar.gz  \
   && rm -rf ~/cpanm

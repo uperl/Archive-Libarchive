@@ -13,6 +13,7 @@ use YAML qw( Dump );
 use List::Util 1.33 qw( all sum0 );
 use PerlX::Maybe;
 use Template;
+use Pod::Abstract;
 use 5.020;
 use experimental qw( signatures );
 
@@ -418,6 +419,23 @@ sub munge_types (@types)
   return (ret_type => $ret_type, arg_types => \@munged);
 }
 
+sub man_made_methods ($class)
+{
+  #perl -MPod::Abstract -E 'my $pa = Pod::Abstract->load_file("lib/Archive/Libarchive/ArchiveWrite.pm"); say $_->param('heading')->pod for $pa->select(q{/head1[@heading =~ {METHODS}]/head2})'
+
+  my $pa = Pod::Abstract->load_file("lib/Archive/Libarchive/$class.pm");
+
+  $_->detach for $pa->select('//#cut');
+
+  map {
+    my %h = (
+      name => $_->param('heading')->pod,
+      pod  => $_->pod,
+    );
+    \%h;
+  } $pa->select(q{/head1[@heading =~ {METHODS}]/head2});
+}
+
 sub generate ($function, $bindings)
 {
   foreach my $class (sort keys %$bindings)
@@ -460,9 +478,10 @@ sub generate ($function, $bindings)
       var  => $varnames->{$_} // do { say "set a varname for $_"; exit 2 },
       methods => [
         sort { $a->{name} cmp $b->{name} }
-        map { { %$_, name => $_->{perl_name} // $_->{name}, munge_types($_->{ret_type}, $_->{arg_types}->@*) } }
-        grep { ! $_->{incomplete} }
-        $bindings->{$_}->@*
+        (man_made_methods($_),
+         map { { %$_, name => $_->{perl_name} // $_->{name}, munge_types($_->{ret_type}, $_->{arg_types}->@*) } }
+         grep { ! $_->{incomplete} }
+         $bindings->{$_}->@*)
       ],
       parent => do {
         no strict 'refs';
