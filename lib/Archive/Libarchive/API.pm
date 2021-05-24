@@ -63,7 +63,7 @@ __END__
 =head2 filter_code
 
  # archive_filter_code
- my $int = $ar->filter_code($int);
+ my $int1 = $ar->filter_code($int2);
 
 =head2 filter_count
 
@@ -98,7 +98,7 @@ __END__
 =head2 seek_data
 
  # archive_seek_data
- my $sint64 = $ar->seek_data($sint64, $int);
+ my $sint64_1 = $ar->seek_data($sint64_2, $int);
 
 =head1 Archive::Libarchive::ArchiveRead
 
@@ -120,7 +120,7 @@ __END__
 =head2 append_filter
 
  # archive_read_append_filter
- my $int = $r->append_filter($int);
+ my $int1 = $r->append_filter($int2);
 
 =head2 append_filter_program
 
@@ -140,7 +140,7 @@ __END__
 =head2 data_into_fd
 
  # archive_read_data_into_fd
- my $int = $r->data_into_fd($int);
+ my $int1 = $r->data_into_fd($int2);
 
 =head2 data_skip
 
@@ -150,7 +150,7 @@ __END__
 =head2 extract
 
  # archive_read_extract
- my $int = $r->extract($e, $int);
+ my $int1 = $r->extract($e, $int2);
 
 =head2 extract2
 
@@ -160,7 +160,7 @@ __END__
 =head2 extract_set_skip_file
 
  # archive_read_extract_set_skip_file
- $r->extract_set_skip_file($sint64, $sint64);
+ $r->extract_set_skip_file($sint64_1, $sint64_2);
 
 =head2 format_capabilities
 
@@ -185,7 +185,7 @@ __END__
 =head2 open_fd
 
  # archive_read_open_fd
- my $int = $r->open_fd($int, $size_t);
+ my $int1 = $r->open_fd($int2, $size_t);
 
 =head2 open_file
 
@@ -225,22 +225,22 @@ __END__
 =head2 set_filter_option
 
  # archive_read_set_filter_option
- my $int = $r->set_filter_option($string, $string, $string);
+ my $int = $r->set_filter_option($string1, $string2, $string3);
 
 =head2 set_format
 
  # archive_read_set_format
- my $int = $r->set_format($int);
+ my $int1 = $r->set_format($int2);
 
 =head2 set_format_option
 
  # archive_read_set_format_option
- my $int = $r->set_format_option($string, $string, $string);
+ my $int = $r->set_format_option($string1, $string2, $string3);
 
 =head2 set_option
 
  # archive_read_set_option
- my $int = $r->set_option($string, $string, $string);
+ my $int = $r->set_option($string1, $string2, $string3);
 
 =head2 set_options
 
@@ -315,7 +315,7 @@ __END__
 =head2 support_filter_by_code
 
  # archive_read_support_filter_by_code (optional)
- my $int = $r->support_filter_by_code($int);
+ my $int1 = $r->support_filter_by_code($int2);
 
 =head2 support_filter_bzip2
 
@@ -415,7 +415,7 @@ __END__
 =head2 support_format_by_code
 
  # archive_read_support_format_by_code
- my $int = $r->support_format_by_code($int);
+ my $int1 = $r->support_format_by_code($int2);
 
 =head2 support_format_cab
 
@@ -502,7 +502,7 @@ __END__
 =head2 add_filter
 
  # archive_write_add_filter
- my $int = $w->add_filter($int);
+ my $int1 = $w->add_filter($int2);
 
 =head2 add_filter_b64encode
 
@@ -617,7 +617,7 @@ __END__
 =head2 open_fd
 
  # archive_write_open_fd
- my $int = $w->open_fd($int);
+ my $int1 = $w->open_fd($int2);
 
 =head2 open_filename
 
@@ -632,22 +632,22 @@ __END__
 =head2 set_bytes_in_last_block
 
  # archive_write_set_bytes_in_last_block
- my $int = $w->set_bytes_in_last_block($int);
+ my $int1 = $w->set_bytes_in_last_block($int2);
 
 =head2 set_bytes_per_block
 
  # archive_write_set_bytes_per_block
- my $int = $w->set_bytes_per_block($int);
+ my $int1 = $w->set_bytes_per_block($int2);
 
 =head2 set_filter_option
 
  # archive_write_set_filter_option
- my $int = $w->set_filter_option($string, $string, $string);
+ my $int = $w->set_filter_option($string1, $string2, $string3);
 
 =head2 set_format
 
  # archive_write_set_format
- my $int = $w->set_format($int);
+ my $int1 = $w->set_format($int2);
 
 =head2 set_format_7zip
 
@@ -687,7 +687,7 @@ __END__
 =head2 set_format_filter_by_ext_def
 
  # archive_write_set_format_filter_by_ext_def
- my $int = $w->set_format_filter_by_ext_def($string, $string);
+ my $int = $w->set_format_filter_by_ext_def($string1, $string2);
 
 =head2 set_format_gnutar
 
@@ -712,7 +712,7 @@ __END__
 =head2 set_format_option
 
  # archive_write_set_format_option
- my $int = $w->set_format_option($string, $string, $string);
+ my $int = $w->set_format_option($string1, $string2, $string3);
 
 =head2 set_format_pax
 
@@ -767,7 +767,7 @@ __END__
 =head2 set_option
 
  # archive_write_set_option
- my $int = $w->set_option($string, $string, $string);
+ my $int = $w->set_option($string1, $string2, $string3);
 
 =head2 set_options
 
@@ -782,7 +782,7 @@ __END__
 =head2 set_skip_file
 
  # archive_write_set_skip_file
- my $int = $w->set_skip_file($sint64, $sint64);
+ my $int = $w->set_skip_file($sint64_1, $sint64_2);
 
 =head2 write_header
 
@@ -849,7 +849,7 @@ __END__
 =head2 disk_set_behavior
 
  # archive_read_disk_set_behavior
- my $int = $dr->disk_set_behavior($int);
+ my $int1 = $dr->disk_set_behavior($int2);
 
 =head2 disk_set_standard_lookup
 
@@ -881,17 +881,17 @@ __END__
 =head2 disk_gid
 
  # archive_write_disk_gid
- my $sint64 = $dw->disk_gid($string, $sint64);
+ my $sint64_1 = $dw->disk_gid($string, $sint64_2);
 
 =head2 disk_set_options
 
  # archive_write_disk_set_options
- my $int = $dw->disk_set_options($int);
+ my $int1 = $dw->disk_set_options($int2);
 
 =head2 disk_set_skip_file
 
  # archive_write_disk_set_skip_file
- my $int = $dw->disk_set_skip_file($sint64, $sint64);
+ my $int = $dw->disk_set_skip_file($sint64_1, $sint64_2);
 
 =head2 disk_set_standard_lookup
 
@@ -901,19 +901,19 @@ __END__
 =head2 disk_uid
 
  # archive_write_disk_uid
- my $sint64 = $dw->disk_uid($string, $sint64);
+ my $sint64_1 = $dw->disk_uid($string, $sint64_2);
 
 =head1 Archive::Libarchive::Entry
 
 =head2 acl_add_entry
 
  # archive_entry_acl_add_entry
- my $int = $e->acl_add_entry($int, $int, $int, $int, $string);
+ my $int1 = $e->acl_add_entry($int2, $int3, $int4, $int5, $string);
 
 =head2 acl_add_entry_w
 
  # archive_entry_acl_add_entry_w
- my $int = $e->acl_add_entry_w($int, $int, $int, $int, $wstring);
+ my $int1 = $e->acl_add_entry_w($int2, $int3, $int4, $int5, $wstring);
 
 =head2 acl_clear
 
@@ -923,27 +923,27 @@ __END__
 =head2 acl_count
 
  # archive_entry_acl_count
- my $int = $e->acl_count($int);
+ my $int1 = $e->acl_count($int2);
 
 =head2 acl_from_text
 
  # archive_entry_acl_from_text (optional)
- my $int = $e->acl_from_text($string, $int);
+ my $int1 = $e->acl_from_text($string, $int2);
 
 =head2 acl_from_text_w
 
  # archive_entry_acl_from_text_w (optional)
- my $int = $e->acl_from_text_w($wstring, $int);
+ my $int1 = $e->acl_from_text_w($wstring, $int2);
 
 =head2 acl_next
 
  # archive_entry_acl_next
- my $int = $e->acl_next($int, \$int, \$int, \$int, \$int, \$string);
+ my $int1 = $e->acl_next($int2, $int*1, $int*2, $int*3, $int*4, \$string);
 
 =head2 acl_reset
 
  # archive_entry_acl_reset
- my $int = $e->acl_reset($int);
+ my $int1 = $e->acl_reset($int2);
 
 =head2 acl_text
 
@@ -1013,12 +1013,12 @@ __END__
 =head2 copy_fflags_text
 
  # archive_entry_copy_fflags_text
- my $string = $e->copy_fflags_text($string);
+ my $string1 = $e->copy_fflags_text($string2);
 
 =head2 copy_fflags_text_w
 
  # archive_entry_copy_fflags_text_w
- my $wstring = $e->copy_fflags_text_w($wstring);
+ my $wstring1 = $e->copy_fflags_text_w($wstring2);
 
 =head2 copy_gname
 
@@ -1133,7 +1133,7 @@ __END__
 =head2 fflags
 
  # archive_entry_fflags
- $e->fflags(\$ulong, \$ulong);
+ $e->fflags($ulong*1, $ulong*2);
 
 =head2 fflags_text
 
@@ -1293,7 +1293,7 @@ __END__
 =head2 set_fflags
 
  # archive_entry_set_fflags
- $e->set_fflags($ulong, $ulong);
+ $e->set_fflags($ulong1, $ulong2);
 
 =head2 set_filetype
 
@@ -1458,7 +1458,7 @@ __END__
 =head2 sparse_add_entry
 
  # archive_entry_sparse_add_entry
- $e->sparse_add_entry($sint64, $sint64);
+ $e->sparse_add_entry($sint64_1, $sint64_2);
 
 =head2 sparse_clear
 
@@ -1473,7 +1473,7 @@ __END__
 =head2 sparse_next
 
  # archive_entry_sparse_next
- my $int = $e->sparse_next(\$sint64, \$sint64);
+ my $int = $e->sparse_next($sint64*1, $sint64*2);
 
 =head2 sparse_reset
 
@@ -1602,7 +1602,7 @@ __END__
 =head2 exclude_entry
 
  # archive_match_exclude_entry
- my $int = $m->exclude_entry($int, $e);
+ my $int1 = $m->exclude_entry($int2, $e);
 
 =head2 exclude_pattern
 
@@ -1612,12 +1612,12 @@ __END__
 =head2 exclude_pattern_from_file
 
  # archive_match_exclude_pattern_from_file
- my $int = $m->exclude_pattern_from_file($string, $int);
+ my $int1 = $m->exclude_pattern_from_file($string, $int2);
 
 =head2 exclude_pattern_from_file_w
 
  # archive_match_exclude_pattern_from_file_w
- my $int = $m->exclude_pattern_from_file_w($wstring, $int);
+ my $int1 = $m->exclude_pattern_from_file_w($wstring, $int2);
 
 =head2 exclude_pattern_w
 
@@ -1632,22 +1632,22 @@ __END__
 =head2 include_date
 
  # archive_match_include_date
- my $int = $m->include_date($int, $string);
+ my $int1 = $m->include_date($int2, $string);
 
 =head2 include_date_w
 
  # archive_match_include_date_w
- my $int = $m->include_date_w($int, $wstring);
+ my $int1 = $m->include_date_w($int2, $wstring);
 
 =head2 include_file_time
 
  # archive_match_include_file_time
- my $int = $m->include_file_time($int, $string);
+ my $int1 = $m->include_file_time($int2, $string);
 
 =head2 include_file_time_w
 
  # archive_match_include_file_time_w
- my $int = $m->include_file_time_w($int, $wstring);
+ my $int1 = $m->include_file_time_w($int2, $wstring);
 
 =head2 include_gid
 
@@ -1672,12 +1672,12 @@ __END__
 =head2 include_pattern_from_file
 
  # archive_match_include_pattern_from_file
- my $int = $m->include_pattern_from_file($string, $int);
+ my $int1 = $m->include_pattern_from_file($string, $int2);
 
 =head2 include_pattern_from_file_w
 
  # archive_match_include_pattern_from_file_w
- my $int = $m->include_pattern_from_file_w($wstring, $int);
+ my $int1 = $m->include_pattern_from_file_w($wstring, $int2);
 
 =head2 include_pattern_w
 
@@ -1687,7 +1687,7 @@ __END__
 =head2 include_time
 
  # archive_match_include_time
- my $int = $m->include_time($int, $time_t, $long);
+ my $int1 = $m->include_time($int2, $time_t, $long);
 
 =head2 include_uid
 
@@ -1727,7 +1727,7 @@ __END__
 =head2 set_inclusion_recursion
 
  # archive_match_set_inclusion_recursion (optional)
- my $int = $m->set_inclusion_recursion($int);
+ my $int1 = $m->set_inclusion_recursion($int2);
 
 =head2 time_excluded
 

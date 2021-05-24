@@ -386,9 +386,26 @@ sub munge_types (@types)
 
   splice @types, 1, 1;
 
+  @types = map { $varnames->{$_} // $_ } @types;
+
+  my %count;
+  $count{$_}++ for @types;
+  %count = map { $count{$_} > 1 ? ($_ => 1) : () } keys %count;
+
   foreach my $type (@types)
   {
-    $type = $varnames->{$type} if defined $varnames->{$type};
+    if($count{$type})
+    {
+      if($type =~ /\d$/a)
+      {
+        $type .= "_" . $count{$type}++;
+      }
+      else
+      {
+        $type .= $count{$type}++;
+      }
+    }
+
     $type = "\$$type";
     if($type =~ /^(.*)\*$/)
     {
