@@ -438,7 +438,6 @@ sub generate ($function, $bindings)
     my $tmp;
     my($content) = split /__END__/, $pm->slurp_utf8;
     my $docname = $pm->basename =~ s/\.pm$//r;
-    say "docname = $docname";
     $tt->process('SeeAlso.pm.tt', {
       content => $content,
       docname => $docname,
