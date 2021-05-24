@@ -16,6 +16,52 @@ use parent qw( Exporter );
 # ABSTRACT: Modern Perl bindings to libarchive
 # VERSION
 
+=head1 SYNOPSIS
+
+=head1 DESCRIPTION
+
+=head1 CONSTANTS
+
+=head1 EXAMPLES
+
+These examples are translated from the C<libarchive> C examples, which can be found here:
+
+=over 4
+
+=item L<https://github.com/libarchive/libarchive/wiki/Examples#List_contents_of_Archive_stored_in_File>
+
+=back
+
+=head2 List contents of archive stored in file
+
+# EXAMPLE: examples/list.pl
+
+=head2 List contents of archive stored in memory
+
+# EXAMPLE: examples/list_memory.pl
+
+=head2 List contents of archive with custom read functions
+
+ # TODO
+
+=head2 A universal decompressor / defilter-er
+
+# EXAMPLE: examples/defilter.pl
+
+=head2 A basic write example
+
+# EXAMPLE: examples/write.pl
+
+=head2 Constructing objects on disk
+
+# EXAMPLE: examples/disk.pl
+
+=head2 A complete extractor
+
+# EXAMPLE: examples/extract.pl
+
+=cut
+
 require Archive::Libarchive::Lib::Constants unless $Archive::Libarchive::no_gen;
 
 use constant {

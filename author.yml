@@ -23,6 +23,8 @@ pod_spelling_system:
     - rdevminor
     - sourcepath
     - strmode
+    - decompressor
+    - defilter
 
 pod_coverage:
   skip: 0
@@ -30,5 +32,3 @@ pod_coverage:
   # for either Class or method.
   private:
     - Archive::Libarchive::Lib
-
-
