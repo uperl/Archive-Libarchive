@@ -97,5 +97,6 @@ RUN cpanm -n \
   Test2::V0                                        \
   Test::Script                                     \
   Pod::Abstract                                    \
+  Sub::Identify                                    \
   https://dist.wdlabs.com/App-castyml-0.01.tar.gz  \
   && rm -rf ~/cpanm

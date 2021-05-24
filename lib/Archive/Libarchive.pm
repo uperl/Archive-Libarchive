@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use 5.020;
 use experimental qw( signatures );
+use Archive::Libarchive::Lib;
 use Archive::Libarchive::ArchiveRead;
 use Archive::Libarchive::ArchiveWrite;
 use Archive::Libarchive::Match;
@@ -94,6 +95,138 @@ the C<can> method to check if they are available.  If you need the latest versio
 your system provides an older version, then you can force a C<share> install of L<Alien::Libarchive3>:
 
  env ALIEN_INSTALL_TYPE=share cpanm Alien::Libarchive3
+
+=head1 METHODS
+
+The main functionality of this module is implemented in the classes listed above, but this module does
+also provide a few top level non-object-oriented functions as well.  These methods are not exported
+by default, but they can be requested using the usual L<Exporter> interface, either individually, or
+with the C<:func> or C<:all> tags (The latter will also import constants).
+
+=head2 archive_bzlib_version
+
+ # archive_bzlib_version
+ my $string = archive_bzlib_version();
+
+The C<bzlib> version that C<libarchive> was built with.  This will return C<undef> if the library was
+not found at build time.
+
+=head2 archive_liblz4_version
+
+ # archive_liblz4_version
+ my $string = archive_liblz4_version();
+
+The C<liblz4> version that C<libarchive> was built with.  This will return C<undef> if the library was
+not found at build time.
+
+=head2 archive_liblzma_version
+
+ # archive_liblzma_version
+ my $string = archive_liblzma_version();
+
+The C<liblzma> version that C<libarchive> was built with.  This will return C<undef> if the library was
+not found at build time.
+
+=head2 archive_libzstd_version
+
+ # archive_libzstd_version (optional)
+ my $string = archive_libzstd_version();
+
+The C<zstd> version that C<libarchive> was built with.  This will return C<undef> if the library was
+not found at build time.
+
+=head2 archive_version_details
+
+ # archive_version_details
+ my $string = archive_version_details();
+
+Detailed textual name/version of the library and its dependencies. This has the form:
+
+=over 4
+
+=item C<libarchive x.y.z zlib/a.b.c liblzma/d.e.f ... etc ...>
+
+=back
+
+the list of libraries described here will vary depending on how libarchive was compiled.
+
+=head2 archive_version_number
+
+ # archive_version_number
+ my $int = archive_version_number();
+
+The C<libarchive> version expressed as an integer.  This will be the major, minor and patch
+levels each using up to three digits, so 3.5.1 will be C<3005001>.
+
+=head2 archive_version_string
+
+ # archive_version_string
+ my $string = archive_version_string();
+
+The C<libarchive> version as a string.
+
+=head2 archive_zlib_version
+
+ # archive_zlib_version
+ my $string = archive_zlib_version();
+
+The C<zlib> version that C<libarchive> was built with.  This will return C<undef> if the library was
+not found at build time.
+
+=cut
+
+my $ffi = Archive::Libarchive::Lib->ffi;
+
+$ffi->mangler(undef);
+
+$ffi->attach( archive_bzlib_version =>   [] => 'string' );
+$ffi->attach( archive_liblz4_version =>  [] => 'string' );
+$ffi->attach( archive_liblzma_version => [] => 'string' );
+$ffi->attach( archive_version_details => [] => 'string' );
+$ffi->attach( archive_version_number =>  [] => 'int'    );
+$ffi->attach( archive_version_string =>  [] => 'string' );
+$ffi->attach( archive_zlib_version =>    [] => 'string' );
+$ffi->ignore_not_found(1);
+$ffi->attach( archive_libzstd_version => [] => 'string' );
+$ffi->ignore_not_found(0);
+
+=head2 versions
+
+ my %versions = Archive::Libarchive->versions();
+
+This returns a hash of C<libarchive> and L<Archive::Libarchive> versions and dependency versions.  This
+may be useful in a test report diagnostic.
+
+=cut
+
+sub versions ($class)
+{
+  my %v = (
+    bzlib      => archive_bzlib_version()   // 'undef',
+    liblz4     => archive_liblz4_version()  // 'undef',
+    liblzma    => archive_liblzma_version() // 'undef',
+    libarchive => archive_version_string()  // 'undef',
+    zlib       => archive_zlib_version()    // 'undef',
+    perl       => $],
+  );
+
+  if(__PACKAGE__->can('archive_libzstd_version'))
+  {
+    $v{libzstd} = archive_libzstd_version();
+  }
+  else
+  {
+    $v{libzstd} = 'undef';
+  }
+
+  foreach my $mod (qw( FFI::Platypus Archive::Libarchive FFI::CheckLib Alien::Libarchive3 Foo ))
+  {
+    my $version = $mod->VERSION;
+    $v{$mod} = $version if defined $version;
+  }
+
+  %v;
+}
 
 =head1 EXAMPLES
 
@@ -276,10 +409,12 @@ use constant {
   AE_IFIFO  => oct('010000'),
 };
 
-our @EXPORT_OK = grep /^(ARCHIVE|AE)_/, keys %Archive::Libarchive::;
+$DB::single = 1;
+our @EXPORT_OK = grep /^(archive|ARCHIVE|AE)_/, keys %Archive::Libarchive::;
 our %EXPORT_TAGS = (
-  all => \@EXPORT_OK,
-  const => \@EXPORT_OK,
+  all   => \@EXPORT_OK,
+  const => [grep /^(ARCHIVE|AE)_/, @EXPORT_OK],
+  func  => [grep /^archive_/, @EXPORT_OK],
 );
 
 1;

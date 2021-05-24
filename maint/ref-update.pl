@@ -256,6 +256,10 @@ sub process_functions ($href, $global, $bindings)
       # The _finish forms were renamed to _Free in 3.x and will be
       # removed in 4.x
       push @prune, $name if $name =~ /^archive_(read|write)_finish$/;
+
+      # utility function to sort strings.  Don't really need this
+      # in perl
+      push @prune, $name if $name eq 'archive_utility_string_sort';
     }
 
     foreach my $name (@prune)

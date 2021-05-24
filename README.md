@@ -80,6 +80,104 @@ your system provides an older version, then you can force a `share` install of [
 env ALIEN_INSTALL_TYPE=share cpanm Alien::Libarchive3
 ```
 
+# METHODS
+
+The main functionality of this module is implemented in the classes listed above, but this module does
+also provide a few top level non-object-oriented functions as well.  These methods are not exported
+by default, but they can be requested using the usual [Exporter](https://metacpan.org/pod/Exporter) interface, either individually, or
+with the `:func` or `:all` tags (The latter will also import constants).
+
+## archive\_bzlib\_version
+
+```perl
+# archive_bzlib_version
+my $string = archive_bzlib_version();
+```
+
+The `bzlib` version that `libarchive` was built with.  This will return `undef` if the library was
+not found at build time.
+
+## archive\_liblz4\_version
+
+```perl
+# archive_liblz4_version
+my $string = archive_liblz4_version();
+```
+
+The `liblz4` version that `libarchive` was built with.  This will return `undef` if the library was
+not found at build time.
+
+## archive\_liblzma\_version
+
+```perl
+# archive_liblzma_version
+my $string = archive_liblzma_version();
+```
+
+The `liblzma` version that `libarchive` was built with.  This will return `undef` if the library was
+not found at build time.
+
+## archive\_libzstd\_version
+
+```perl
+# archive_libzstd_version (optional)
+my $string = archive_libzstd_version();
+```
+
+The `zstd` version that `libarchive` was built with.  This will return `undef` if the library was
+not found at build time.
+
+## archive\_version\_details
+
+```perl
+# archive_version_details
+my $string = archive_version_details();
+```
+
+Detailed textual name/version of the library and its dependencies. This has the form:
+
+- `libarchive x.y.z zlib/a.b.c liblzma/d.e.f ... etc ...`
+
+the list of libraries described here will vary depending on how libarchive was compiled.
+
+## archive\_version\_number
+
+```perl
+# archive_version_number
+my $int = archive_version_number();
+```
+
+The `libarchive` version expressed as an integer.  This will be the major, minor and patch
+levels each using up to three digits, so 3.5.1 will be `3005001`.
+
+## archive\_version\_string
+
+```perl
+# archive_version_string
+my $string = archive_version_string();
+```
+
+The `libarchive` version as a string.
+
+## archive\_zlib\_version
+
+```perl
+# archive_zlib_version
+my $string = archive_zlib_version();
+```
+
+The `zlib` version that `libarchive` was built with.  This will return `undef` if the library was
+not found at build time.
+
+## versions
+
+```perl
+my %versions = Archive::Libarchive->versions();
+```
+
+This returns a hash of `libarchive` and [Archive::Libarchive](https://metacpan.org/pod/Archive::Libarchive) versions and dependency versions.  This
+may be useful in a test report diagnostic.
+
 # EXAMPLES
 
 These examples are translated from the `libarchive` C examples, which can be found here:

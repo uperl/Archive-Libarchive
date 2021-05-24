@@ -19,6 +19,8 @@ $modules{$_} = $_ for qw(
   File::chdir
   Path::Tiny
   Ref::Util
+  Sub::Identify
+  Term::Table
   Test2::API
   Test2::Tools::Basic
   Test2::Tools::Compare
@@ -29,6 +31,14 @@ $modules{$_} = $_ for qw(
 $post_diag = sub {
   require Archive::Libarchive::Lib;
   diag "lib = $_" for Archive::Libarchive::Lib->lib;
+  spacer();
+  eval {
+    require Archive::Libarchive;
+    require Term::Table;
+    my %v = Archive::Libarchive->versions;
+    my $t = Term::Table->new( header => ['component','version'], rows => [ map { [$_,$v{$_}] } sort keys %v ] );
+    diag join "\n", $t->render;
+  };
 };
 
 my @modules = sort keys %modules;
