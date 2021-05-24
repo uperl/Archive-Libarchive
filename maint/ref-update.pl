@@ -374,8 +374,10 @@ sub generate ($function, $bindings)
 {
   foreach my $class (sort keys %$bindings)
   {
+    my $docname;
     my $path = path(qw( lib Archive Libarchive Lib ), do {
       my @name = split /::/, $class;
+      $docname = $name[-1];
       $name[-1] .= ".pm";
       @name
     });
@@ -385,7 +387,8 @@ sub generate ($function, $bindings)
       bindings => {
         required => [grep { !$_->{optional} } $bindings->{$class}->@*],
         optional => [grep { $_->{optional} } $bindings->{$class}->@*],
-      }
+      },
+      docname => "Lib::$docname",
     }, "$path") or do {
       say "Error generating $path @{[ $tt->error ]}";
       exit 2;
@@ -423,10 +426,24 @@ sub generate ($function, $bindings)
   $tt->process('Doc.pm.tt', {
     classes => \@classes,
     removed => [sort keys %removed],
+    docname => 'API',
   }, $path) or do {
     say "Error generating $path @{[ $tt->error ]}";
     exit 2;
   };
+
+  foreach my $pm (sort grep { $_->basename =~ /\.pm/ } (path('lib/Archive/Libarchive.pm'), path('lib/Archive/Libarchive')->children))
+  {
+    next if $pm->basename eq 'API.pm';
+    my $tmp;
+    my($content) = split /__END__/, $pm->slurp_utf8;
+    $tt->process('SeeAlso.pm.tt', {
+      content => $content,
+      docname => $pm->basename =~ s/\.pm$//r,
+    }, "$pm") or do {
+      say "Error updating $path @{[ $tt->error ]}";
+    };
+  }
 }
 
 foreach my $key (sort keys %count)

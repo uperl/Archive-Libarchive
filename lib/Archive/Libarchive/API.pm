@@ -1947,8 +1947,6 @@ to writing bindings for them.
 
 =item L<Archive::Libarchive>
 
-=item L<Archive::Libarchive::API>
-
 =item L<Archive::Libarchive::Archive>
 
 =item L<Archive::Libarchive::ArchiveRead>
