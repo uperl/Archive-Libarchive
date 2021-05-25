@@ -18,6 +18,7 @@ $modules{$_} = $_ for qw(
   FFI::Platypus::Type::PtrObject
   File::chdir
   Path::Tiny
+  PeekPoke::FFI
   Ref::Util
   Sub::Identify
   Term::Table

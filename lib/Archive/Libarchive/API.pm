@@ -244,20 +244,10 @@ may be useful in a test report diagnostic.
 
 =back
 
-=head2 add_callback_data
-
- # archive_read_add_callback_data
- my $int = $r->add_callback_data($opaque, $uint);
-
 =head2 add_passphrase
 
  # archive_read_add_passphrase
  my $int = $r->add_passphrase($string);
-
-=head2 append_callback_data
-
- # archive_read_append_callback_data
- my $int = $r->append_callback_data($opaque);
 
 =head2 append_filter
 
@@ -321,20 +311,63 @@ may be useful in a test report diagnostic.
 
 =head2 new
 
+ # archive_read_new
  my $r = Archive::Libarchive::ArchiveRead->new;
 
 Create a new archive read object.
 
 =head2 next_header
 
+ # archive_read_next_header
  my $code = $r->next_header($e);
 
 Returns the next L<Archive::Libarchive::Entry> object.
 
-=head2 open1
+=head2 open
 
  # archive_read_open1
- my $int = $r->open1;
+ # archive_read_set_callback_data
+ # archive_read_set_close_callback
+ # archive_read_set_open_callback
+ # archive_read_set_read_callback
+ # archive_read_set_seek_callback
+ # archive_read_set_skip_callback
+ $r->open(%callbacks);
+
+=over 4
+
+=item open
+
+ $r->open(open => sub ($w) {
+   ...
+ });
+
+=item read
+
+ $r->open(read => sub ($w, $ref) {
+   $$ref = ...;
+   ...
+ });
+
+=item seek
+
+ $r->open(seek => sub ($w, $offset, $whence) {
+   ...
+ });
+
+=item skip
+
+ $r->open(skip => sub ($w, $request) {
+   ...
+ });
+
+=item close
+
+ $r->open(close => sub ($w) {
+   ...
+ });
+
+=back
 
 =head2 open_fd
 
@@ -363,29 +396,16 @@ Returns the next L<Archive::Libarchive::Entry> object.
 
 =head2 open_memory
 
+ # archive_write_open_memory
  my $code = $r->open_memory(\$buffer);
 
 Open's the in-memory archive.
 
-=head2 prepend_callback_data
-
- # archive_read_prepend_callback_data
- my $int = $r->prepend_callback_data($opaque);
-
 =head2 read_data
 
+ # archive_read_data
  my $code = $r->read_data(\$buffer, $size);
  my $code = $r->read_data(\$buffer);
-
-=head2 set_callback_data
-
- # archive_read_set_callback_data
- my $int = $r->set_callback_data($opaque);
-
-=head2 set_callback_data2
-
- # archive_read_set_callback_data2
- my $int = $r->set_callback_data2($opaque, $uint);
 
 =head2 set_filter_option
 
@@ -2382,11 +2402,23 @@ to writing bindings for them.
 
 =item archive_free
 
+=item archive_read_add_callback_data
+
+=item archive_read_append_callback_data
+
 =item archive_read_finish
 
 =item archive_read_next_header
 
+=item archive_read_open
+
+=item archive_read_open2
+
 =item archive_read_open_memory2
+
+=item archive_read_prepend_callback_data
+
+=item archive_read_set_callback_data2
 
 =item archive_utility_string_sort
 

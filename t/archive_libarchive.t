@@ -18,7 +18,7 @@ sub try_function ($sub, $optional=0)
 
   ok defined &$sub, "$name defined" or return;
   my $value = $sub->();
-  note "$name() = $value";
+  note "$name() = @{[ $value // 'undef' ]}";
 }
 
 subtest 'version methods' => sub {

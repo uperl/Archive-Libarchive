@@ -69,16 +69,17 @@ sub ffi
     });
 
     # callbacks for both read/write
-    $ffi->type('(opaque,opaque)->int' => 'archive_open_callback');
-    $ffi->type('(opaque,opaque)->int' => 'archive_close_callback');
+    $ffi->type('(opaque,opaque)->int'    => 'archive_open_callback'                 );
+    $ffi->type('(opaque,opaque)->int'    => 'archive_close_callback'                );
+    $ffi->type('(opaque,opaque)->opaque' => 'archive_passphrase_callback'           );  # actually returns a string :/
 
     # callbacks for write
-    $ffi->type('(opaque,opaque,opaque,size_t)->ssize_t' => 'archive_write_callback');
+    $ffi->type('(opaque,opaque,opaque,size_t)->ssize_t' => 'archive_write_callback' );
 
     # callbacks for read
-    $ffi->type('(opaque,opaque,opaque)->ssize_t' => 'archive_read_callback');
-    $ffi->type('(opaque,opaque,sint64)->ssize_t' => 'archive_skip_callback');
-    $ffi->type('(opaque,opaque,sint64,int)->sint64' => 'archive_seek_callback');
+    $ffi->type('(opaque,opaque,opaque)->ssize_t'    => 'archive_read_callback'      );
+    $ffi->type('(opaque,opaque,sint64)->ssize_t'    => 'archive_skip_callback'      );
+    $ffi->type('(opaque,opaque,sint64,int)->sint64' => 'archive_seek_callback'      );
 
     $ffi;
   };

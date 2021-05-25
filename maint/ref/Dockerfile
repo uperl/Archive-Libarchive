@@ -98,5 +98,6 @@ RUN cpanm -n \
   Test::Script                                     \
   Pod::Abstract                                    \
   Sub::Identify                                    \
+  PeekPoke::FFI                                    \
   https://dist.wdlabs.com/App-castyml-0.01.tar.gz  \
   && rm -rf ~/cpanm
