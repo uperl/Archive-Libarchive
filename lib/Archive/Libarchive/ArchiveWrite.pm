@@ -39,7 +39,8 @@ $ffi->attach( new => [] => 'opaque' => sub {
 
 $ffi->attach( [ free => 'DESTROY' ] => ['archive_write'] => 'int' => sub {
   my($xsub, $self) = @_;
-  return if $self->{cb};  # inside a callback, we don't own the archive pointer
+  return if $self->{cb}                  # inside a callback, we don't own the archive pointer
+    || ${^GLOBAL_PHASE} eq 'DESTRUCT';   # during global shutdown, the xsub might go away
   my $ret = $xsub->($self);
   warn "destroying archive pointer did not return ARCHIVE_OK" unless $ret == 0;
 });
@@ -81,15 +82,16 @@ $ffi->attach( open => ['archive_write', 'opaque', 'archive_open_callback', 'arch
   {
     if(defined $cb{$name} && !is_plain_coderef $cb{$name})
     {
-      Carp::croak("$name callback is not a subref");
+      Carp::croak("The $name callback is not a subref");
     }
   }
 
-  my $opener = $cb{open};
-  my $writer = $cb{write};
-  my $closer = $cb{close};
+  my $opener = delete $cb{open};
+  my $writer = delete $cb{write};
+  my $closer = delete $cb{close};
 
-  Carp::croak("write callback is required") unless $writer;
+  Carp::croak("Write callback is required") unless $writer;
+  Carp::croak("No such write callbacks: @{[ sort keys %cb ]}") if %cb;
 
   if($opener)
   {

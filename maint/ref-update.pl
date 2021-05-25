@@ -260,6 +260,15 @@ sub process_functions ($href, $global, $bindings)
       # utility function to sort strings.  Don't really need this
       # in perl
       push @prune, $name if $name eq 'archive_utility_string_sort';
+
+      # Since callbacks are closures we don't really need to worry about
+      # client data.  Not 100% sure this is what I think it is so
+      # we maybe should revisit later.
+      push @prune, $name if $name =~ /^archive_read_(add_callback_data|append_callback_data|prepend_callback_data|set_callback_data2)$/;
+
+      # The open and open2 archive read methods are permutations of setting callbacks and calling open1
+      # that we don't really need.
+      push @prune, $name if $name =~ /^archive_read_open2?$/l
     }
 
     foreach my $name (@prune)

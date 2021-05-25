@@ -235,35 +235,39 @@ while($r->next_header($e) == ARCHIVE_OK) {
 
 ```perl
 use 5.020;
-use Archive::Libarchive;
+use Archive::Libarchive qw( :const );
 
 my $r = Archive::Libarchive::ArchiveRead->new;
 $r->support_compression_all;
 $r->support_format_all;
 
 my $fh;
-
-=pod
+    open $fh, '<', 'examples/archive.tar';
+    binmode $fh;
 
 $r->open(
-  open => sub {
-    open my $fh, '<', 'archive.tar';
-  },
+#  open => sub {
+#    return ARCHIVE_OK;
+#  },
   read => sub {
-    ...
+    my(undef, $ref) = @_;
+    my $size = read $fh, $$ref, 512;
+    return $size;
   },
-  close => sub {
-    close $fh;
-  },
-);
+#  close => sub {
+#    close $fh;
+#    return ARCHIVE_OK;
+#  },
+) or die $r->error_string;
 
 my $e = Archive::Libarchive::Entry->new;
-while($r->next_header($e) == ARCHIVE_OK)
-{
+while(1) {
+  my $ret = $r->next_header($e);
+  last if $ret == ARCHIVE_EOF;
+  die $r->error_string if $ret < ARCHIVE_WARN;
+  warn $r->error_string if $ret != ARCHIVE_OK;
   say $e->pathname;
 }
-
-=cut
 ```
 
 ## A universal decompressor / defilter-er
