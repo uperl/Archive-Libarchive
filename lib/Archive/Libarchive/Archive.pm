@@ -68,7 +68,7 @@ Returns a human readable diagnostic of error for the corresponding archive insta
 =head2 clear_error
 
  # archive_clear_error
- $ar->clear_error
+ $ar->clear_error;
 
 Clear the error for the corresponding archive instance.
 
