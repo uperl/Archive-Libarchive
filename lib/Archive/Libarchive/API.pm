@@ -149,7 +149,7 @@ may be useful in a test report diagnostic.
 =head2 clear_error
 
  # archive_clear_error
- $ar->clear_error
+ $ar->clear_error;
 
 Clear the error for the corresponding archive instance.
 
@@ -352,38 +352,65 @@ Returns the next L<Archive::Libarchive::Entry> object.
  # archive_read_set_skip_callback
  $r->open(%callbacks);
 
+This is a basic open method, which relies on callbacks for its implementation.  The
+only callback that is required is the C<read> callback.  The C<open> and C<close>
+callbacks are made available mostly for the benefit of the caller.  The C<skip>
+and C<seek> callbacks are used if available for some formats like C<zip> to improve
+performance.  All callbacks should return a L<normal status code|Archive::Libarchive/CONSTANTS>,
+which is C<ARCHIVE_OK> on success.
+
+Unlike the C<libarchive> C-API, this interface doesn't provide a facility for
+passing in "client" data.  In Perl this is implemnted using a closure, which should
+allow you to pass in arbitrary variables via proper scoping.
+
 =over 4
 
 =item open
 
- $r->open(open => sub ($w) {
+ $r->open(open => sub ($r) {
    ...
  });
+
+Called immediately when the archive is "opened";
 
 =item read
 
- $r->open(read => sub ($w, $ref) {
+ $r->open(read => sub ($r, $ref) {
    $$ref = ...;
    ...
+   return $size.
  });
+
+Called when new data is required.  What is passed in is a scalar reference.  You should
+set this scalar to the next block of data.  On success you should return the size of
+the data in bytes, and on failure return a L<normal status code|Archive::Libarchive/CONSTANTS>.
 
 =item seek
 
- $r->open(seek => sub ($w, $offset, $whence) {
+ $r->open(seek => sub ($r, $offset, $whence) {
    ...
  });
+
+Called to seek to the new location.  The C<$offset> and C<$whence> arguments work exactly
+like the C<libc> C<fseek> function.
 
 =item skip
 
- $r->open(skip => sub ($w, $request) {
+ $r->open(skip => sub ($r, $request) {
    ...
  });
+
+Called to skip the next C<$request> bytes.  Should return the actual number of bytes skipped
+on success (which can be less than or equal to C<$request>), and on failure return a
+L<normal status code|Archive::Libarchive/CONSTANTS>.
 
 =item close
 
- $r->open(close => sub ($w) {
+ $r->open(close => sub ($r) {
    ...
  });
+
+This is called when the archive instance is closed.
 
 =back
 
@@ -436,6 +463,11 @@ This takes a perl file handle and reads the archive from there.
  # archive_read_data
  my $code = $r->read_data(\$buffer, $size);
  my $code = $r->read_data(\$buffer);
+
+Read in data from the content section of the archive entry.  The output is written into
+C<$buffer>.  Up to C<$size> bytes will be read.  This will return the number of bytes
+read on success, zero (C<0>) on EOF and a L<normal status code|Archive::Libarchive/CONSTANTS>
+on error.
 
 =head2 set_filter_option
 
