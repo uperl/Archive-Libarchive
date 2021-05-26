@@ -3,6 +3,7 @@ use 5.020;
 use Path::Tiny qw( path );
 use Archive::Libarchive::ArchiveRead;
 use Test::Archive::Libarchive;
+use experimental qw( signatures );
 
 subtest 'basic' => sub {
 
@@ -28,7 +29,7 @@ subtest 'next_header' => sub {
   la_ok $r, 'support_format_tar';
 
   my $e = Archive::Libarchive::Entry->new;
-  la_ok $r, 'open_filename', ["examples/archive.tar", 10240];
+  la_ok $r, 'open_filename', ['examples/archive.tar', 10240];
 
   la_ok $r, 'next_header', [$e];
   is($e->pathname, 'archive/', '$entry->pathname');
@@ -49,13 +50,61 @@ subtest 'open_memory' => sub {
 
   my $r = Archive::Libarchive::ArchiveRead->new;
   la_ok $r, 'support_format_tar';
-  la_ok $r, 'open_memory', [\path("examples/archive.tar")->slurp_raw];
-
-  my $e = Archive::Libarchive::Entry->new;
-  la_ok $r, 'next_header', [$e];
-  is($e->pathname, 'archive/', '$entry->pathname');
+  la_ok $r, 'open_memory', [\path('examples/archive.tar')->slurp_raw];
+  la_archive_ok($r);
 
 };
+
+subtest 'open_filename' => sub {
+
+  my $r = Archive::Libarchive::ArchiveRead->new;
+  la_ok $r, 'support_format_tar';
+  la_ok $r, 'open_filename', ['examples/archive.tar', 40];
+  la_archive_ok($r);
+
+};
+
+subtest 'open_FILE' => sub {
+
+  subtest 'object' => sub {
+    skip_all 'test requires FFI::C::File'
+      unless eval { require FFI::C::File; 1 };
+
+    my $fp = FFI::C::File->fopen('examples/archive.tar', 'rb');
+
+    my $r = Archive::Libarchive::ArchiveRead->new;
+    la_ok $r, 'support_format_tar';
+    la_ok $r, 'open_FILE', [$fp];
+    la_archive_ok($r);
+
+  };
+
+  subtest 'opaque pointer' => sub {
+
+    my $ffi = FFI::Platypus->new( api => 1, lib => [undef] );
+    my $fp = $ffi->function( fopen => ['string','string'] => 'opaque' )->call('examples/archive.tar', 'rb');
+
+    my $r = Archive::Libarchive::ArchiveRead->new;
+    la_ok $r, 'support_format_tar';
+    la_ok $r, 'open_FILE', [$fp];
+    la_archive_ok($r);
+
+  };
+
+
+};
+
+subtest 'open_perlfile' => sub {
+
+  open my $fh, '<', 'examples/archive.tar';
+
+  my $r = Archive::Libarchive::ArchiveRead->new;
+  la_ok $r, 'support_format_tar';
+  la_ok $r, 'open_perlfile', [$fh];
+  la_archive_ok($r);
+
+};
+
 
 subtest 'read_data' => sub {
 
@@ -89,5 +138,22 @@ subtest 'read_data' => sub {
 
 };
 
-done_testing;
+sub la_archive_ok ($r)
+{
+  my $e = Archive::Libarchive::Entry->new;
+  la_ok $r, 'next_header', [$e];
+  is($e->pathname, 'archive/', '$entry->pathname');
 
+  la_ok $r, 'next_header', [$e];
+  is($e->pathname, 'archive/bar.txt', '$entry->pathname');
+  my $content = la_read_data_ok $r;
+  is $content, "there\n", 'content matches';
+
+  la_ok $r, 'next_header', [$e];
+  is($e->pathname, 'archive/foo.txt', '$entry->pathname');
+  $content = la_read_data_ok $r;
+  is $content, "hello\n", 'content matches';
+
+}
+
+done_testing;

@@ -5,7 +5,8 @@ use warnings;
 use 5.020;
 use Test2::Tools::Basic qw( diag );
 use Test2::Tools::Compare qw( is object call T );
-use Test2::API qw( context );
+use Test2::API qw( context release );
+use Ref::Util qw( is_blessed_ref );
 use experimental qw( signatures );
 use Archive::Libarchive::Lib::Constants;
 use parent qw( Exporter );
@@ -51,7 +52,7 @@ pattern.
 
 =cut
 
-our @EXPORT = qw( la_ok la_eof la_warn la_failed la_fatal );
+our @EXPORT = qw( la_ok la_eof la_warn la_failed la_fatal la_read_data_ok );
 
 our %code = (
   eof    =>   1,
@@ -222,6 +223,64 @@ foreach my $code (qw( ok eof retry warn failed fatal )) {
 
   no strict 'refs';
   *{"la_$code"} = $sub;
+}
+
+=head2 la_read_data_ok
+
+ my $content = la_read_data_ok $a;
+ my $content = la_read_data_ok $a, $test_name;
+
+Tests that the data can be read from the archive.  The entire content section will be read
+and returned on success.  If there is a failure during the read then the test will fail.
+
+=cut
+
+sub la_read_data_ok ($r, $test_name=undef)
+{
+  my $ctx = context();
+
+  $test_name ||= "\$archive->read_data(\\\$buffer) >= 0;  # multiple calls";
+
+  my $content = '';
+
+  unless(is_blessed_ref $r && $r->isa("Archive::Libarchive::ArchiveRead"))
+  {
+    $ctx->fail_and_release($test_name, "Object is not an instance of Archive::Libarchive::ArchiveRead");
+    return $content;
+  }
+
+  unless($r->can('read_data'))
+  {
+    $ctx->fail_and_release($test_name, "Object does not implement read_data");
+    return $content;
+  }
+
+  my $count = 0;
+
+  while(1)
+  {
+    my $buffer;
+    $count++;
+    my $size = $r->read_data(\$buffer);
+    if($size > 0)
+    {
+      $content .= $buffer;
+    }
+    elsif($size == 0)
+    {
+      last;
+    }
+    else
+    {
+      $DB::single = 1;
+      my %rcode = map { $code{$_} => "ARCHIVE_" . uc($_) } keys %code;
+      $ctx->fail_and_release($test_name, "Call read_data # $count returned $rcode{$size}");
+      return $content;
+    }
+  }
+
+  $ctx->pass_and_release($test_name);
+  return $content;
 }
 
 1;
