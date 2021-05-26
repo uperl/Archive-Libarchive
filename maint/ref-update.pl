@@ -444,7 +444,7 @@ sub man_made_methods ($class=undef)
       pod  => $_->pod,
     );
     \%h;
-  } $pa->select(q{/head1[@heading =~ {METHODS|CONSTRUCTOR}]/head2});
+  } $pa->select(q{/head1[@heading =~ {METHODS|CONSTRUCTOR|FUNCTIONS}]/head2});
 }
 
 sub generate ($function, $bindings)

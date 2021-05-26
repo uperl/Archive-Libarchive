@@ -96,7 +96,7 @@ your system provides an older version, then you can force a C<share> install of 
 
  env ALIEN_INSTALL_TYPE=share cpanm Alien::Libarchive3
 
-=head1 METHODS
+=head1 FUNCTIONS
 
 The main functionality of this module is implemented in the classes listed above, but this module does
 also provide a few top level non-object-oriented functions as well.  These methods are not exported
