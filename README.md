@@ -430,6 +430,12 @@ Note that:
 
 ## Constructing objects on disk
 
+[Archive::Libarchive](https://metacpan.org/pod/Archive::Libarchive) includes a [Archive::Libarchive::DiskWrite](https://metacpan.org/pod/Archive::Libarchive::DiskWrite) class that works very much like
+[Archive::Libarchive::ArchiveWrite](https://metacpan.org/pod/Archive::Libarchive::ArchiveWrite), except that it constructs objects on disk, instead of adding
+them to an archive.  This class knows how to construct directories, regular files, symlinks, hard links
+and other types of disk objects.  Here is a very simple example showing how you could use it
+to create a regular file on disk:
+
 ```perl
 use 5.020;
 use Archive::Libarchive qw( ARCHIVE_EXTRACT_TIME AE_IFREG );
@@ -450,6 +456,25 @@ $dw->write_header($e);
 $dw->write_data(\$text);
 $dw->finish_entry;
 ```
+
+Note that if you set a size in the entry instance, [Archive::Libarchive::DiskWrite](https://metacpan.org/pod/Archive::Libarchive::DiskWrite) will enforce that size.
+If you try to write more than the size set in the entry content, your writes will be truncated; if you write
+fewer bytes than you promised, the file will be extended with zero bytes.
+
+The pattern above can also be used to reconstruct directories, device nodes, and FIFOs. The same idea also works
+for restoring symlinks and hardlinks, but you do have to initialize the entry a little differently:
+
+- symlinks
+
+    Symlinks have a file type `AE_IFLNK` and require a target to be set with the
+    [set\_symlink method](https://metacpan.org/pod/Archive::Libarchive::API#set_symlink).
+
+- hardlinks
+
+    Hardlinks require a target to be set with
+    [the set\_hardlink method](https://metacpan.org/pod/Archive::Libarchive::API#set_hardlink); if this is set, the regular filetype is ignored.
+    If the entry describing a hardlink has a size, you must be prepared to write data to the linked files. If you don't
+    want to overwrite the file, leave the size unset.
 
 ## A complete extractor
 

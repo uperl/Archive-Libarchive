@@ -37,6 +37,8 @@ pod_spelling_system:
     - performant
     - pax
     - ustar
+    - hardlinks
+    - FIFOs
 
 pod_coverage:
   skip: 0
