@@ -329,7 +329,50 @@ L<support_format_empty method on Archive::Libarchive::ArchiveRead|Archive::Libar
 
 =head2 A basic write example
 
+The following is a very simple example of using L<Archive::Libarchive> to write a group of files into a tar archive.
+This is a little more complex than the read examples above because the write example actually does something with
+the file bodies.
+
 # EXAMPLE: examples/write.pl
+
+Note that:
+
+=over 4
+
+=item gzip
+
+If you wanted to write a gzipped tar archive, you would just add a call to the
+L<add_filter_gzip method on Archive::Libarchive::ArchiveRead|Archive::Libarchive::API/add_filter_gzip>, and
+append C<.gz> to the output filename.
+
+=item pax restricted
+
+The "pax restricted" format is a tar format that uses pax extensions only when absolutely necessary.  Most of
+the time, it will write plain ustar entries.  This is recommended tar format for most uses.  You should explicitly
+use ustar format only when you have to create archives that will be readable on older systems; you should explicitly
+request pax format only when you need to preserve as many attributes as possible.
+
+=item reusing entry instance
+
+This example creates a fresh L<Archive::Libarchive::Entry> instance for each file.  For better performance, you
+can reuse the same entry instance by using the
+L<clear method|Archive::Libarchive::API/clear> to erase it after each use.
+
+=item required properties
+
+Size, file type and pathname are all required properties here.  You can also use the
+L<copy_stat method|Archive::Libarchive::API/copy_stat> to copy all information from file to the archive entry,
+including file type.  To get even more complete information, look at the L<Archive::Libarchive::DiskRead> class,
+which provides an easy way to get more extensive file meta data―including ACLs and extended attributes on
+some systems―than using C<stat>.  It also works on platforms such as Windows where C<stat> either doesn't
+exist or is broken.
+
+=item calling close
+
+The close method will be called implicitly when the archive instance falls out of scope.  However, the close call
+returns an error code, which may be useful for catching errors.
+
+=back
 
 =head2 Constructing objects on disk
 
@@ -482,7 +525,6 @@ use constant {
   AE_IFIFO  => oct('010000'),
 };
 
-$DB::single = 1;
 our @EXPORT_OK = grep /^(archive|ARCHIVE|AE)_/, keys %Archive::Libarchive::;
 our %EXPORT_TAGS = (
   all   => \@EXPORT_OK,
