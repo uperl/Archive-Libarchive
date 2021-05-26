@@ -15,5 +15,5 @@ if($ret != ARCHIVE_OK) {
 my $e = Archive::Libarchive::Entry->new;
 while($r->next_header($e) == ARCHIVE_OK) {
   say $e->pathname;
-  $r->data_skip;
+  $r->read_data_skip;
 }

@@ -33,15 +33,15 @@ subtest 'next_header' => sub {
 
   la_ok $r, 'next_header', [$e];
   is($e->pathname, 'archive/', '$entry->pathname');
-  la_ok $r, 'data_skip';
+  la_ok $r, 'read_data_skip';
 
   la_ok $r, 'next_header', [$e];
   is($e->pathname, 'archive/bar.txt', '$entry->pathname (2)');
-  la_ok $r, 'data_skip';
+  la_ok $r, 'read_data_skip';
 
   la_ok $r, 'next_header', [$e];
   is($e->pathname, 'archive/foo.txt', '$entry->pathname (2)');
-  la_ok $r, 'data_skip';
+  la_ok $r, 'read_data_skip';
 
   la_eof $r, 'next_header', [$e];
 };
