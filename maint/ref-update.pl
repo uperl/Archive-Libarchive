@@ -108,6 +108,7 @@ my @const;
   {
     next unless $const->name =~ /^ARCHIVE_/;
     next if $const->name eq 'ARCHIVE_VERSION_NUMBER';
+    next if $const->name =~ /^ARCHIVE_COMPRESSION_/;
     next unless $const->type eq 'int';
     push @const, $const;
   }
@@ -249,9 +250,8 @@ sub process_functions ($href, $global, $bindings)
       # it is a shortcut for archive_*_free functions.
       push @prune, $name if $name eq 'archive_free';
 
-      # The set_compression functions are being renamed to add_filter
-      # in 3.x and will be removed in 4.x
-      push @prune, $name if $name =~ /^archive_write_set_compression/;
+      # these are aliases that are being renamed in 3.x and removed in 4.x
+      push @prune, $name if $name =~ /^archive_(write_set_compression.*|position_(compressed|uncompressed)|compression(_name|))$/;
 
       # The _finish forms were renamed to _Free in 3.x and will be
       # removed in 4.x
