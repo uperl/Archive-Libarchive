@@ -376,7 +376,36 @@ returns an error code, which may be useful for catching errors.
 
 =head2 Constructing objects on disk
 
+L<Archive::Libarchive> includes a L<Archive::Libarchive::DiskWrite> class that works very much like
+L<Archive::Libarchive::ArchiveWrite>, except that it constructs objects on disk, instead of adding
+them to an archive.  This class knows how to construct directories, regular files, symlinks, hard links
+and other types of disk objects.  Here is a very simple example showing how you could use it
+to create a regular file on disk:
+
 # EXAMPLE: examples/disk.pl
+
+Note that if you set a size in the entry instance, L<Archive::Libarchive::DiskWrite> will enforce that size.
+If you try to write more than the size set in the entry content, your writes will be truncated; if you write
+fewer bytes than you promised, the file will be extended with zero bytes.
+
+The pattern above can also be used to reconstruct directories, device nodes, and FIFOs. The same idea also works
+for restoring symlinks and hardlinks, but you do have to initialize the entry a little differently:
+
+=over 4
+
+=item symlinks
+
+Symlinks have a file type C<AE_IFLNK> and require a target to be set with the
+L<set_symlink method|Archive::Libarchive::API/set_symlink>.
+
+=item hardlinks
+
+Hardlinks require a target to be set with
+L<the set_hardlink method|Archive::Libarchive::API/set_hardlink>; if this is set, the regular filetype is ignored.
+If the entry describing a hardlink has a size, you must be prepared to write data to the linked files. If you don't
+want to overwrite the file, leave the size unset.
+
+=back
 
 =head2 A complete extractor
 
