@@ -240,7 +240,55 @@ These examples are translated from the C<libarchive> C examples, which can be fo
 
 =head2 List contents of archive stored in file
 
+The main L<Archive::Libarchive> API is based around two basic type of classes.  The L<Archive::Libarchive::Archive>
+class serves as a basis for all archive objects.  The L<Archive::Libarchive::Entry> represents the header or meta data
+for files stored inside an archive (or as we will see later, files on disk).
+
+The basic life cycle of an archive instance is:
+
+=over 4
+
+=item Create one using its C<new> constructor
+
+The constructor does not take any arguments, instead you will configure it in the
+next step.
+
+=item Configure it using "support" or "set" calls
+
+Support calls allow L<Archive::Libarchive> to decide when to use a feature; "set" calls
+enable the feature unconditionally.
+
+=item "Open" a particular data source
+
+This can be using callbacks for a custom source, or one of the pre-canned data sources supported directly by
+L<Archive::Libarchive>.
+
+=item Iterate over the contents
+
+Ask alternatively for "header" or entry/file meta data (which is represented by a L<Archive::Libarchive::Entry> instance),
+and entry/file content.
+
+=item Finish by calling "close"
+
+This will be called automatically if the archive instance falls out of scope.
+
+=back
+
+Writing an archive is very similar, except that you provide the "header" and content data to L<Archive::Libarchive> instead
+of asking for them.
+
+Here is a very basic example that simply opens a file and lists the contents of the archive.
+
 # EXAMPLE: examples/list.pl
+
+Note that L<open_filename|Archive::Libarchive::ArchiveRead/open_filename> method inspects the file before deciding
+how to handle the block size.  If the filename provided refers to a tape device, for example, it will use exactly
+the block size you specify.  For other devices, it may adjust the requested block size in order to obtain better
+performance.
+
+Note that the call to L<read_data_skip|Archive::Libarchive::API/read_data_skip> here is not actually necessary, since
+L<Archive::Libarchive> will invoke it automatically if you request the next header without reading the data for the
+last entry.
 
 =head2 List contents of archive stored in memory
 

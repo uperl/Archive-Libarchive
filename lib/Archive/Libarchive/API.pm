@@ -292,11 +292,6 @@ set that to zero (C<0>) in that case.
  # archive_read_data_into_fd
  my $int1 = $r->data_into_fd($int2);
 
-=head2 data_skip
-
- # archive_read_data_skip
- my $int = $r->data_skip;
-
 =head2 extract
 
  # archive_read_extract
@@ -468,6 +463,11 @@ Read in data from the content section of the archive entry.  The output is writt
 C<$buffer>.  Up to C<$size> bytes will be read.  This will return the number of bytes
 read on success, zero (C<0>) on EOF and a L<normal status code|Archive::Libarchive/CONSTANTS>
 on error.
+
+=head2 read_data_skip
+
+ # archive_read_data_skip
+ my $int = $r->read_data_skip;
 
 =head2 set_filter_option
 

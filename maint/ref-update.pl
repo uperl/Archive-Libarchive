@@ -332,7 +332,7 @@ sub process_functions ($href, $global, $bindings)
           $arg_types[0] = 'archive_read';
           $class = 'ArchiveRead';
           $name = $1;
-          $perl_name = "read_$1" if $name =~ /^(data)$/;
+          $perl_name = "read_$1" if $name =~ /^(data|data_skip)$/;
         }
 
         elsif($name =~ /^archive_write_(.*)$/)

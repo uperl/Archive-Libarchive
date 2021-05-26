@@ -186,6 +186,41 @@ These examples are translated from the `libarchive` C examples, which can be fou
 
 ## List contents of archive stored in file
 
+The main [Archive::Libarchive](https://metacpan.org/pod/Archive::Libarchive) API is based around two basic type of classes.  The [Archive::Libarchive::Archive](https://metacpan.org/pod/Archive::Libarchive::Archive)
+class serves as a basis for all archive objects.  The [Archive::Libarchive::Entry](https://metacpan.org/pod/Archive::Libarchive::Entry) represents the header or meta data
+for files stored inside an archive (or as we will see later, files on disk).
+
+The basic life cycle of an archive instance is:
+
+- Create one using its `new` constructor
+
+    The constructor does not take any arguments, instead you will configure it in the
+    next step.
+
+- Configure it using "support" or "set" calls
+
+    Support calls allow [Archive::Libarchive](https://metacpan.org/pod/Archive::Libarchive) to decide when to use a feature; "set" calls
+    enable the feature unconditionally.
+
+- "Open" a particular data source
+
+    This can be using callbacks for a custom source, or one of the pre-canned data sources supported directly by
+    [Archive::Libarchive](https://metacpan.org/pod/Archive::Libarchive).
+
+- Iterate over the contents
+
+    Ask alternatively for "header" or entry/file meta data (which is represented by a [Archive::Libarchive::Entry](https://metacpan.org/pod/Archive::Libarchive::Entry) instance),
+    and entry/file content.
+
+- Finish by calling "close"
+
+    This will be called automatically if the archive instance falls out of scope.
+
+Writing an archive is very similar, except that you provide the "header" and content data to [Archive::Libarchive](https://metacpan.org/pod/Archive::Libarchive) instead
+of asking for them.
+
+Here is a very basic example that simply opens a file and lists the contents of the archive.
+
 ```perl
 use 5.020;
 use Archive::Libarchive qw( ARCHIVE_OK );
@@ -202,9 +237,18 @@ if($ret != ARCHIVE_OK) {
 my $e = Archive::Libarchive::Entry->new;
 while($r->next_header($e) == ARCHIVE_OK) {
   say $e->pathname;
-  $r->data_skip;
+  $r->read_data_skip;
 }
 ```
+
+Note that [open\_filename](https://metacpan.org/pod/Archive::Libarchive::ArchiveRead#open_filename) method inspects the file before deciding
+how to handle the block size.  If the filename provided refers to a tape device, for example, it will use exactly
+the block size you specify.  For other devices, it may adjust the requested block size in order to obtain better
+performance.
+
+Note that the call to [read\_data\_skip](https://metacpan.org/pod/Archive::Libarchive::API#read_data_skip) here is not actually necessary, since
+[Archive::Libarchive](https://metacpan.org/pod/Archive::Libarchive) will invoke it automatically if you request the next header without reading the data for the
+last entry.
 
 ## List contents of archive stored in memory
 
@@ -227,7 +271,7 @@ if($ret != ARCHIVE_OK) {
 my $e = Archive::Libarchive::Entry->new;
 while($r->next_header($e) == ARCHIVE_OK) {
   say $e->pathname;
-  $r->data_skip;
+  $r->read_data_skip;
 }
 ```
 
