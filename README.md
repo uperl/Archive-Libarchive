@@ -334,6 +334,9 @@ When writing to an archive the [Archive::Libarchive::ArchiveWrite](https://metac
 
 ## A universal decompressor / defilter-er
 
+The "raw" format handler treats arbitrary binary input as a single-element archive.  This allows you to get the
+output of a libarchive filter chain, including files with multiple encodings, such as `gz.uu` files:
+
 ```perl
 use 5.020;
 use Archive::Libarchive;
@@ -351,6 +354,12 @@ while($r->read_data(\$buffer)) {
 
 $r->close;
 ```
+
+Note that the "raw" format is not enabled by the
+[support\_format\_all method on Archive::Libarchive::ArchiveRead](https://metacpan.org/pod/Archive::Libarchive::API#support_format_all).
+Also note that the "raw" format handler does not recognize or accept empty files.  If you specifically want to be
+able to read empty files, you'll need to also invoke the
+[support\_format\_empty method on Archive::Libarchive::ArchiveRead](https://metacpan.org/pod/Archive::Libarchive::API#support_format_empty).
 
 ## A basic write example
 

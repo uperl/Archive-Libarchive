@@ -316,7 +316,16 @@ L<open method and callbacks|Archive::Libarchive::ArchiveWrite/open>.
 
 =head2 A universal decompressor / defilter-er
 
+The "raw" format handler treats arbitrary binary input as a single-element archive.  This allows you to get the
+output of a libarchive filter chain, including files with multiple encodings, such as C<gz.uu> files:
+
 # EXAMPLE: examples/defilter.pl
+
+Note that the "raw" format is not enabled by the
+L<support_format_all method on Archive::Libarchive::ArchiveRead|Archive::Libarchive::API/support_format_all>.
+Also note that the "raw" format handler does not recognize or accept empty files.  If you specifically want to be
+able to read empty files, you'll need to also invoke the
+L<support_format_empty method on Archive::Libarchive::ArchiveRead|Archive::Libarchive::API/support_format_empty>.
 
 =head2 A basic write example
 
