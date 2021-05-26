@@ -58,9 +58,9 @@ subtest 'open / write' => sub {
 
     la_ok $w, 'set_format_pax_restricted';
 
-    la_ok $w, 'open' => [write => sub ($w, $buffer) {
-      $image .= $buffer;
-      return length $buffer;
+    la_ok $w, 'open' => [write => sub ($w, $ref) {
+      $image .= $$ref;
+      return length $$ref;
     }];
 
     la_write_ok($w);
@@ -150,8 +150,7 @@ sub la_write_ok ($w)
   la_ok $w, 'write_header' => [$e];
 
   my $data = path(__FILE__)->slurp_raw;
-  is( $w->write_data($data), length($data), '$archive->data(...)');
-
+  is( $w->write_data(\$data), length($data), '$archive->data(...)');
   la_ok $w, 'close';
 
   $ctx->release;

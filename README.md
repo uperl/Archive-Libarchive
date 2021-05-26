@@ -313,7 +313,7 @@ path('.')->visit(sub ($path, $) {
   $e->set_filetype(AE_IFREG);
   $e->set_perm( oct('0644') );
   $w->write_header($e);
-  $w->write_data($path->slurp_raw);
+  $w->write_data(\$path->slurp_raw);
 
 }, { recurse => 1 });
 
@@ -339,7 +339,7 @@ $e->set_mtime(time);
 $e->set_mode(oct('0644'));
 
 $dw->write_header($e);
-$dw->write_data($text);
+$dw->write_data(\$text);
 $dw->finish_entry;
 ```
 
@@ -400,7 +400,7 @@ while(1) {
         }
       }
 
-      $ret = $dw->write_data($buffer);
+      $ret = $dw->write_data(\$buffer);
       if($ret < ARCHIVE_OK) {
         if($ret < ARCHIVE_WARN) {
           die "file write error on member @{[ $e->pathname ]} @{[ $dw->error_string ]}";

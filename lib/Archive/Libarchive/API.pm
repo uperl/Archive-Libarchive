@@ -360,7 +360,7 @@ performance.  All callbacks should return a L<normal status code|Archive::Libarc
 which is C<ARCHIVE_OK> on success.
 
 Unlike the C<libarchive> C-API, this interface doesn't provide a facility for
-passing in "client" data.  In Perl this is implemnted using a closure, which should
+passing in "client" data.  In Perl this is implemented using a closure, which should
 allow you to pass in arbitrary variables via proper scoping.
 
 =over 4
@@ -461,8 +461,8 @@ This takes a perl file handle and reads the archive from there.
 =head2 read_data
 
  # archive_read_data
- my $code = $r->read_data(\$buffer, $size);
- my $code = $r->read_data(\$buffer);
+ my $size_or_code = $r->read_data(\$buffer, $size);
+ my $size_or_code = $r->read_data(\$buffer);
 
 Read in data from the content section of the archive entry.  The output is written into
 C<$buffer>.  Up to C<$size> bytes will be read.  This will return the number of bytes
@@ -846,7 +846,12 @@ on error.
 
 =head2 data
 
- $w->write_data($buffer);
+ # archive_write_data
+ my $size_or_code = $w->write_data(\$buffer);
+
+Write the entry content data to the archive.  This takes a reference to the buffer.
+Returns the number of bytes written on success, and a L<normal status code|Archive::Libarchive/CONSTANTS>
+on error.
 
 =head2 data_block
 
@@ -875,13 +880,25 @@ on error.
 
 =head2 new
 
+ # archive_write_new
  my $w = Archive::Libarchive::ArchiveWrite->new;
 
 Create a new archive write object.
 
 =head2 open
 
+ # archive_write_open
  $w->open(%callbacks);
+
+This is a basic open method, which relies on callbacks for its implementation.  The
+only callback that is required is the C<write> callback.  The C<open> and C<close>
+callbacks are made available mostly for the benefit of the caller.  All callbacks
+should return a L<normal status code|Archive::Libarchive/CONSTANTS>, which is
+C<ARCHIVE_OK> on success.
+
+Unlike the C<libarchive> C-API, this interface doesn't provide a facility for
+passing in "client" data.  In Perl this is implemented using a closure, which should
+allow you to pass in arbitrary variables via proper scoping.
 
 =over 4
 
@@ -891,11 +908,18 @@ Create a new archive write object.
    ...
  });
 
-=item read
+Called immediately when the archive is "opened";
 
- $w->open(read => sub ($w, $buffer) {
-   ...
+=item write
+
+ $w->open(write => sub ($w, $ref) {
+   ... = $$ref;
+   return $size;
  });
+
+This callback is called when data needs to be written to the archive.  It is passed in
+as a reference to a scalar that contains the raw data.  On success you should return the actual size of
+the data written in bytes, and on failure return a L<normal status code|Archive::Libarchive/CONSTANTS>.
 
 =item close
 
@@ -903,10 +927,13 @@ Create a new archive write object.
    ...
  });
 
+This is called when the archive instance is closed.
+
 =back
 
 =head2 open_FILE
 
+ # archive_write_open_FILE
  $w->open_FILE($file_pointer);
 
 This takes either a L<FFI::C::File>, or an opaque pointer to a libc file pointer.
@@ -928,6 +955,7 @@ This takes either a L<FFI::C::File>, or an opaque pointer to a libc file pointer
 
 =head2 open_memory
 
+ # archive_write_open_memory
  $w->open_memory(\$buffer);
 
 This takes a reference to scalar and stores the archive in memory there.
