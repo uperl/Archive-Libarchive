@@ -252,6 +252,10 @@ last entry.
 
 ## List contents of archive stored in memory
 
+There are several variants of the open methods.  The "filename" variant used above is intended to be simple
+to use in the common case of reading from a file from disk, but you may find the "memory" variant useful in other
+cases.
+
 ```perl
 use 5.020;
 use Path::Tiny qw( path );
@@ -275,7 +279,14 @@ while($r->next_header($e) == ARCHIVE_OK) {
 }
 ```
 
+There are also variants to read from an already-opened file descriptor, a `libc` `FILE` pointer, or a Perl
+file handle.
+
 ## List contents of archive with custom read functions
+
+Sometimes, none of the packaged open methods will work for you.  In that case, you can use the lower-level `open`
+method, which accepts a number of callbacks.  For this example we will use the `open`, `read` and `close`
+callbacks.
 
 ```perl
 use 5.020;
@@ -315,6 +326,11 @@ while(1) {
 
 $r->close;
 ```
+
+For full power of read callbacks see the [open method's documentation](https://metacpan.org/pod/Archive::Libarchive::ArchiveRead#open).
+
+When writing to an archive the [Archive::Libarchive::ArchiveWrite](https://metacpan.org/pod/Archive::Libarchive::ArchiveWrite) class also has its own
+[open method and callbacks](https://metacpan.org/pod/Archive::Libarchive::ArchiveWrite#open).
 
 ## A universal decompressor / defilter-er
 

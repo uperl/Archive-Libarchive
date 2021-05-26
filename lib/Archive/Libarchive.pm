@@ -292,11 +292,27 @@ last entry.
 
 =head2 List contents of archive stored in memory
 
+There are several variants of the open methods.  The "filename" variant used above is intended to be simple
+to use in the common case of reading from a file from disk, but you may find the "memory" variant useful in other
+cases.
+
 # EXAMPLE: examples/list_memory.pl
+
+There are also variants to read from an already-opened file descriptor, a C<libc> C<FILE> pointer, or a Perl
+file handle.
 
 =head2 List contents of archive with custom read functions
 
+Sometimes, none of the packaged open methods will work for you.  In that case, you can use the lower-level C<open>
+method, which accepts a number of callbacks.  For this example we will use the C<open>, C<read> and C<close>
+callbacks.
+
 # EXAMPLE: examples/custom.pl
+
+For full power of read callbacks see the L<open method's documentation|Archive::Libarchive::ArchiveRead/open>.
+
+When writing to an archive the L<Archive::Libarchive::ArchiveWrite> class also has its own
+L<open method and callbacks|Archive::Libarchive::ArchiveWrite/open>.
 
 =head2 A universal decompressor / defilter-er
 
