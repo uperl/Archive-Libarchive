@@ -369,6 +369,12 @@ Returns the next L<Archive::Libarchive::Entry> object.
 
 =back
 
+=head2 open_FILE
+
+ $r->open_FILE($file_pointer);
+
+This takes either a L<FFI::C::File>, or an opaque pointer to a libc file pointer.
+
 =head2 open_fd
 
  # archive_read_open_fd
@@ -400,6 +406,12 @@ Returns the next L<Archive::Libarchive::Entry> object.
  my $code = $r->open_memory(\$buffer);
 
 Open's the in-memory archive.
+
+=head2 open_perlfile
+
+ $r->open_perlfile(*FILE);
+
+This takes a perl file handle and reads the archive from there.
 
 =head2 read_data
 

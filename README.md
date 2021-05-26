@@ -242,23 +242,23 @@ $r->support_compression_all;
 $r->support_format_all;
 
 my $fh;
-    open $fh, '<', 'examples/archive.tar';
-    binmode $fh;
 
 $r->open(
-#  open => sub {
-#    return ARCHIVE_OK;
-#  },
+  open => sub {
+    open $fh, '<', 'archive.tar';
+    binmode $fh;
+    return ARCHIVE_OK;
+  },
   read => sub {
     my(undef, $ref) = @_;
     my $size = read $fh, $$ref, 512;
     return $size;
   },
-#  close => sub {
-#    close $fh;
-#    return ARCHIVE_OK;
-#  },
-) or die $r->error_string;
+  close => sub {
+    close $fh;
+    return ARCHIVE_OK;
+  },
+) == ARCHIVE_OK or die $r->error_string;
 
 my $e = Archive::Libarchive::Entry->new;
 while(1) {
@@ -268,6 +268,8 @@ while(1) {
   warn $r->error_string if $ret != ARCHIVE_OK;
   say $e->pathname;
 }
+
+$r->close;
 ```
 
 ## A universal decompressor / defilter-er

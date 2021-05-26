@@ -5,7 +5,7 @@ use warnings;
 use 5.020;
 use Archive::Libarchive::Lib;
 use FFI::Platypus::Buffer qw( scalar_to_buffer scalar_to_pointer );
-use Ref::Util qw( is_plain_scalarref is_plain_coderef );
+use Ref::Util qw( is_plain_scalarref is_plain_coderef is_blessed_ref );
 use Carp ();
 use PeekPoke::FFI ();
 use experimental qw( signatures );
@@ -186,6 +186,40 @@ $ffi->attach( open_memory => ['archive_read','opaque','size_t'] => 'int' => sub 
   my($ptr, $size) = scalar_to_buffer $$ref;
   $xsub->($self, $ptr, $size);
 });
+
+=head2 open_FILE
+
+ $r->open_FILE($file_pointer);
+
+This takes either a L<FFI::C::File>, or an opaque pointer to a libc file pointer.
+
+=cut
+
+$ffi->attach( open_FILE => ['archive_read', 'opaque'] => 'int' => sub {
+  my($xsub, $self, $fp) = @_;
+  $fp = $$fp if is_blessed_ref $fp && $fp->isa('FFI::C::File');
+  $xsub->($self, $fp);
+});
+
+=head2 open_perlfile
+
+ $r->open_perlfile(*FILE);
+
+This takes a perl file handle and reads the archive from there.
+
+=cut
+
+sub open_perlfile ($self, $fh)
+{
+  $self->open(
+    read => sub ($w, $ref) {
+      return sysread $fh, $$ref, 512;
+    },
+    close => sub ($w) {
+      close $fh;
+    },
+  );
+}
 
 =head2 read_data
 

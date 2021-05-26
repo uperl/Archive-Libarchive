@@ -42,7 +42,6 @@ $ffi->attach( extract_set_skip_file => ['archive_read', 'sint64', 'sint64'] );
 $ffi->attach( format_capabilities => ['archive_read'] => 'int' );
 $ffi->attach( has_encrypted_entries => ['archive_read'] => 'int' );
 $ffi->attach( header_position => ['archive_read'] => 'sint64' );
-#$ffi->attach( open_FILE => ['archive_read', undef] => 'int' );
 $ffi->attach( open_fd => ['archive_read', 'int', 'size_t'] => 'int' );
 $ffi->attach( open_file => ['archive_read', 'string', 'size_t'] => 'int' );
 $ffi->attach( open_filename => ['archive_read', 'string', 'size_t'] => 'int' );
