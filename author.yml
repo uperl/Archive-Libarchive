@@ -35,6 +35,8 @@ pod_spelling_system:
     - uuencoded
     - ABI
     - performant
+    - pax
+    - ustar
 
 pod_coverage:
   skip: 0

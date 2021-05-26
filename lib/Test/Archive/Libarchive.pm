@@ -272,7 +272,6 @@ sub la_read_data_ok ($r, $test_name=undef)
     }
     else
     {
-      $DB::single = 1;
       my %rcode = map { $code{$_} => "ARCHIVE_" . uc($_) } keys %code;
       $ctx->fail_and_release($test_name, "Call read_data # $count returned $rcode{$size}");
       return $content;

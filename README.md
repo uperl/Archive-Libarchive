@@ -363,6 +363,10 @@ able to read empty files, you'll need to also invoke the
 
 ## A basic write example
 
+The following is a very simple example of using [Archive::Libarchive](https://metacpan.org/pod/Archive::Libarchive) to write a group of files into a tar archive.
+This is a little more complex than the read examples above because the write example actually does something with
+the file bodies.
+
 ```perl
 use 5.020;
 use experimental qw( signatures );
@@ -388,6 +392,41 @@ path('.')->visit(sub ($path, $) {
 
 $w->close;
 ```
+
+Note that:
+
+- gzip
+
+    If you wanted to write a gzipped tar archive, you would just add a call to the
+    [add\_filter\_gzip method on Archive::Libarchive::ArchiveRead](https://metacpan.org/pod/Archive::Libarchive::API#add_filter_gzip), and
+    append `.gz` to the output filename.
+
+- pax restricted
+
+    The "pax restricted" format is a tar format that uses pax extensions only when absolutely necessary.  Most of
+    the time, it will write plain ustar entries.  This is recommended tar format for most uses.  You should explicitly
+    use ustar format only when you have to create archives that will be readable on older systems; you should explicitly
+    request pax format only when you need to preserve as many attributes as possible.
+
+- reusing entry instance
+
+    This example creates a fresh [Archive::Libarchive::Entry](https://metacpan.org/pod/Archive::Libarchive::Entry) instance for each file.  For better performance, you
+    can reuse the same entry instance by using the
+    [clear method](https://metacpan.org/pod/Archive::Libarchive::API#clear) to erase it after each use.
+
+- required properties
+
+    Size, file type and pathname are all required properties here.  You can also use the
+    [copy\_stat method](https://metacpan.org/pod/Archive::Libarchive::API#copy_stat) to copy all information from file to the archive entry,
+    including file type.  To get even more complete information, look at the [Archive::Libarchive::DiskRead](https://metacpan.org/pod/Archive::Libarchive::DiskRead) class,
+    which provides an easy way to get more extensive file meta data―including ACLs and extended attributes on
+    some systems―than using `stat`.  It also works on platforms such as Windows where `stat` either doesn't
+    exist or is broken.
+
+- calling close
+
+    The close method will be called implicitly when the archive instance falls out of scope.  However, the close call
+    returns an error code, which may be useful for catching errors.
 
 ## Constructing objects on disk
 
