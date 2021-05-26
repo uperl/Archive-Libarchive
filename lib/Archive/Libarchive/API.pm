@@ -153,16 +153,6 @@ may be useful in a test report diagnostic.
 
 Clear the error for the corresponding archive instance.
 
-=head2 compression
-
- # archive_compression
- my $int = $ar->compression;
-
-=head2 compression_name
-
- # archive_compression_name
- my $string = $ar->compression_name;
-
 =head2 copy_error
 
  # archive_copy_error
@@ -227,16 +217,6 @@ Returns a human readable diagnostic of error for the corresponding archive insta
 
  # archive_format_name
  my $string = $ar->format_name;
-
-=head2 position_compressed
-
- # archive_position_compressed
- my $sint64 = $ar->position_compressed;
-
-=head2 position_uncompressed
-
- # archive_position_uncompressed
- my $sint64 = $ar->position_uncompressed;
 
 =head2 seek_data
 
@@ -2152,28 +2132,6 @@ documentation.
 
 =over 4
 
-=item ARCHIVE_COMPRESSION_BZIP2
-
-=item ARCHIVE_COMPRESSION_COMPRESS
-
-=item ARCHIVE_COMPRESSION_GZIP
-
-=item ARCHIVE_COMPRESSION_LRZIP
-
-=item ARCHIVE_COMPRESSION_LZIP
-
-=item ARCHIVE_COMPRESSION_LZMA
-
-=item ARCHIVE_COMPRESSION_NONE
-
-=item ARCHIVE_COMPRESSION_PROGRAM
-
-=item ARCHIVE_COMPRESSION_RPM
-
-=item ARCHIVE_COMPRESSION_UU
-
-=item ARCHIVE_COMPRESSION_XZ
-
 =item ARCHIVE_ENTRY_ACL_ADD_FILE
 
 =item ARCHIVE_ENTRY_ACL_ADD_SUBDIRECTORY
@@ -2475,6 +2433,10 @@ to writing bindings for them.
 
 =over 4
 
+=item archive_compression
+
+=item archive_compression_name
+
 =item archive_entry_acl
 
 =item archive_entry_gname_w
@@ -2492,6 +2454,10 @@ to writing bindings for them.
 =item archive_entry_uname_w
 
 =item archive_free
+
+=item archive_position_compressed
+
+=item archive_position_uncompressed
 
 =item archive_read_add_callback_data
 
