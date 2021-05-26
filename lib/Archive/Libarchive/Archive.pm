@@ -13,13 +13,32 @@ my $ffi = Archive::Libarchive::Lib->ffi;
 
 =head1 SYNOPSIS
 
+ # handle errors correctly.
+ my $code = $r->read_data(\$data);
+ if($code == ARCHIVE_WARN) {
+   warn $r->error_string;
+ } elsif($code == ARCHIVE_FAIL || $code == ARCHIVE_FATAL) {
+   die $r->error_string;
+ }
+
 =head1 DESCRIPTION
+
+This class is a base class for all archive classes in L<Archive::Libarchive>.
 
 =head1 METHODS
 
+This is a subset of total list of methods available to all archive classes.
+For the full list see L<Archive::Libarchive::API/Archive::Libarchive::Archive>.
+
 =head2 entry
 
- my $e = $archive->entry;
+ # archive_entry_new2
+ my $e = $ar->entry;
+
+This method creates a new L<Archive::Libarchive::Entry> instance, like when
+you create an instance with that class' L<new|Archive::Libarchive::Entry/new>
+method, except this form will pull character-set conversion information from
+the specified archive instance.
 
 =cut
 
@@ -31,9 +50,42 @@ $ffi->attach( [ entry_new2 => 'entry' ] => ['archive'] => 'opaque' => sub {
   bless \$ptr, 'Archive::Libarchive::Entry';
 });
 
+=head2 errno
+
+ # archive_errno
+ my $int = $ar->errno;
+
+Returns the system C<errno> code for the archive instance.  For non-system level
+errors, this will not have a sensible value.
+
+=head2 error_string
+
+ # archive_error_string
+ my $string = $ar->error_string;
+
+Returns a human readable diagnostic of error for the corresponding archive instance.
+
+=head2 clear_error
+
+ # archive_clear_error
+ $ar->clear_error
+
+Clear the error for the corresponding archive instance.
+
+=cut
+
+$ffi->attach( clear_error => ['archive'] );
+$ffi->attach( errno => ['archive'] => 'int' );
+$ffi->attach( error_string => ['archive'] => 'string' );
+
 =head2 set_error
 
- $archive->set_error($str);
+ # archive_set_error
+ $ar->set_error($errno, $string);
+
+This will set the C<errno> code and human readable diagnostic for the archive
+instance.  Not all errors have a corresponding C<errno> code, so you can
+set that to zero (C<0>) in that case.
 
 =cut
 

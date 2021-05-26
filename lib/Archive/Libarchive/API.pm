@@ -149,7 +149,9 @@ may be useful in a test report diagnostic.
 =head2 clear_error
 
  # archive_clear_error
- $ar->clear_error;
+ $ar->clear_error
+
+Clear the error for the corresponding archive instance.
 
 =head2 compression
 
@@ -168,17 +170,28 @@ may be useful in a test report diagnostic.
 
 =head2 entry
 
- my $e = $archive->entry;
+ # archive_entry_new2
+ my $e = $ar->entry;
+
+This method creates a new L<Archive::Libarchive::Entry> instance, like when
+you create an instance with that class' L<new|Archive::Libarchive::Entry/new>
+method, except this form will pull character-set conversion information from
+the specified archive instance.
 
 =head2 errno
 
  # archive_errno
  my $int = $ar->errno;
 
+Returns the system C<errno> code for the archive instance.  For non-system level
+errors, this will not have a sensible value.
+
 =head2 error_string
 
  # archive_error_string
  my $string = $ar->error_string;
+
+Returns a human readable diagnostic of error for the corresponding archive instance.
 
 =head2 file_count
 
@@ -232,7 +245,12 @@ may be useful in a test report diagnostic.
 
 =head2 set_error
 
- $archive->set_error($str);
+ # archive_set_error
+ $ar->set_error($errno, $string);
+
+This will set the C<errno> code and human readable diagnostic for the archive
+instance.  Not all errors have a corresponding C<errno> code, so you can
+set that to zero (C<0>) in that case.
 
 =head1 Archive::Libarchive::ArchiveRead
 

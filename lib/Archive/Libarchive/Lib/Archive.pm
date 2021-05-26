@@ -27,12 +27,9 @@ use Archive::Libarchive::Lib;
 
 my $ffi = Archive::Libarchive::Lib->ffi;
 
-$ffi->attach( clear_error => ['archive'] );
 $ffi->attach( compression => ['archive'] => 'int' );
 $ffi->attach( compression_name => ['archive'] => 'string' );
 $ffi->attach( copy_error => ['archive', 'archive'] );
-$ffi->attach( errno => ['archive'] => 'int' );
-$ffi->attach( error_string => ['archive'] => 'string' );
 $ffi->attach( file_count => ['archive'] => 'int' );
 $ffi->attach( filter_bytes => ['archive', 'int'] => 'sint64' );
 $ffi->attach( filter_code => ['archive', 'int'] => 'int' );
