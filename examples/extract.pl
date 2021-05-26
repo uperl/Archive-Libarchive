@@ -54,7 +54,7 @@ while(1) {
         }
       }
 
-      $ret = $dw->write_data($buffer);
+      $ret = $dw->write_data(\$buffer);
       if($ret < ARCHIVE_OK) {
         if($ret < ARCHIVE_WARN) {
           die "file write error on member @{[ $e->pathname ]} @{[ $dw->error_string ]}";

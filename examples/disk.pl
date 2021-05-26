@@ -16,6 +16,6 @@ $e->set_mtime(time);
 $e->set_mode(oct('0644'));
 
 $dw->write_header($e);
-$dw->write_data($text);
+$dw->write_data(\$text);
 $dw->finish_entry;
 

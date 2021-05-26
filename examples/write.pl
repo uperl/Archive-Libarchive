@@ -18,7 +18,7 @@ path('.')->visit(sub ($path, $) {
   $e->set_filetype(AE_IFREG);
   $e->set_perm( oct('0644') );
   $w->write_header($e);
-  $w->write_data($path->slurp_raw);
+  $w->write_data(\$path->slurp_raw);
 
 }, { recurse => 1 });
 

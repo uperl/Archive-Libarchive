@@ -22,7 +22,7 @@ my $ffi = Archive::Libarchive::Lib->ffi;
 
 =head1 DESCRIPTION
 
-This class represetns an archive instance for reading from archives.
+This class represents an archive instance for reading from archives.
 
 =head1 CONSTRUCTOR
 
@@ -75,7 +75,7 @@ performance.  All callbacks should return a L<normal status code|Archive::Libarc
 which is C<ARCHIVE_OK> on success.
 
 Unlike the C<libarchive> C-API, this interface doesn't provide a facility for
-passing in "client" data.  In Perl this is implemnted using a closure, which should
+passing in "client" data.  In Perl this is implemented using a closure, which should
 allow you to pass in arbitrary variables via proper scoping.
 
 =over 4
@@ -258,8 +258,8 @@ sub open_perlfile ($self, $fh)
 =head2 read_data
 
  # archive_read_data
- my $code = $r->read_data(\$buffer, $size);
- my $code = $r->read_data(\$buffer);
+ my $size_or_code = $r->read_data(\$buffer, $size);
+ my $size_or_code = $r->read_data(\$buffer);
 
 Read in data from the content section of the archive entry.  The output is written into
 C<$buffer>.  Up to C<$size> bytes will be read.  This will return the number of bytes
