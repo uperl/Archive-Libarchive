@@ -409,7 +409,13 @@ want to overwrite the file, leave the size unset.
 
 =head2 A complete extractor
 
+Using the facilities described above, you can extract most archives to disk by simply copying entries from an
+L<Archive::Libarchive::ArchiveRead> instance to an L<Archive::Libarchive::DiskWrite> instance.
+
 # EXAMPLE: examples/extract.pl
+
+You could create an archive by going the other way by copying entries from an
+L<Archive::Libarchive::DiskRead> instance to an L<Archive::Libarchive::ArchiveWrite> instance.
 
 =head1 CONSTANTS
 

@@ -478,6 +478,9 @@ for restoring symlinks and hardlinks, but you do have to initialize the entry a 
 
 ## A complete extractor
 
+Using the facilities described above, you can extract most archives to disk by simply copying entries from an
+[Archive::Libarchive::ArchiveRead](https://metacpan.org/pod/Archive::Libarchive::ArchiveRead) instance to an [Archive::Libarchive::DiskWrite](https://metacpan.org/pod/Archive::Libarchive::DiskWrite) instance.
+
 ```perl
 use 5.020;
 use Archive::Libarchive qw( :all );
@@ -557,6 +560,9 @@ while(1) {
 $r->close;
 $dw->close;
 ```
+
+You could create an archive by going the other way by copying entries from an
+[Archive::Libarchive::DiskRead](https://metacpan.org/pod/Archive::Libarchive::DiskRead) instance to an [Archive::Libarchive::ArchiveWrite](https://metacpan.org/pod/Archive::Libarchive::ArchiveWrite) instance.
 
 # CONSTANTS
 
