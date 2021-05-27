@@ -60,9 +60,10 @@ L<Archive::Libarchive::API/CONSTANTS> for the full list.
 # FIXME: these constants can't currently be extracted by
 # Const::Introspect::C.  Though to be fair these are unlikely
 # to need changing.
-# FIXME: the la mode_t is an unsigned short on cygwin, this probably
-# needs to be fixed in the introspection code too.  In 4.x this will
-# be changed to an int / uint as per the header file.
+# NOTE: the header file has some logic to use ushort instead of
+# mode_t on Windows, but on Strawberry at least, mode_t is
+# already a ushort.  This will likely be switched to a uint
+# in 4.x
 $ffi->load_custom_type( '::Enum', 'archive_entry_filetype_ret_t',
   { prefix => 'AE_IF', rev => 'dualvar', type => 'mode_t', package => 'Archive::Libarchive' },
   [ mt   => oct('170000') ],
