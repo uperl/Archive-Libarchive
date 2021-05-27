@@ -67,4 +67,19 @@ subtest 'xattr' => sub {
 
 };
 
+subtest 'stat' => sub {
+
+  require FFI::C::Stat;
+
+  my $e = Archive::Libarchive::Entry->new;
+  my $cstat = FFI::C::Stat->new(__FILE__);
+
+  $e->copy_stat($cstat);
+  is( $e->size, $cstat->size );
+
+  my $cstat2 = $e->stat;
+  is( $cstat2->size, $cstat->size );
+
+};
+
 done_testing;

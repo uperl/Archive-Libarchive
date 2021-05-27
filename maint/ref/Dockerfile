@@ -89,7 +89,7 @@ RUN cpanm -n \
   FFI::CheckLib                                    \
   FFI::Platypus                                    \
   FFI::Platypus::Type::PtrObject                   \
-  FFI::Platypus::Type::Enum@0.05                   \
+  FFI::Platypus::Type::Enum                        \
   FFI::ExtractSymbols                              \
   Const::Introspect::C                             \
   Clang::CastXML                                   \
@@ -100,5 +100,6 @@ RUN cpanm -n \
   Pod::Abstract                                    \
   Sub::Identify                                    \
   PeekPoke::FFI                                    \
+  FFI::C::Stat                                     \
   https://dist.wdlabs.com/App-castyml-0.01.tar.gz  \
   && rm -rf ~/cpanm

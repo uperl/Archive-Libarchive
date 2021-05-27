@@ -5,6 +5,7 @@ use warnings;
 use 5.020;
 use Archive::Libarchive::Lib;
 use FFI::Platypus::Buffer qw( buffer_to_scalar scalar_to_buffer );
+use FFI::C::Stat;
 use experimental qw( signatures );
 
 # ABSTRACT: Libarchive entry class
@@ -80,6 +81,20 @@ Adds an xattr name/value pair.
 
 Fetches the next xattr name/value pair.
 
+=head2 copy_stat
+
+ # archive_entry_copy_stat
+ $e->copy_stat($stat);
+
+Copies the values from a L<FFI::C::Stat> instance.
+
+=head2 stat
+
+ # archive_entry_stat
+ my $stat = $e->stat;
+
+Returns a L<FFI::C::Stat> instance filled out from the entry metadata.
+
 =cut
 
 # TODO: these constants can't currently be extracted by
@@ -118,7 +133,6 @@ $ffi->attach( set_filetype => ['archive_entry', 'archive_entry_filetype_t'] );
 
 $ffi->attach( xattr_add_entry => ['archive_entry', 'string', 'opaque', 'size_t'] => sub {
   my $xsub = shift;
-  $DB::single = 1;
   my($ptr, $size) = scalar_to_buffer($_[2]);
   $xsub->($_[0], $_[1], $ptr, $size);
 });
@@ -132,6 +146,13 @@ $ffi->attach( xattr_next => ['archive_entry', 'string*', 'opaque*', 'size_t*'] =
   else
   { $$ref_value = undef }
   return $ret;
+});
+
+$ffi->attach( copy_stat => ['archive_entry', 'stat'] );
+$ffi->attach( stat => ['archive_entry'] => opaque => sub {
+  my($xsub, $self) = @_;
+  my $ptr = $xsub->($self);
+  defined $ptr ? FFI::C::Stat->clone($ptr) : undef;
 });
 
 # TODO: warn if doesn't return ARCHIVE_OK
