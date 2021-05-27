@@ -121,7 +121,7 @@ my @const;
 
   my @const2 = map {
     my $c = $_;
-    $c->name =~ /^ARCHIVE_(FILTER|FORMAT|MATCH|ENTRY_ACL|ENTRY_DIGEST|EXTRACT|READDISK|READ_FORMAT)_(.*)$/ ? do {
+    $c->name =~ /^ARCHIVE_(FILTER|FORMAT|MATCH|ENTRY_ACL|ENTRY_DIGEST|READDISK|READ_FORMAT)_(.*)$/ ? do {
       $enums{$1}->{name}   //= "archive_@{[ lc $1 ]}_t";
       $enums{$1}->{prefix} //= "ARCHIVE_$1_";
       push $enums{$1}->{constants}->@*, {
