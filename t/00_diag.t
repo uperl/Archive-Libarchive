@@ -15,6 +15,7 @@ $modules{$_} = $_ for qw(
   FFI::CheckLib
   FFI::Platypus
   FFI::Platypus::Buffer
+  FFI::Platypus::Type::Enum
   FFI::Platypus::Type::PtrObject
   File::chdir
   Path::Tiny

@@ -39,4 +39,16 @@ subtest 'version methods' => sub {
 
 };
 
+subtest 'list constants' => sub {
+
+  foreach my $name (sort $Archive::Libarchive::EXPORT_TAGS{'const'}->@*)
+  {
+    my $value = Archive::Libarchive->$name;
+    note sprintf "%-50s %s", $name, $value;
+  }
+
+  ok 1;
+
+};
+
 done_testing;

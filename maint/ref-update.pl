@@ -117,9 +117,25 @@ my @const;
 
   @const = sort { $a->name cmp $b->name } @const;
 
+  my %enums;
+
+  my @const2 = map {
+    my $c = $_;
+    $c->name =~ /^ARCHIVE_(FILTER|FORMAT|MATCH|ENTRY_ACL|ENTRY_DIGEST|EXTRACT|READDISK|READ_FORMAT)_(.*)$/ ? do {
+      $enums{$1}->{name}   //= "archive_enum_@{[ lc $1 ]}";
+      $enums{$1}->{prefix} //= "ARCHIVE_$1_";
+      push $enums{$1}->{constants}->@*, {
+        name  => lc($2),
+        value => $c->value,
+      };
+      ();
+    } : $_;
+  } @const;
+
   $tt->process('Const.pm.tt', {
-    class => 'Constants',
-    constants => \@const,
+    class     => 'Constants',
+    constants => \@const2,
+    enums     => [sort { $a->{name} cmp $b->{name} } values %enums],
   }, $path) or do {
     say "Error generating $path @{[ $tt->error ]}";
     exit 2;
@@ -516,9 +532,9 @@ sub generate ($function, $bindings)
 
   my $path = 'lib/Archive/Libarchive/API.pm';
   $tt->process('Doc.pm.tt', {
-    classes => \@classes,
-    removed => [sort keys %removed],
-    docname => 'API',
+    classes   => \@classes,
+    removed   => [sort keys %removed],
+    docname   => 'API',
     constants => \@const,
   }, $path) or do {
     say "Error generating $path @{[ $tt->error ]}";
