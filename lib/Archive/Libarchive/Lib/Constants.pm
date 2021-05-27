@@ -94,13 +94,16 @@ sub _enums ($class, $ffi)
     ['newer', 1],
     ['older', 2],
   );
-  $ffi->load_custom_type('::Enum', 'archive_read_format_t',
-    { prefix => 'ARCHIVE_READ_FORMAT_', rev => 'dualvar', type => 'int', package => 'Archive::Libarchive' },
-    ['caps_encrypt_data', 1],
-    ['caps_encrypt_metadata', 2],
-    ['caps_none', 0],
-    ['encryption_dont_know', -1],
-    ['encryption_unsupported', -2],
+  $ffi->load_custom_type('::Enum', 'archive_read_format_caps_t',
+    { prefix => 'ARCHIVE_READ_FORMAT_CAPS_', rev => 'dualvar', type => 'int', package => 'Archive::Libarchive' },
+    ['encrypt_data', 1],
+    ['encrypt_metadata', 2],
+    ['none', 0],
+  );
+  $ffi->load_custom_type('::Enum', 'archive_read_format_encryption_t',
+    { prefix => 'ARCHIVE_READ_FORMAT_ENCRYPTION_', rev => 'dualvar', type => 'int', package => 'Archive::Libarchive' },
+    ['dont_know', -1],
+    ['unsupported', -2],
   );
   $ffi->load_custom_type('::Enum', 'archive_readdisk_t',
     { prefix => 'ARCHIVE_READDISK_', rev => 'dualvar', type => 'int', package => 'Archive::Libarchive' },
