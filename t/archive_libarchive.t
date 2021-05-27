@@ -2,7 +2,7 @@ use Test2::V0 -no_srand => 1;
 use Archive::Libarchive qw( :func );
 use Sub::Identify qw( sub_name );
 use 5.020;
-use experimental qw( signatures );
+use experimental qw( signatures postderef );
 
 sub try_function ($sub, $optional=0)
 {
