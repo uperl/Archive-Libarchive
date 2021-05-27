@@ -26,7 +26,7 @@ sub _enums ($class, $ffi)
 {
 [% FOREACH enum IN enums -%]
   $ffi->load_custom_type('::Enum', '[% enum.name %]',
-    { prefix => '[% enum.prefix %]', rev => 'str', type => 'int', package => 'Archive::Libarchive' },
+    { prefix => '[% enum.prefix %]', rev => 'dualvar', type => 'int', package => 'Archive::Libarchive' },
 [% FOREACH constant IN enum.constants -%]
     ['[% constant.name %]', [% constant.value %]],
 [% END -%]
