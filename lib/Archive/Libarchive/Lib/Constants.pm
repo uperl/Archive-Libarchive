@@ -86,12 +86,6 @@ sub _enums ($class, $ffi)
     ['xar', 655360],
     ['zip', 327680],
   );
-  $ffi->load_custom_type('::Enum', 'archive_read_format_caps_t',
-    { prefix => 'ARCHIVE_READ_FORMAT_CAPS_', rev => 'dualvar', type => 'int', package => 'Archive::Libarchive' },
-    ['encrypt_data', 1],
-    ['encrypt_metadata', 2],
-    ['none', 0],
-  );
   $ffi->load_custom_type('::Enum', 'archive_readdisk_t',
     { prefix => 'ARCHIVE_READDISK_', rev => 'dualvar', type => 'int', package => 'Archive::Libarchive' },
     ['honor_nodump', 2],
@@ -184,6 +178,9 @@ use constant {
   ARCHIVE_MATCH_NEWER => 1,
   ARCHIVE_MATCH_OLDER => 2,
   ARCHIVE_OK => 0,
+  ARCHIVE_READ_FORMAT_CAPS_ENCRYPT_DATA => 1,
+  ARCHIVE_READ_FORMAT_CAPS_ENCRYPT_METADATA => 2,
+  ARCHIVE_READ_FORMAT_CAPS_NONE => 0,
   ARCHIVE_READ_FORMAT_ENCRYPTION_DONT_KNOW => -1,
   ARCHIVE_READ_FORMAT_ENCRYPTION_UNSUPPORTED => -2,
   ARCHIVE_RETRY => -10,
