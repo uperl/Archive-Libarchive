@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 use 5.020;
-use Archive::Libarchive qw( ARCHIVE_EXTRACT_TIME );
+use Archive::Libarchive qw( :const );
 
 my $dw = Archive::Libarchive::DiskWrite->new;
 $dw->disk_set_options(ARCHIVE_EXTRACT_TIME);

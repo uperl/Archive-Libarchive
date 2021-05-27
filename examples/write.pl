@@ -1,7 +1,6 @@
 use strict;
 use warnings;
 use 5.020;
-use experimental qw( signatures );
 use Archive::Libarchive;
 use Path::Tiny qw( path );
 
@@ -10,6 +9,8 @@ $w->set_format_pax_restricted;
 $w->open_filename("outarchive.tar");
 
 path('.')->visit(sub ($path, $) {
+  my $path = shift;
+
   return if $path->is_dir;
 
   my $e = Archive::Libarchive::Entry->new;
