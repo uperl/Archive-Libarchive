@@ -3,6 +3,7 @@ package Archive::Libarchive::Lib::[% class %];
 use strict;
 use warnings;
 use 5.020;
+use experimental qw( signatures );
 
 # ABSTRACT: Private class for Arcive::Libarchive
 # VERSION
@@ -20,6 +21,18 @@ use 5.020;
 This is a private class for L<Archive::Libarchive> see the main documentation for the public interface.
 
 =cut
+
+sub _enums ($class, $ffi)
+{
+[% FOREACH enum IN enums -%]
+  $ffi->load_custom_type('::Enum', '[% enum.name %]',
+    { prefix => '[% enum.prefix %]', rev => 'str', type => 'int', package => 'Archive::Libarchive' },
+[% FOREACH constant IN enum.constants -%]
+    ['[% constant.name %]', [% constant.value %]],
+[% END -%]
+  );
+[% END -%]
+}
 
 package Archive::Libarchive;
 

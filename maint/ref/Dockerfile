@@ -89,6 +89,7 @@ RUN cpanm -n \
   FFI::CheckLib                                    \
   FFI::Platypus                                    \
   FFI::Platypus::Type::PtrObject                   \
+  FFI::Platypus::Type::Enum                        \
   FFI::ExtractSymbols                              \
   Const::Introspect::C                             \
   Clang::CastXML                                   \

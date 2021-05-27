@@ -549,17 +549,6 @@ ensure that the code generation is done consistently.
 
 require Archive::Libarchive::Lib::Constants unless $Archive::Libarchive::no_gen;
 
-use constant {
-  AE_IFMT   => oct('170000'),
-  AE_IFREG  => oct('100000'),
-  AE_IFLNK  => oct('120000'),
-  AE_IFSOCK => oct('140000'),
-  AE_IFCHR  => oct('020000'),
-  AE_IFBLK  => oct('060000'),
-  AE_IFDIR  => oct('040000'),
-  AE_IFIFO  => oct('010000'),
-};
-
 our @EXPORT_OK = grep /^(archive|ARCHIVE|AE)_/, keys %Archive::Libarchive::;
 our %EXPORT_TAGS = (
   all   => \@EXPORT_OK,
