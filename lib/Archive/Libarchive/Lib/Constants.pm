@@ -86,16 +86,6 @@ sub _enums ($class, $ffi)
     ['xar', 655360],
     ['zip', 327680],
   );
-  $ffi->load_custom_type('::Enum', 'archive_readdisk_t',
-    { prefix => 'ARCHIVE_READDISK_', rev => 'dualvar', type => 'int', package => 'Archive::Libarchive' },
-    ['honor_nodump', 2],
-    ['mac_copyfile', 4],
-    ['no_acl', 32],
-    ['no_fflags', 64],
-    ['no_traverse_mounts', 8],
-    ['no_xattr', 16],
-    ['restore_atime', 1],
-  );
 }
 
 package Archive::Libarchive;
@@ -178,6 +168,13 @@ use constant {
   ARCHIVE_MATCH_NEWER => 1,
   ARCHIVE_MATCH_OLDER => 2,
   ARCHIVE_OK => 0,
+  ARCHIVE_READDISK_HONOR_NODUMP => 2,
+  ARCHIVE_READDISK_MAC_COPYFILE => 4,
+  ARCHIVE_READDISK_NO_ACL => 32,
+  ARCHIVE_READDISK_NO_FFLAGS => 64,
+  ARCHIVE_READDISK_NO_TRAVERSE_MOUNTS => 8,
+  ARCHIVE_READDISK_NO_XATTR => 16,
+  ARCHIVE_READDISK_RESTORE_ATIME => 1,
   ARCHIVE_READ_FORMAT_CAPS_ENCRYPT_DATA => 1,
   ARCHIVE_READ_FORMAT_CAPS_ENCRYPT_METADATA => 2,
   ARCHIVE_READ_FORMAT_CAPS_NONE => 0,
