@@ -30,10 +30,8 @@ my $ffi = Archive::Libarchive::Lib->ffi;
 $ffi->attach( copy_error => ['archive', 'archive'] );
 $ffi->attach( file_count => ['archive'] => 'int' );
 $ffi->attach( filter_bytes => ['archive', 'int'] => 'sint64' );
-$ffi->attach( filter_code => ['archive', 'int'] => 'int' );
 $ffi->attach( filter_count => ['archive'] => 'int' );
 $ffi->attach( filter_name => ['archive', 'int'] => 'string' );
-$ffi->attach( format => ['archive'] => 'int' );
 $ffi->attach( format_name => ['archive'] => 'string' );
 $ffi->attach( seek_data => ['archive', 'sint64', 'int'] => 'sint64' );
 

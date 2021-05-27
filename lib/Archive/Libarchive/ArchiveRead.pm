@@ -281,6 +281,31 @@ $ffi->attach( [data => 'read_data'] => ['archive_read', 'opaque', 'size_t'] => '
   return $rsize;
 });
 
+=head2 append_filter
+
+ # archive_read_append_filter
+ my $int = $r->append_filter($code);
+
+Append filter to manually specify the order in which filters will be
+applied.  This will accept either a string representation of the filter
+code, or the constant.  The constant prefix is C<ARCHIVE_FILTER_>.  So
+for a gzipped file this would be either C<'gzip'> or C<ARCHIVE_FILTER_GZIP>.
+For the full list see L<Archive::Libarchive::API/CONSTANTS>.
+
+=head2 set_format
+
+ # archive_read_set_format
+ my $int = $r->set_format($code);
+
+Set the format manually.  This will accept either a string representation
+of the format, or the constant.  The constant prefix is C<ARCHIVE_FORMAT_>.
+So for a tar file this would be either C<'tar'> or C<ARCHIVE_FORMAT_TAR>.
+
+=cut
+
+$ffi->attach( append_filter => ['archive_read', 'archive_filter_t'] => 'int' );
+$ffi->attach( set_format => ['archive_read', 'archive_format_t'] => 'int' );
+
 require Archive::Libarchive::Lib::ArchiveRead unless $Archive::Libarchive::no_gen;
 
 1;

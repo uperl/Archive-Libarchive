@@ -94,6 +94,37 @@ $ffi->attach( set_error => ['archive', 'int', 'string'] => [] => sub {
   $xsub->($self, $errno, $string =~ s/%/%%/gr);
 });
 
+=head2 filter_code
+
+ # archive_filter_code
+ my $code = $ar->filter_code($num);
+
+This will return the filter code at position C<$num>.  For the total
+number of positions see the
+L<filter_count method|Archive::Libarchive::API/filter_count>.
+
+The constant prefix for this method is C<ARCHIVE_FILTER_>.  This will
+return a dualvar where the string is the lowercase name without the
+prefix and the integer is the constant value.  For the full list see
+L<Archive::Libarchive::API/CONSTANTS>.
+
+=head2 format
+
+ # archive_format
+ my $code = $ar->format;
+
+This will return the format code at position C<$num>.
+
+The constant prefix for this method is C<ARCHIVE_FORMAT_>.  This will
+return a dualvar where the string is the lowercase name without the
+prefix and the integer is the constant value.  For the full list see
+L<Archive::Libarchive::API/CONSTANTS>.
+
+=cut
+
+$ffi->attach( filter_code => ['archive', 'int'] => 'archive_filter_t' );
+$ffi->attach( format => ['archive'] => 'archive_format_t' );
+
 require Archive::Libarchive::Lib::Archive unless $Archive::Libarchive::no_gen;
 
 1;

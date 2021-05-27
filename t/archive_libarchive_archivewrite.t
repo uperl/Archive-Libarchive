@@ -135,6 +135,40 @@ subtest 'open_perlfile' => sub {
   la_readback_ok($path->slurp_raw);
 };
 
+subtest 'filter / format' => sub {
+
+  subtest 'string' => sub {
+
+    my $w = Archive::Libarchive::ArchiveWrite->new;
+    la_ok $w, add_filter => ['uu'];
+    la_ok $w, set_format => ['tar_pax_restricted'];
+
+    is( $w->format, 'tar_pax_restricted' );
+    is( $w->format, number Archive::Libarchive::ARCHIVE_FORMAT_TAR_PAX_RESTRICTED() );
+
+    is( $w->filter_count, 1 );
+    is( $w->filter_code(0), 'uu');
+    is( $w->filter_code(0), number Archive::Libarchive::ARCHIVE_FILTER_UU() );
+
+  };
+
+  subtest 'string' => sub {
+
+    my $w = Archive::Libarchive::ArchiveWrite->new;
+    la_ok $w, add_filter => [Archive::Libarchive::ARCHIVE_FILTER_UU()];
+    la_ok $w, set_format => [Archive::Libarchive::ARCHIVE_FORMAT_TAR_PAX_RESTRICTED()];
+
+    is( $w->format, 'tar_pax_restricted' );
+    is( $w->format, number(Archive::Libarchive::ARCHIVE_FORMAT_TAR_PAX_RESTRICTED()) );
+
+    is( $w->filter_count, 1 );
+    is( $w->filter_code(0), 'uu');
+    is( $w->filter_code(0), number Archive::Libarchive::ARCHIVE_FILTER_UU() );
+
+  };
+
+};
+
 sub la_write_ok ($w)
 {
   my $ctx = context();

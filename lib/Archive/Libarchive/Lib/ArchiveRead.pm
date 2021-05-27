@@ -28,7 +28,6 @@ use Archive::Libarchive::Lib;
 my $ffi = Archive::Libarchive::Lib->ffi;
 
 $ffi->attach( add_passphrase => ['archive_read', 'string'] => 'int' );
-$ffi->attach( append_filter => ['archive_read', 'int'] => 'int' );
 $ffi->attach( append_filter_program => ['archive_read', 'string'] => 'int' );
 $ffi->attach( append_filter_program_signature => ['archive_read', 'string', 'opaque', 'size_t'] => 'int' );
 $ffi->attach( close => ['archive_read'] => 'int' );
@@ -48,7 +47,6 @@ $ffi->attach( open_filename => ['archive_read', 'string', 'size_t'] => 'int' );
 $ffi->attach( open_filename_w => ['archive_read', 'wstring', 'size_t'] => 'int' );
 $ffi->attach( open_filenames => ['archive_read', 'string*', 'size_t'] => 'int' );
 $ffi->attach( set_filter_option => ['archive_read', 'string', 'string', 'string'] => 'int' );
-$ffi->attach( set_format => ['archive_read', 'int'] => 'int' );
 $ffi->attach( set_format_option => ['archive_read', 'string', 'string', 'string'] => 'int' );
 $ffi->attach( set_option => ['archive_read', 'string', 'string', 'string'] => 'int' );
 $ffi->attach( set_options => ['archive_read', 'string'] => 'int' );
