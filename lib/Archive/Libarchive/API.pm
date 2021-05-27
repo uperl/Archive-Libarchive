@@ -1463,6 +1463,13 @@ Create a new disk write object.
  # archive_entry_copy_sourcepath_w
  $e->copy_sourcepath_w($wstring);
 
+=head2 copy_stat
+
+ # archive_entry_copy_stat
+ $e->copy_stat($stat);
+
+Copies the values from a L<FFI::C::Stat> instance.
+
 =head2 copy_symlink
 
  # archive_entry_copy_symlink
@@ -1893,6 +1900,13 @@ L<Archive::Libarchive::API/CONSTANTS> for the full list.
 
  # archive_entry_sparse_reset
  my $int = $e->sparse_reset;
+
+=head2 stat
+
+ # archive_entry_stat
+ my $stat = $e->stat;
+
+Returns a L<FFI::C::Stat> instance filled out from the entry metadata.
 
 =head2 strmode
 

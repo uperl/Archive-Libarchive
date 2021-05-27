@@ -12,6 +12,7 @@ my $post_diag;
 $modules{$_} = $_ for qw(
   ExtUtils::MakeMaker
   FFI::C::File
+  FFI::C::Stat
   FFI::CheckLib
   FFI::Platypus
   FFI::Platypus::Buffer
