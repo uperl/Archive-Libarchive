@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use 5.020;
 use experimental qw( signatures );
-use Archive::Libarchive qw( AE_IFREG );
+use Archive::Libarchive;
 use Path::Tiny qw( path );
 
 my $w = Archive::Libarchive::ArchiveWrite->new;
@@ -15,7 +15,7 @@ path('.')->visit(sub ($path, $) {
   my $e = Archive::Libarchive::Entry->new;
   $e->set_pathname("$path");
   $e->set_size(-s $path);
-  $e->set_filetype(AE_IFREG);
+  $e->set_filetype('reg');
   $e->set_perm( oct('0644') );
   $w->write_header($e);
   $w->write_data(\$path->slurp_raw);

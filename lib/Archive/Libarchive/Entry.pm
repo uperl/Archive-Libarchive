@@ -33,6 +33,63 @@ $ffi->attach( new => [] => 'opaque' => sub {
   bless \$ptr, $class;
 });
 
+=head1 METHODS
+
+=head2 filetype
+
+ # archive_entry_filetype
+ my $code = $e->filetype;
+
+This returns the type of file for the entry.  This will be a dualvar where the string
+is one of C<mt>, C<reg>, C<lnx>, C<sock>, C<chr>, C<blk>, C<dir> or C<ifo>, and
+integer values will match the corresponding C<AE_IF> prefixed constant.  See
+L<Archive::Libarchive::API/CONSTANTS> for the full list.
+
+=head2 set_filetype
+
+ # archive_entry_set_filetype
+ $e->set_filetype($code);
+
+This sets the type of the file for the entry.  This will accept either a string value
+which is one of C<mt>, C<reg>, C<lnx>, C<sock>, C<chr>, C<blk>, C<dir> or C<ifo>,
+or an integer constant value with the C<AE_IF> prefix.  See
+L<Archive::Libarchive::API/CONSTANTS> for the full list.
+
+=cut
+
+# FIXME: these constants can't currently be extracted by
+# Const::Introspect::C.  Though to be fair these are unlikely
+# to need changing.
+# FIXME: the la mode_t is an unsigned short on cygwin, this probably
+# needs to be fixed in the introspection code too.  In 4.x this will
+# be changed to an int / uint as per the header file.
+$ffi->load_custom_type( '::Enum', 'archive_entry_filetype_ret_t',
+  { prefix => 'AE_IF', rev => 'dualvar', type => 'mode_t', package => 'Archive::Libarchive' },
+  [ mt   => oct('170000') ],
+  [ reg  => oct('100000') ],
+  [ lnk  => oct('120000') ],
+  [ sock => oct('140000') ],
+  [ chr  => oct('020000') ],
+  [ blk  => oct('060000') ],
+  [ dir  => oct('040000') ],
+  [ ifo  => oct('010000') ],
+);
+
+$ffi->load_custom_type( '::Enum', 'archive_entry_filetype_t',
+  { prefix => 'AE_IF', type => 'uint', package => 'Archive::Libarchive' },
+  [ mt   => oct('170000') ],
+  [ reg  => oct('100000') ],
+  [ lnk  => oct('120000') ],
+  [ sock => oct('140000') ],
+  [ chr  => oct('020000') ],
+  [ blk  => oct('060000') ],
+  [ dir  => oct('040000') ],
+  [ ifo  => oct('010000') ],
+);
+
+$ffi->attach( filetype => ['archive_entry'] => 'archive_entry_filetype_ret_t' );
+$ffi->attach( set_filetype => ['archive_entry', 'archive_entry_filetype_t'] );
+
 # TODO: warn if doesn't return ARCHIVE_OK
 $ffi->attach( [ free => 'DESTROY' ] => ['archive_entry'] => 'void' );
 

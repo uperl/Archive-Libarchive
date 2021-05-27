@@ -339,6 +339,12 @@ Note that:
 
 =over 4
 
+=item filetype
+
+The filetype methods take either a string code, or an integer constant with the C<AE_IF> prefix.  When returning
+a filetype code, they will return a dualvar with both.  The code C<reg> / C<AE_IFREG> is the code for a regular
+file (not a directory, symlink or other special filetype).
+
 =item gzip
 
 If you wanted to write a gzipped tar archive, you would just add a call to the
@@ -395,7 +401,7 @@ for restoring symlinks and hardlinks, but you do have to initialize the entry a 
 
 =item symlinks
 
-Symlinks have a file type C<AE_IFLNK> and require a target to be set with the
+Symlinks have a file type C<lnk> / C<AE_IFLNK> and require a target to be set with the
 L<set_symlink method|Archive::Libarchive::API/set_symlink>.
 
 =item hardlinks

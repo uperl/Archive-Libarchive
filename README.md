@@ -370,7 +370,7 @@ the file bodies.
 ```perl
 use 5.020;
 use experimental qw( signatures );
-use Archive::Libarchive qw( AE_IFREG );
+use Archive::Libarchive;
 use Path::Tiny qw( path );
 
 my $w = Archive::Libarchive::ArchiveWrite->new;
@@ -383,7 +383,7 @@ path('.')->visit(sub ($path, $) {
   my $e = Archive::Libarchive::Entry->new;
   $e->set_pathname("$path");
   $e->set_size(-s $path);
-  $e->set_filetype(AE_IFREG);
+  $e->set_filetype('reg');
   $e->set_perm( oct('0644') );
   $w->write_header($e);
   $w->write_data(\$path->slurp_raw);
@@ -394,6 +394,12 @@ $w->close;
 ```
 
 Note that:
+
+- filetype
+
+    The filetype methods take either a string code, or an integer constant with the `AE_IF` prefix.  When returning
+    a filetype code, they will return a dualvar with both.  The code `reg` / `AE_IFREG` is the code for a regular
+    file (not a directory, symlink or other special filetype).
 
 - gzip
 
@@ -438,7 +444,7 @@ to create a regular file on disk:
 
 ```perl
 use 5.020;
-use Archive::Libarchive qw( ARCHIVE_EXTRACT_TIME AE_IFREG );
+use Archive::Libarchive qw( ARCHIVE_EXTRACT_TIME );
 
 my $dw = Archive::Libarchive::DiskWrite->new;
 $dw->disk_set_options(ARCHIVE_EXTRACT_TIME);
@@ -447,7 +453,7 @@ my $text = "Hello World!\n";
 
 my $e = Archive::Libarchive::Entry->new;
 $e->set_pathname("hello.txt");
-$e->set_filetype(AE_IFREG);
+$e->set_filetype('reg');
 $e->set_size(length $text);
 $e->set_mtime(time);
 $e->set_mode(oct('0644'));
@@ -466,7 +472,7 @@ for restoring symlinks and hardlinks, but you do have to initialize the entry a 
 
 - symlinks
 
-    Symlinks have a file type `AE_IFLNK` and require a target to be set with the
+    Symlinks have a file type `lnk` / `AE_IFLNK` and require a target to be set with the
     [set\_symlink method](https://metacpan.org/pod/Archive::Libarchive::API#set_symlink).
 
 - hardlinks

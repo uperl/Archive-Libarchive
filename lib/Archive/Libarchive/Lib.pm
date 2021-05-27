@@ -81,21 +81,6 @@ sub ffi
     $ffi->type('(opaque,opaque,sint64)->ssize_t'    => 'archive_skip_callback'      );
     $ffi->type('(opaque,opaque,sint64,int)->sint64' => 'archive_seek_callback'      );
 
-    # FIXME: these constants can't currently be extracted by
-    # Const::Introspect::C.  Though to be fair these are unlikely
-    # to need changing.
-    $ffi->load_custom_type( '::Enum', 'archive_entry_filetype_t',
-      { prefix => 'AE_IF', rev => 'str', type => 'int', package => 'Archive::Libarchive' },
-      [ mt   => oct('170000') ],
-      [ reg  => oct('100000') ],
-      [ lnk  => oct('120000') ],
-      [ sock => oct('140000') ],
-      [ chr  => oct('020000') ],
-      [ blk  => oct('060000') ],
-      [ dir  => oct('040000') ],
-      [ ifo  => oct('010000') ],
-    );
-
     if($Archive::Libarchive::no_gen)
     {
     }
