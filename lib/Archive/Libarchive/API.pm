@@ -196,7 +196,16 @@ Returns a human readable diagnostic of error for the corresponding archive insta
 =head2 filter_code
 
  # archive_filter_code
- my $int1 = $ar->filter_code($int2);
+ my $code = $ar->filter_code($num);
+
+This will return the filter code at position C<$num>.  For the total
+number of positions see the
+L<filter_count method|Archive::Libarchive::API/filter_count>.
+
+The constant prefix for this method is C<ARCHIVE_FILTER_>.  This will
+return a dualvar where the string is the lowercase name without the
+prefix and the integer is the constant value.  For the full list see
+L<Archive::Libarchive::API/CONSTANTS>.
 
 =head2 filter_count
 
@@ -211,7 +220,14 @@ Returns a human readable diagnostic of error for the corresponding archive insta
 =head2 format
 
  # archive_format
- my $int = $ar->format;
+ my $code = $ar->format;
+
+This will return the format code at position C<$num>.
+
+The constant prefix for this method is C<ARCHIVE_FORMAT_>.  This will
+return a dualvar where the string is the lowercase name without the
+prefix and the integer is the constant value.  For the full list see
+L<Archive::Libarchive::API/CONSTANTS>.
 
 =head2 format_name
 
@@ -250,7 +266,13 @@ set that to zero (C<0>) in that case.
 =head2 append_filter
 
  # archive_read_append_filter
- my $int1 = $r->append_filter($int2);
+ my $int = $r->append_filter($code);
+
+Append filter to manually specify the order in which filters will be
+applied.  This will accept either a string representation of the filter
+code, or the constant.  The constant prefix is C<ARCHIVE_FILTER_>.  So
+for a gzipped file this would be either C<'gzip'> or C<ARCHIVE_FILTER_GZIP>.
+For the full list see L<Archive::Libarchive::API/CONSTANTS>.
 
 =head2 append_filter_program
 
@@ -457,7 +479,11 @@ on error.
 =head2 set_format
 
  # archive_read_set_format
- my $int1 = $r->set_format($int2);
+ my $int = $r->set_format($code);
+
+Set the format manually.  This will accept either a string representation
+of the format, or the constant.  The constant prefix is C<ARCHIVE_FORMAT_>.
+So for a tar file this would be either C<'tar'> or C<ARCHIVE_FORMAT_TAR>.
 
 =head2 set_format_option
 
@@ -737,7 +763,13 @@ on error.
 =head2 add_filter
 
  # archive_write_add_filter
- my $int1 = $w->add_filter($int2);
+ my $int = $w->add_filter($code);
+
+Add filter to be applied when writing the archive.
+This will accept either a string representation of the filter
+code, or the constant.  The constant prefix is C<ARCHIVE_FILTER_>.  So
+for a gzipped file this would be either C<'gzip'> or C<ARCHIVE_FILTER_GZIP>.
+For the full list see L<Archive::Libarchive::API/CONSTANTS>.
 
 =head2 add_filter_b64encode
 
@@ -964,7 +996,11 @@ This takes a perl file handle and stores the archive there.
 =head2 set_format
 
  # archive_write_set_format
- my $int1 = $w->set_format($int2);
+ my $int = $w->set_format($code);
+
+Set the output format.  This will accept either a string representation
+of the format, or the constant.  The constant prefix is C<ARCHIVE_FORMAT_>.
+So for a tar file this would be either C<'tar'> or C<ARCHIVE_FORMAT_TAR>.
 
 =head2 set_format_7zip
 

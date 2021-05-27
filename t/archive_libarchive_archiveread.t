@@ -138,6 +138,48 @@ subtest 'read_data' => sub {
 
 };
 
+subtest 'filter' => sub {
+
+  subtest 'string' => sub {
+    my $r = Archive::Libarchive::ArchiveRead->new;
+    la_ok $r, append_filter => ['uu'];
+    is( $r->filter_count, 1 );
+    is( $r->filter_code(0), 'uu');
+    is( $r->filter_code(0), number Archive::Libarchive::ARCHIVE_FILTER_UU() );
+  };
+
+  subtest 'int' => sub {
+    my $r = Archive::Libarchive::ArchiveRead->new;
+    la_ok $r, append_filter => [Archive::Libarchive::ARCHIVE_FILTER_UU()];
+    is( $r->filter_count, 1 );
+    is( $r->filter_code(0), 'uu');
+    is( $r->filter_code(0), number Archive::Libarchive::ARCHIVE_FILTER_UU() );
+  };
+
+};
+
+subtest 'format' => sub {
+
+  subtest 'string' => sub {
+    my $r = Archive::Libarchive::ArchiveRead->new;
+    la_ok $r, set_format => ['tar_gnutar'];
+    la_ok $r, open_filename => ['examples/archive.tar', 10240];
+    la_ok $r, next_header => [Archive::Libarchive::Entry->new];
+    is $r->format, 'tar_gnutar';
+    is $r->format, number(Archive::Libarchive::ARCHIVE_FORMAT_TAR_GNUTAR());
+  };
+
+  subtest 'int' => sub {
+    my $r = Archive::Libarchive::ArchiveRead->new;
+    la_ok $r, set_format => [Archive::Libarchive::ARCHIVE_FORMAT_TAR_GNUTAR()];
+    la_ok $r, open_filename => ['examples/archive.tar', 10240];
+    la_ok $r, next_header => [Archive::Libarchive::Entry->new];
+    is $r->format, 'tar_gnutar';
+    is $r->format, number(Archive::Libarchive::ARCHIVE_FORMAT_TAR_GNUTAR());
+  };
+
+};
+
 sub la_archive_ok ($r)
 {
   my $e = Archive::Libarchive::Entry->new;

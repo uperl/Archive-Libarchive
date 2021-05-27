@@ -231,6 +231,31 @@ $ffi->attach( [ data => 'write_data' ] => ['archive_write', 'opaque', 'size_t'] 
   $xsub->($self, scalar_to_buffer ${$_[0]});
 });
 
+=head2 add_filter
+
+ # archive_write_add_filter
+ my $int = $w->add_filter($code);
+
+Add filter to be applied when writing the archive.
+This will accept either a string representation of the filter
+code, or the constant.  The constant prefix is C<ARCHIVE_FILTER_>.  So
+for a gzipped file this would be either C<'gzip'> or C<ARCHIVE_FILTER_GZIP>.
+For the full list see L<Archive::Libarchive::API/CONSTANTS>.
+
+=head2 set_format
+
+ # archive_write_set_format
+ my $int = $w->set_format($code);
+
+Set the output format.  This will accept either a string representation
+of the format, or the constant.  The constant prefix is C<ARCHIVE_FORMAT_>.
+So for a tar file this would be either C<'tar'> or C<ARCHIVE_FORMAT_TAR>.
+
+=cut
+
+$ffi->attach( add_filter => ['archive_write', 'archive_filter_t'] => 'int' );
+$ffi->attach( set_format => ['archive_write', 'archive_format_t'] => 'int' );
+
 require Archive::Libarchive::Lib::ArchiveWrite unless $Archive::Libarchive::no_gen;
 
 1;

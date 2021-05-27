@@ -6,7 +6,7 @@ Modern Perl bindings to libarchive
 
 ```perl
 use 5.020;
-use Archive::Libarchive qw( :all );
+use Archive::Libarchive qw( :const );
 
 my $r = Archive::Libarchive::ArchiveRead->new;
 $r->support_filter_all;
@@ -369,7 +369,6 @@ the file bodies.
 
 ```perl
 use 5.020;
-use experimental qw( signatures );
 use Archive::Libarchive;
 use Path::Tiny qw( path );
 
@@ -378,6 +377,8 @@ $w->set_format_pax_restricted;
 $w->open_filename("outarchive.tar");
 
 path('.')->visit(sub ($path, $) {
+  my $path = shift;
+
   return if $path->is_dir;
 
   my $e = Archive::Libarchive::Entry->new;
@@ -444,7 +445,7 @@ to create a regular file on disk:
 
 ```perl
 use 5.020;
-use Archive::Libarchive qw( ARCHIVE_EXTRACT_TIME );
+use Archive::Libarchive qw( :const );
 
 my $dw = Archive::Libarchive::DiskWrite->new;
 $dw->disk_set_options(ARCHIVE_EXTRACT_TIME);
@@ -489,7 +490,7 @@ Using the facilities described above, you can extract most archives to disk by s
 
 ```perl
 use 5.020;
-use Archive::Libarchive qw( :all );
+use Archive::Libarchive qw( :const );
 
 my $tarball = 'archive.tar';
 

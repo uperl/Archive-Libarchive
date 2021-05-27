@@ -27,7 +27,6 @@ use Archive::Libarchive::Lib;
 
 my $ffi = Archive::Libarchive::Lib->ffi;
 
-$ffi->attach( add_filter => ['archive_write', 'int'] => 'int' );
 $ffi->attach( add_filter_b64encode => ['archive_write'] => 'int' );
 $ffi->attach( add_filter_by_name => ['archive_write', 'string'] => 'int' );
 $ffi->attach( add_filter_bzip2 => ['archive_write'] => 'int' );
@@ -56,7 +55,6 @@ $ffi->attach( open_filename_w => ['archive_write', 'wstring'] => 'int' );
 $ffi->attach( set_bytes_in_last_block => ['archive_write', 'int'] => 'int' );
 $ffi->attach( set_bytes_per_block => ['archive_write', 'int'] => 'int' );
 $ffi->attach( set_filter_option => ['archive_write', 'string', 'string', 'string'] => 'int' );
-$ffi->attach( set_format => ['archive_write', 'int'] => 'int' );
 $ffi->attach( set_format_7zip => ['archive_write'] => 'int' );
 $ffi->attach( set_format_ar_bsd => ['archive_write'] => 'int' );
 $ffi->attach( set_format_ar_svr4 => ['archive_write'] => 'int' );
