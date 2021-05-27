@@ -61,3 +61,8 @@ Some other useful tools:
 
  * `./maint/ref-symbols` will list the symbols in the unsupported, old and new versions of
    `libarchive`.
+
+ * `castxml` and `castyml` run from inside the `ref-shell` will dump a C header file using
+   `libclang`.  The latter will restore some of the hierarchy to the function argument
+   types, which can be helpful in debugging the function introspection.  Example:
+   `castyml /usr/include/archive.h` or `castyml /usr/include/archive_entry.h`.
