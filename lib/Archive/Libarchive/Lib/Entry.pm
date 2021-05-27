@@ -166,7 +166,6 @@ $ffi->attach( acl_from_text_w => ['archive_entry', 'wstring', 'int'] => 'int' );
 $ffi->attach( acl_to_text => ['archive_entry', 'ssize_t*', 'int'] => 'string' );
 $ffi->attach( acl_to_text_w => ['archive_entry', 'ssize_t*', 'int'] => 'wstring' );
 $ffi->attach( acl_types => ['archive_entry'] => 'int' );
-#$ffi->attach( digest => ['archive_entry', 'int'] => undef );
 $ffi->attach( set_symlink_type => ['archive_entry', 'int'] );
 $ffi->attach( symlink_type => ['archive_entry'] => 'int' );
 

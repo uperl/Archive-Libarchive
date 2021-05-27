@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use 5.020;
 use Archive::Libarchive::Lib;
+use FFI::Platypus::Buffer qw( buffer_to_scalar );
 use experimental qw( signatures );
 
 # ABSTRACT: Libarchive entry class
@@ -55,6 +56,16 @@ which is one of C<mt>, C<reg>, C<lnx>, C<sock>, C<chr>, C<blk>, C<dir> or C<ifo>
 or an integer constant value with the C<AE_IF> prefix.  See
 L<Archive::Libarchive::API/CONSTANTS> for the full list.
 
+=head2 digest
+
+ # archive_entry_digest
+ my $string = $e->digest($type);
+
+This is used to query the raw hex digest for the given entry. The type of digest is
+provided as an argument.  The type may be passed in as either a string or an integer
+constant.  The constant prefix is C<ARCHIVE_ENTRY_DIGEST_>.  So for an MD5 digest
+you could pass in either C<'md5'> or C<ARCHIVE_ENTRY_DIGEST_MD5>.
+
 =cut
 
 # TODO: these constants can't currently be extracted by
@@ -93,6 +104,30 @@ $ffi->attach( set_filetype => ['archive_entry', 'archive_entry_filetype_t'] );
 
 # TODO: warn if doesn't return ARCHIVE_OK
 $ffi->attach( [ free => 'DESTROY' ] => ['archive_entry'] => 'void' );
+
+$ffi->ignore_not_found(1);
+
+$ffi->attach_cast(_digest_type_to_int => archive_entry_digest_t => 'int' );
+
+my @size = (
+  undef,
+  16,
+  20,
+  20,
+  32,
+  48,
+  64,
+);
+
+$ffi->attach( digest => ['archive_entry', 'archive_entry_digest_t'] => 'opaque' => sub {
+  my($xsub, $self, $type) = @_;
+  my $size = $size[_digest_type_to_int($type)];
+  my $ptr = $xsub->($self, $type);
+  buffer_to_scalar($ptr, $size);
+});
+
+$ffi->ignore_not_found(0);
+
 
 require Archive::Libarchive::Lib::Entry unless $Archive::Libarchive::no_gen;
 

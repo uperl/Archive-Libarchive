@@ -83,7 +83,7 @@ sub ffi
 
     if($Archive::Libarchive::no_gen)
     {
-      $ffi->type('int', $_) for qw( archive_filter_t archive_format_t );
+      $ffi->type('int', $_) for qw( archive_entry_digest_t archive_filter_t archive_format_t );
     }
     else
     {
