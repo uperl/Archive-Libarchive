@@ -153,10 +153,8 @@ $ffi->attach( update_link_utf8 => ['archive_entry', 'string'] => 'int' );
 $ffi->attach( update_pathname_utf8 => ['archive_entry', 'string'] => 'int' );
 $ffi->attach( update_symlink_utf8 => ['archive_entry', 'string'] => 'int' );
 $ffi->attach( update_uname_utf8 => ['archive_entry', 'string'] => 'int' );
-$ffi->attach( xattr_add_entry => ['archive_entry', 'string', 'opaque', 'size_t'] );
 $ffi->attach( xattr_clear => ['archive_entry'] );
 $ffi->attach( xattr_count => ['archive_entry'] => 'int' );
-#$ffi->attach( xattr_next => ['archive_entry', 'string*', undef, 'size_t*'] => 'int' );
 $ffi->attach( xattr_reset => ['archive_entry'] => 'int' );
 
 $ffi->ignore_not_found(1);

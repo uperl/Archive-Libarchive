@@ -40,6 +40,7 @@ pod_spelling_system:
     - hardlinks
     - FIFOs
     - dualvar
+    - xattr
 
 pod_coverage:
   skip: 0

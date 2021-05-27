@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use 5.020;
 use Archive::Libarchive::Lib;
-use FFI::Platypus::Buffer qw( buffer_to_scalar );
+use FFI::Platypus::Buffer qw( buffer_to_scalar scalar_to_buffer );
 use experimental qw( signatures );
 
 # ABSTRACT: Libarchive entry class
@@ -66,6 +66,20 @@ provided as an argument.  The type may be passed in as either a string or an int
 constant.  The constant prefix is C<ARCHIVE_ENTRY_DIGEST_>.  So for an MD5 digest
 you could pass in either C<'md5'> or C<ARCHIVE_ENTRY_DIGEST_MD5>.
 
+=head2 xattr_add_entry
+
+ # archive_entry_xattr_add_entry
+ my $int = $e->xattr_add_entry($name, $value);
+
+Adds an xattr name/value pair.
+
+=head2 xattr_next
+
+ # archive_entry_xattr_next
+ my $int = $e->xattr_next(\$name, $value);
+
+Fetches the next xattr name/value pair.
+
 =cut
 
 # TODO: these constants can't currently be extracted by
@@ -101,6 +115,24 @@ $ffi->load_custom_type( '::Enum', 'archive_entry_filetype_t',
 
 $ffi->attach( filetype => ['archive_entry'] => 'archive_entry_filetype_ret_t' );
 $ffi->attach( set_filetype => ['archive_entry', 'archive_entry_filetype_t'] );
+
+$ffi->attach( xattr_add_entry => ['archive_entry', 'string', 'opaque', 'size_t'] => sub {
+  my $xsub = shift;
+  $DB::single = 1;
+  my($ptr, $size) = scalar_to_buffer($_[2]);
+  $xsub->($_[0], $_[1], $ptr, $size);
+});
+
+$ffi->attach( xattr_next => ['archive_entry', 'string*', 'opaque*', 'size_t*'] => 'int' => sub {
+  my($xsub, $self, $ref_name, $ref_value) = @_;
+  my($ptr, $size);
+  my $ret = $xsub->($self, $ref_name, \$ptr, \$size);
+  if(defined $ptr)
+  { $$ref_value = buffer_to_scalar($ptr, $size) }
+  else
+  { $$ref_value = undef }
+  return $ret;
+});
 
 # TODO: warn if doesn't return ARCHIVE_OK
 $ffi->attach( [ free => 'DESTROY' ] => ['archive_entry'] => 'void' );
