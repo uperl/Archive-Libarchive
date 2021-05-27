@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 use 5.020;
-use Archive::Libarchive qw( :all );
+use Archive::Libarchive qw( :const );
 
 my $r = Archive::Libarchive::ArchiveRead->new;
 $r->support_filter_all;

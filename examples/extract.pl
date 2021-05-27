@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 use 5.020;
-use Archive::Libarchive qw( :all );
+use Archive::Libarchive qw( :const );
 
 my $tarball = 'archive.tar';
 
