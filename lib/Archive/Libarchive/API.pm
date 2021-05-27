@@ -1518,6 +1518,16 @@ Create a new disk write object.
  # archive_entry_devminor
  my $dev_t = $e->devminor;
 
+=head2 digest
+
+ # archive_entry_digest
+ my $string = $e->digest($type);
+
+This is used to query the raw hex digest for the given entry. The type of digest is
+provided as an argument.  The type may be passed in as either a string or an integer
+constant.  The constant prefix is C<ARCHIVE_ENTRY_DIGEST_>.  So for an MD5 digest
+you could pass in either C<'md5'> or C<ARCHIVE_ENTRY_DIGEST_MD5>.
+
 =head2 fflags
 
  # archive_entry_fflags
