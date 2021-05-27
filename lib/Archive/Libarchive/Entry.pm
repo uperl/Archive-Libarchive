@@ -57,7 +57,7 @@ L<Archive::Libarchive::API/CONSTANTS> for the full list.
 
 =cut
 
-# FIXME: these constants can't currently be extracted by
+# TODO: these constants can't currently be extracted by
 # Const::Introspect::C.  Though to be fair these are unlikely
 # to need changing.
 # NOTE: the header file has some logic to use ushort instead of
