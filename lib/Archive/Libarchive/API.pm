@@ -1495,7 +1495,12 @@ Create a new disk write object.
 =head2 filetype
 
  # archive_entry_filetype
- my $mode_t = $e->filetype;
+ my $code = $e->filetype;
+
+This returns the type of file for the entry.  This will be a dualvar where the string
+is one of C<mt>, C<reg>, C<lnx>, C<sock>, C<chr>, C<blk>, C<dir> or C<ifo>, and
+integer values will match the corresponding C<AE_IF> prefixed constant.  See
+L<Archive::Libarchive::API/CONSTANTS> for the full list.
 
 =head2 gid
 
@@ -1656,7 +1661,12 @@ Create a new Entry object.
 =head2 set_filetype
 
  # archive_entry_set_filetype
- $e->set_filetype($uint);
+ $e->set_filetype($code);
+
+This sets the type of the file for the entry.  This will accept either a string value
+which is one of C<mt>, C<reg>, C<lnx>, C<sock>, C<chr>, C<blk>, C<dir> or C<ifo>,
+or an integer constant value with the C<AE_IF> prefix.  See
+L<Archive::Libarchive::API/CONSTANTS> for the full list.
 
 =head2 set_gid
 

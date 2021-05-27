@@ -22,4 +22,30 @@ subtest 'utf-8' => sub {
 
 };
 
+subtest 'filetype' => sub {
+
+  my $reg_int = oct('100000');
+
+  subtest 'set with string' => sub {
+
+    my $e = Archive::Libarchive::Entry->new;
+    $e->set_filetype('reg');
+
+    is($e->filetype, 'reg');
+    is($e->filetype, number $reg_int);
+
+  };
+
+  subtest 'set with string' => sub {
+
+    my $e = Archive::Libarchive::Entry->new;
+    $e->set_filetype($reg_int);
+
+    is($e->filetype, 'reg');
+    is($e->filetype, number $reg_int);
+
+  };
+
+};
+
 done_testing;

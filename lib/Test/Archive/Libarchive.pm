@@ -29,7 +29,7 @@ use parent qw( Exporter );
  my $e = Archive::Libarchive::Entry->new;
  $e->set_pathname(__FILE__);
  $e->set_size(-s __FILE__);
- $e->set_filetype(oct('0644'));
+ $e->set_filetype('reg');
  
  la_ok $w, 'write_header' => [$e];
  is($w->write_data(path(__FILE__)->slurp_raw), -s __FILE__);

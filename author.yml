@@ -39,6 +39,7 @@ pod_spelling_system:
     - ustar
     - hardlinks
     - FIFOs
+    - dualvar
 
 pod_coverage:
   skip: 0

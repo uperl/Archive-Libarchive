@@ -144,7 +144,7 @@ sub la_write_ok ($w)
   my $e = Archive::Libarchive::Entry->new;
   $e->set_pathname('archive_libarchive_archivewrite.t');
   $e->set_size(-s __FILE__);
-  $e->set_filetype(oct('0100000'));
+  $e->set_filetype('reg');
   $e->set_perm(oct('0644'));
 
   la_ok $w, 'write_header' => [$e];
