@@ -57,7 +57,7 @@ can also take a look at the main class documentation for the operation that you 
 
 - [Archive::Libarchive::Entry](https://metacpan.org/pod/Archive::Libarchive::Entry)
 
-    Class representing file meta data of a file inside an archive, or in the local filesystem.
+    Class representing file metadata of a file inside an archive, or in the local filesystem.
 
 - [Archive::Libarchive::EntryLinkResolver](https://metacpan.org/pod/Archive::Libarchive::EntryLinkResolver)
 
@@ -187,7 +187,7 @@ These examples are translated from the `libarchive` C examples, which can be fou
 ## List contents of archive stored in file
 
 The main [Archive::Libarchive](https://metacpan.org/pod/Archive::Libarchive) API is based around two basic type of classes.  The [Archive::Libarchive::Archive](https://metacpan.org/pod/Archive::Libarchive::Archive)
-class serves as a basis for all archive objects.  The [Archive::Libarchive::Entry](https://metacpan.org/pod/Archive::Libarchive::Entry) represents the header or meta data
+class serves as a basis for all archive objects.  The [Archive::Libarchive::Entry](https://metacpan.org/pod/Archive::Libarchive::Entry) represents the header or metadata
 for files stored inside an archive (or as we will see later, files on disk).
 
 The basic life cycle of an archive instance is:
@@ -209,7 +209,7 @@ The basic life cycle of an archive instance is:
 
 - Iterate over the contents
 
-    Ask alternatively for "header" or entry/file meta data (which is represented by a [Archive::Libarchive::Entry](https://metacpan.org/pod/Archive::Libarchive::Entry) instance),
+    Ask alternatively for "header" or entry/file metadata (which is represented by a [Archive::Libarchive::Entry](https://metacpan.org/pod/Archive::Libarchive::Entry) instance),
     and entry/file content.
 
 - Finish by calling "close"
@@ -426,7 +426,7 @@ Note that:
     Size, file type and pathname are all required properties here.  You can also use the
     [copy\_stat method](https://metacpan.org/pod/Archive::Libarchive::API#copy_stat) to copy all information from file to the archive entry,
     including file type.  To get even more complete information, look at the [Archive::Libarchive::DiskRead](https://metacpan.org/pod/Archive::Libarchive::DiskRead) class,
-    which provides an easy way to get more extensive file meta data―including ACLs and extended attributes on
+    which provides an easy way to get more extensive file metadata―including ACLs and extended attributes on
     some systems―than using `stat`.  It also works on platforms such as Windows where `stat` either doesn't
     exist or is broken.
 

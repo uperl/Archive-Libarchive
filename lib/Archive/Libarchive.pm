@@ -73,7 +73,7 @@ Class for writing file entries to a local filesystem.
 
 =item L<Archive::Libarchive::Entry>
 
-Class representing file meta data of a file inside an archive, or in the local filesystem.
+Class representing file metadata of a file inside an archive, or in the local filesystem.
 
 =item L<Archive::Libarchive::EntryLinkResolver>
 
@@ -241,7 +241,7 @@ These examples are translated from the C<libarchive> C examples, which can be fo
 =head2 List contents of archive stored in file
 
 The main L<Archive::Libarchive> API is based around two basic type of classes.  The L<Archive::Libarchive::Archive>
-class serves as a basis for all archive objects.  The L<Archive::Libarchive::Entry> represents the header or meta data
+class serves as a basis for all archive objects.  The L<Archive::Libarchive::Entry> represents the header or metadata
 for files stored inside an archive (or as we will see later, files on disk).
 
 The basic life cycle of an archive instance is:
@@ -265,7 +265,7 @@ L<Archive::Libarchive>.
 
 =item Iterate over the contents
 
-Ask alternatively for "header" or entry/file meta data (which is represented by a L<Archive::Libarchive::Entry> instance),
+Ask alternatively for "header" or entry/file metadata (which is represented by a L<Archive::Libarchive::Entry> instance),
 and entry/file content.
 
 =item Finish by calling "close"
@@ -369,7 +369,7 @@ L<clear method|Archive::Libarchive::API/clear> to erase it after each use.
 Size, file type and pathname are all required properties here.  You can also use the
 L<copy_stat method|Archive::Libarchive::API/copy_stat> to copy all information from file to the archive entry,
 including file type.  To get even more complete information, look at the L<Archive::Libarchive::DiskRead> class,
-which provides an easy way to get more extensive file meta data―including ACLs and extended attributes on
+which provides an easy way to get more extensive file metadata―including ACLs and extended attributes on
 some systems―than using C<stat>.  It also works on platforms such as Windows where C<stat> either doesn't
 exist or is broken.
 
