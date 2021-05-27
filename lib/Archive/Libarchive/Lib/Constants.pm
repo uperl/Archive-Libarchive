@@ -92,11 +92,6 @@ sub _enums ($class, $ffi)
     ['encrypt_metadata', 2],
     ['none', 0],
   );
-  $ffi->load_custom_type('::Enum', 'archive_read_format_encryption_t',
-    { prefix => 'ARCHIVE_READ_FORMAT_ENCRYPTION_', rev => 'dualvar', type => 'int', package => 'Archive::Libarchive' },
-    ['dont_know', -1],
-    ['unsupported', -2],
-  );
   $ffi->load_custom_type('::Enum', 'archive_readdisk_t',
     { prefix => 'ARCHIVE_READDISK_', rev => 'dualvar', type => 'int', package => 'Archive::Libarchive' },
     ['honor_nodump', 2],
@@ -189,6 +184,8 @@ use constant {
   ARCHIVE_MATCH_NEWER => 1,
   ARCHIVE_MATCH_OLDER => 2,
   ARCHIVE_OK => 0,
+  ARCHIVE_READ_FORMAT_ENCRYPTION_DONT_KNOW => -1,
+  ARCHIVE_READ_FORMAT_ENCRYPTION_UNSUPPORTED => -2,
   ARCHIVE_RETRY => -10,
   ARCHIVE_WARN => -20,
 };
