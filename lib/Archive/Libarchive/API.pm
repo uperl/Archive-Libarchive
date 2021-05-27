@@ -1987,7 +1987,9 @@ L<Archive::Libarchive::API/CONSTANTS> for the full list.
 =head2 xattr_add_entry
 
  # archive_entry_xattr_add_entry
- $e->xattr_add_entry($string, $opaque, $size_t);
+ my $int = $e->xattr_add_entry($name, $value);
+
+Adds an xattr name/value pair.
 
 =head2 xattr_clear
 
@@ -1998,6 +2000,13 @@ L<Archive::Libarchive::API/CONSTANTS> for the full list.
 
  # archive_entry_xattr_count
  my $int = $e->xattr_count;
+
+=head2 xattr_next
+
+ # archive_entry_xattr_next
+ my $int = $e->xattr_next(\$name, $value);
+
+Fetches the next xattr name/value pair.
 
 =head2 xattr_reset
 

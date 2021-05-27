@@ -48,4 +48,23 @@ subtest 'filetype' => sub {
 
 };
 
+subtest 'xattr' => sub {
+
+  my $e = Archive::Libarchive::Entry->new;
+  $e->xattr_add_entry( foo => "bar\0baz" );
+
+  my($name, $value);
+
+  is($e->xattr_reset, 1);
+
+  is $e->xattr_next(\$name, \$value), 0;
+  is($name, "foo" );
+  is($value, "bar\0baz" );
+
+  is $e->xattr_next(\$name, \$value), -20;
+  is($name,  undef);
+  is($value, undef );
+
+};
+
 done_testing;
