@@ -1,4 +1,4 @@
-FROM plicease/ciperl:5.32-bullseye
+FROM plicease/ciperl:5.34-bullseye
 LABEL maintainer="Graham Ollis <plicease@cpan.org>"
 ARG unsupported=2.8.5
 ARG oldest=no-default
