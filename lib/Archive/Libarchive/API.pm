@@ -1391,7 +1391,7 @@ Create a new disk write object.
 =head2 clear
 
  # archive_entry_clear
- my $e = $e->clear;
+ $e->clear;
 
 =head2 clone
 
