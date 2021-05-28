@@ -1470,6 +1470,8 @@ Create a new disk write object.
 
 Copies the values from a L<FFI::C::Stat> instance.
 
+Not currently implemented on Windows.
+
 =head2 copy_symlink
 
  # archive_entry_copy_symlink
@@ -1907,6 +1909,8 @@ L<Archive::Libarchive::API/CONSTANTS> for the full list.
  my $stat = $e->stat;
 
 Returns a L<FFI::C::Stat> instance filled out from the entry metadata.
+
+Not currently implemented on Windows.
 
 =head2 strmode
 
