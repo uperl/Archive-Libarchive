@@ -163,6 +163,7 @@ if($^O ne 'MSWin32')
 }
 else
 {
+  # https://github.com/uperl/Archive-Libarchive/issues/19
   require Carp;
   *copy_stat = sub { Carp::croak("Not implemented on this platform") };
   *stat      = sub { Carp::croak("Not implemented on this platform") };
