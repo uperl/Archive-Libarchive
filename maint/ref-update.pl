@@ -308,17 +308,13 @@ sub process_functions ($href, $global, $bindings)
     my $opt = $optional{$orig} ? 1 : undef;
     my $perl_name;
 
-    if($ret_type =~ /^archive/)
-    {
-      say "warning: $name returns $ret_type (check ownership)";
-    }
-
     if(defined $arg_types[0])
     {
       if($arg_types[0] eq 'archive_entry' && $name =~ /^archive_entry_(.*)$/)
       {
         $class = 'Entry';
         $name = $1;
+        $ret_type = 'void' if $name eq 'clear';
       }
 
       if($arg_types[0] eq 'archive_entry_linkresolver' && $name =~ /^archive_entry_linkresolver_(.*)$/)
@@ -381,6 +377,8 @@ sub process_functions ($href, $global, $bindings)
     }
 
     $class //= "Unbound";
+
+    say "warning: $orig returns $ret_type (check ownership)" if $ret_type =~ /^archive/;
 
     my $incomplete = (defined $ret_type && all { defined $_ } @arg_types) ? undef : 1;
     $count{$incomplete ? 'incomplete' : 'generated'}++;
