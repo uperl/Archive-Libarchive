@@ -72,13 +72,14 @@ subtest 'stat' => sub {
   require FFI::C::Stat;
 
   my $e = Archive::Libarchive::Entry->new;
-  my $cstat = FFI::C::Stat->new(__FILE__);
+  my $stat = FFI::C::Stat->new(__FILE__);
 
-  $e->copy_stat($cstat);
-  is( $e->size, $cstat->size );
+  try_ok { $e->copy_stat($stat) };
+  is( $e->size, $stat->size );
 
-  my $cstat2 = $e->stat;
-  is( $cstat2->size, $cstat->size );
+  my $stat2;
+  try_ok { $stat2 = $e->stat };
+  try_ok { is( $stat2->size, $stat->size ) };
 
 };
 

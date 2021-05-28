@@ -5,7 +5,6 @@ use warnings;
 use 5.020;
 use Archive::Libarchive::Lib;
 use FFI::Platypus::Buffer qw( buffer_to_scalar scalar_to_buffer );
-use FFI::C::Stat;
 use experimental qw( signatures );
 
 # ABSTRACT: Libarchive entry class
@@ -88,12 +87,16 @@ Fetches the next xattr name/value pair.
 
 Copies the values from a L<FFI::C::Stat> instance.
 
+Not currently implemented on Windows.
+
 =head2 stat
 
  # archive_entry_stat
  my $stat = $e->stat;
 
 Returns a L<FFI::C::Stat> instance filled out from the entry metadata.
+
+Not currently implemented on Windows.
 
 =cut
 
@@ -148,12 +151,22 @@ $ffi->attach( xattr_next => ['archive_entry', 'string*', 'opaque*', 'size_t*'] =
   return $ret;
 });
 
-$ffi->attach( copy_stat => ['archive_entry', 'stat'] );
-$ffi->attach( stat => ['archive_entry'] => opaque => sub {
-  my($xsub, $self) = @_;
-  my $ptr = $xsub->($self);
-  defined $ptr ? FFI::C::Stat->clone($ptr) : undef;
-});
+if($^O ne 'MSWin32')
+{
+  require FFI::C::Stat;
+  $ffi->attach( copy_stat => ['archive_entry', 'stat'] );
+  $ffi->attach( stat => ['archive_entry'] => opaque => sub {
+    my($xsub, $self) = @_;
+    my $ptr = $xsub->($self);
+    defined $ptr ? FFI::C::Stat->clone($ptr) : undef;
+  });
+}
+else
+{
+  require Carp;
+  *copy_stat = sub { Carp::croak("Not implemented on this platform") };
+  *stat      = sub { Carp::croak("Not implemented on this platform") };
+}
 
 # TODO: warn if doesn't return ARCHIVE_OK
 $ffi->attach( [ free => 'DESTROY' ] => ['archive_entry'] => 'void' );
