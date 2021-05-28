@@ -100,10 +100,24 @@ Not currently implemented on Windows.
 
 =head2 clone
 
- #archive_entry_clone
+ # archive_entry_clone
  my $e2 = $e->clone;
 
 Clone the entry instance.
+
+=head2 copy_mac_metadata
+
+ # archive_entry_copy_mac_metadata
+ $e->copy_mac_metadata($meta);
+
+Sets the mac metadata to C<$meta>.
+
+=head2 mac_metadata
+
+ # archive_entry_mac_metadata
+ my $meta = $e->mac_metadata;
+
+Get the mac metadata from the entry.
 
 =cut
 
@@ -177,6 +191,21 @@ else
 }
 
 $ffi->attach( clone => ['archive_entry'] => 'archive_entry' );
+
+$ffi->attach( copy_mac_metadata => ['archive_entry', 'opaque', 'size_t'] => sub {
+  my $xsub = shift;
+  my $self = shift;
+  my($ptr, $size) = scalar_to_buffer $_[0];
+  $xsub->($self, $ptr, $size);
+});
+
+
+$ffi->attach( mac_metadata => ['archive_entry', 'size_t*'] => 'opaque' => sub {
+  my($xsub, $self) = @_;
+  my $size;
+  my $ptr = $xsub->($self, \$size);
+  defined $ptr ? buffer_to_scalar($ptr, $size) : undef;
+});
 
 # TODO: warn if doesn't return ARCHIVE_OK
 $ffi->attach( [ free => 'DESTROY' ] => ['archive_entry'] => 'void' );

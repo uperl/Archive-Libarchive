@@ -1395,7 +1395,7 @@ Create a new disk write object.
 
 =head2 clone
 
- #archive_entry_clone
+ # archive_entry_clone
  my $e2 = $e->clone;
 
 Clone the entry instance.
@@ -1443,7 +1443,9 @@ Clone the entry instance.
 =head2 copy_mac_metadata
 
  # archive_entry_copy_mac_metadata
- $e->copy_mac_metadata($opaque, $size_t);
+ $e->copy_mac_metadata($meta);
+
+Sets the mac metadata to C<$meta>.
 
 =head2 copy_pathname
 
@@ -1617,7 +1619,9 @@ L<Archive::Libarchive::API/CONSTANTS> for the full list.
 =head2 mac_metadata
 
  # archive_entry_mac_metadata
- my $opaque = $e->mac_metadata(\$size_t);
+ my $meta = $e->mac_metadata;
+
+Get the mac metadata from the entry.
 
 =head2 mode
 
