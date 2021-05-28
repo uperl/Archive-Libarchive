@@ -18,7 +18,13 @@ my $ffi = Archive::Libarchive::Lib->ffi;
 
 =head1 DESCRIPTION
 
+This class represents an entry, which is file metadata for a file stored in an
+archive or on the local file system.
+
 =head1 CONSTRUCTOR
+
+This is a subset of total list of methods available to all archive classes.
+For the full list see L<Archive::Libarchive::API/Archive::Libarchive::Entry>.
 
 =head2 new
 
@@ -33,7 +39,7 @@ $ffi->mangler(sub ($name) { "archive_entry_$name"  });
 $ffi->attach( new => [] => 'opaque' => sub {
   my($xsub, $class) = @_;
   my $ptr = $xsub->();
-  bless \$ptr, $class;
+  bless { ptr => $ptr }, $class;
 });
 
 =head1 METHODS
@@ -209,8 +215,14 @@ $ffi->attach( mac_metadata => ['archive_entry', 'size_t*'] => 'opaque' => sub {
   defined $ptr ? buffer_to_scalar($ptr, $size) : undef;
 });
 
-# TODO: warn if doesn't return ARCHIVE_OK
-$ffi->attach( [ free => 'DESTROY' ] => ['archive_entry'] => 'void' );
+$ffi->attach( [ free => 'DESTROY' ] => ['archive_entry'] => sub {
+  my($xsub, $self) = @_;
+  return if $self->{owner}              # owned by another object
+    || ${^GLOBAL_PHASE} eq 'DESTRUCT';  # during global shutdown the xsub might go away
+  $xsub->($self);
+});
+
+#$ffi->attach( [ free => 'DESTROY' ] => ['archive_entry'] => 'void' );
 
 $ffi->ignore_not_found(1);
 
