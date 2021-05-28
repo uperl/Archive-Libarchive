@@ -102,4 +102,10 @@ subtest 'clone' => sub {
 
 };
 
+subtest 'mac metadata' => sub {
+  my $e = Archive::Libarchive::Entry->new;
+  $e->copy_mac_metadata("foo\0bar");
+  is($e->mac_metadata, "foo\0bar");
+};
+
 done_testing;
