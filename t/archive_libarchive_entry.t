@@ -69,6 +69,10 @@ subtest 'xattr' => sub {
 
 subtest 'stat' => sub {
 
+  # https://github.com/uperl/Archive-Libarchive/issues/19
+  skip_all 'not implemented on windows'
+    if $^O eq 'MSWin32';
+
   require FFI::C::Stat;
 
   my $e = Archive::Libarchive::Entry->new;
