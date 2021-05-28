@@ -151,6 +151,18 @@ my @const;
   generate(\%functions, \%bindings);
 }
 
+sub type_fixup ($type)
+{
+  if($type =~ /^(archive|archive_entry|archive_entry_linkresolver)(\*+)$/)
+  {
+    return $2 eq '*' ? $1 : undef;
+  }
+  else
+  {
+    return $type;
+  }
+}
+
 sub process_functions ($href, $global, $bindings)
 {
   my %id;
@@ -198,7 +210,7 @@ sub process_functions ($href, $global, $bindings)
         }
         elsif($target_type =~ /^(archive|archive_entry|archive_entry_linkresolver)$/)
         {
-          return $type->{platypus_type} = $target_type;
+          return $type->{platypus_type} = "$target_type*";
         }
         elsif($target_type =~ /^(int|string|size_t|ssize_t|ulong|uint|sint64)$/)
         {
@@ -300,8 +312,8 @@ sub process_functions ($href, $global, $bindings)
   foreach my $name (sort keys %functions)
   {
     my $f = $functions{$name};
-    my $ret_type = $get_type->($name, $f->{returns});
-    my @arg_types = map { $get_type->($name, $_->{type} ) } $f->{inner}->@*;
+    my $ret_type = type_fixup($get_type->($name, $f->{returns}));
+    my @arg_types = map { type_fixup($get_type->($name, $_->{type} )) } $f->{inner}->@*;
 
     my $class;
     my $orig = $name;
