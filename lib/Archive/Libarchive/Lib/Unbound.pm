@@ -27,7 +27,7 @@ use Archive::Libarchive::Lib;
 
 my $ffi = Archive::Libarchive::Lib->ffi;
 
-$ffi->attach( archive_entry_linkify => ['archive_entry_linkresolver', 'archive_entry', 'archive_entry'] );
+#$ffi->attach( archive_entry_linkify => ['archive_entry_linkresolver', undef, undef] );
 $ffi->attach( archive_entry_partial_links => ['archive_entry_linkresolver', 'uint*'] => 'archive_entry' );
 
 1;
