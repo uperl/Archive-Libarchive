@@ -42,7 +42,6 @@ $ffi->attach( birthtime => ['archive_entry'] => 'time_t' );
 $ffi->attach( birthtime_is_set => ['archive_entry'] => 'int' );
 $ffi->attach( birthtime_nsec => ['archive_entry'] => 'long' );
 $ffi->attach( clear => ['archive_entry'] );
-$ffi->attach( clone => ['archive_entry'] => 'archive_entry' );
 $ffi->attach( copy_fflags_text => ['archive_entry', 'string'] => 'string' );
 $ffi->attach( copy_fflags_text_w => ['archive_entry', 'wstring'] => 'wstring' );
 $ffi->attach( copy_gname => ['archive_entry', 'string'] );

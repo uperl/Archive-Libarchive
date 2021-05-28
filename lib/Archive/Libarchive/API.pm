@@ -1395,8 +1395,10 @@ Create a new disk write object.
 
 =head2 clone
 
- # archive_entry_clone
- my $e = $e->clone;
+ #archive_entry_clone
+ my $e2 = $e->clone;
+
+Clone the entry instance.
 
 =head2 copy_fflags_text
 
