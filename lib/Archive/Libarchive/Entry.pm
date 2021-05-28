@@ -98,6 +98,13 @@ Returns a L<FFI::C::Stat> instance filled out from the entry metadata.
 
 Not currently implemented on Windows.
 
+=head2 clone
+
+ #archive_entry_clone
+ my $e2 = $e->clone;
+
+Clone the entry instance.
+
 =cut
 
 # TODO: these constants can't currently be extracted by
@@ -168,6 +175,8 @@ else
   *copy_stat = sub { Carp::croak("Not implemented on this platform") };
   *stat      = sub { Carp::croak("Not implemented on this platform") };
 }
+
+$ffi->attach( clone => ['archive_entry'] => 'archive_entry' );
 
 # TODO: warn if doesn't return ARCHIVE_OK
 $ffi->attach( [ free => 'DESTROY' ] => ['archive_entry'] => 'void' );

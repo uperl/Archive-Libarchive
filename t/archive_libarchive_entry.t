@@ -87,4 +87,19 @@ subtest 'stat' => sub {
 
 };
 
+subtest 'clone' => sub {
+
+  my $e = Archive::Libarchive::Entry->new;
+  $e->set_pathname('foo/bar.txt');
+
+  my $e2 = $e->clone;
+
+  is($e2->pathname, 'foo/bar.txt');
+
+  undef $e;
+
+  is($e2->pathname, 'foo/bar.txt');
+
+};
+
 done_testing;
