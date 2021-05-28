@@ -47,7 +47,7 @@ $ffi->mangler(sub ($name) { "archive_$name" });
 $ffi->attach( [ entry_new2 => 'entry' ] => ['archive'] => 'opaque' => sub {
   my($xsub, $self) = @_;
   my $ptr = $xsub->($self);
-  bless \$ptr, 'Archive::Libarchive::Entry';
+  bless { ptr => $ptr }, 'Archive::Libarchive::Entry';
 });
 
 =head2 errno

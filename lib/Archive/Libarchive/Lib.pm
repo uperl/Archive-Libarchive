@@ -54,8 +54,8 @@ sub ffi
     $ffi->load_custom_type( '::PtrObject', 'archive_match'      => 'Archive::Libarchive::Match' );
     $ffi->load_custom_type( '::PtrObject', 'archive_read_disk'  => 'Archive::Libarchive::DiskRead'     );
     $ffi->load_custom_type( '::PtrObject', 'archive_write_disk' => 'Archive::Libarchive::DiskWrite'    );
+    $ffi->load_custom_type( '::PtrObject', 'archive_entry'      => 'Archive::Libarchive::Entry'        );
 
-    $ffi->type( 'object(Archive::Libarchive::Entry)' => 'archive_entry' );
     $ffi->type( 'object(Archive::Libarchive::EntryLinkResolver)' => 'archive_entry_linkresolver' );
 
     $ffi->attach_cast( '_ptr_to_str', opaque => 'string' );
