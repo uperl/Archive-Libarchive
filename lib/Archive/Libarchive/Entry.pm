@@ -14,6 +14,8 @@ my $ffi = Archive::Libarchive::Lib->ffi;
 
 =head1 SYNOPSIS
 
+# EXAMPLE: examples/synopsis/entry.pl
+
 =head1 DESCRIPTION
 
 =head1 CONSTRUCTOR
