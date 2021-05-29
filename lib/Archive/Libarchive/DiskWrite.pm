@@ -25,7 +25,7 @@ This class represents an instance for writing from an archive to disk.
 =head2 new
 
  # archive_write_disk_new
- my $r = Archive::Libarchive::DiskWrite->new;
+ my $dw = Archive::Libarchive::DiskWrite->new;
 
 Create a new disk write object.
 
