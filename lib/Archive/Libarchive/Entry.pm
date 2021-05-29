@@ -44,6 +44,9 @@ $ffi->attach( new => [] => 'opaque' => sub {
 
 =head1 METHODS
 
+This is a subset of total list of methods available to all archive classes.
+For the full list see L<Archive::Libarchive::API/Archive::Libarchive::Entry>.
+
 =head2 filetype
 
  # archive_entry_filetype
