@@ -14,13 +14,17 @@ my $ffi = Archive::Libarchive::Lib->ffi;
 
 =head1 SYNOPSIS
 
+ # TODO
+
 =head1 DESCRIPTION
+
+This class represents an instance for writing from an archive to disk.
 
 =head1 CONSTRUCTOR
 
 =head2 new
 
- my $r = Archive::Libarchive::DiskRead->new;
+ my $dr = Archive::Libarchive::DiskRead->new;
 
 Create a new disk read object.
 
@@ -35,6 +39,13 @@ $ffi->attach( [ disk_new => 'new' ] => [] => 'opaque' => sub {
 });
 
 require Archive::Libarchive::Lib::DiskRead unless $Archive::Libarchive::no_gen;
+
+=head1 METHODS
+
+This is a subset of total list of methods available to all archive classes.
+For the full list see L<Archive::Libarchive::API/Archive::Libarchive::ArchiveWrite>.
+
+=cut
 
 1;
 
