@@ -29,7 +29,7 @@ RUN  apt-get update                            \
 
 RUN mkdir -p /tmp/build                \
   && cd /tmp/build                     \
-  && curl -vvL https://www.libarchive.org/downloads/libarchive-${oldest}.tar.gz | tar zxf - \
+  && curl -L https://dist.wdlabs.com/libarchive/libarchive-${oldest}.tar.gz | tar zxf - \
   && cd libarchive-${oldest}           \
   && ./configure                       \
     --prefix=/opt/libarchive/${oldest} \
@@ -45,7 +45,7 @@ RUN mkdir -p /tmp/build                \
 
 RUN mkdir -p /tmp/build                \
   && cd /tmp/build                     \
-  && curl -vvL https://www.libarchive.org/downloads/libarchive-${unsupported}.tar.gz | tar zxf - \
+  && curl -L https://dist.wdlabs.com/libarchive/libarchive-${unsupported}.tar.gz | tar zxf - \
   && cd libarchive-${unsupported}           \
   && chmod +x ./configure                   \
   && ./configure                            \
@@ -62,7 +62,7 @@ RUN mkdir -p /tmp/build                \
 
 RUN mkdir -p /tmp/build                \
   && cd /tmp/build                     \
-  && curl -vvL https://www.libarchive.org/downloads/libarchive-${latest}.tar.gz | tar zxf - \
+  && curl -L https://dist.wdlabs.com/libarchive/libarchive-${latest}.tar.gz | tar zxf - \
   && cd libarchive-${latest}           \
   && ./configure                       \
     --prefix=/opt/libarchive/${latest} \

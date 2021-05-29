@@ -8,6 +8,9 @@ on:
       - '*'
   pull_request:
 
+env:
+  ARCHIVE_LIBARCHIVE_REF_BUILD_FLAGS: "--cache-from plicease/libarchive-ref:0.00"
+
 jobs:
   perl:
 
