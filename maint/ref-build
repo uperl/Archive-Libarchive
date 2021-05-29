@@ -9,4 +9,6 @@ docker build -t plicease/libarchive-ref:$REF_TAG \
   --build-arg latest=$REF_LATEST                 \
   --build-arg oldest=$REF_OLDEST                 \
   --build-arg unsupported=$REF_UNSUPPORTED       \
+  --build-arg BUILDKIT_INLINE_CACHE=1            \
+  --cache-from plicease/libarchive-ref           \
   .
