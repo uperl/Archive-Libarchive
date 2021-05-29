@@ -19,14 +19,6 @@ use experimental qw( signatures );
 There is nothing to see here.  Please see the main documentation page at
 L<Archive::Libarchive>.
 
-=head1 SEE ALSO
-
-=over 4
-
-=item L<Archive::Libarchive>
-
-=back
-
 =cut
 
 sub lib

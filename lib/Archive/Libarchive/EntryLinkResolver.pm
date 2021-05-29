@@ -13,7 +13,12 @@ my $ffi = Archive::Libarchive::Lib->ffi;
 
 =head1 SYNOPSIS
 
+ # TODO
+
 =head1 DESCRIPTION
+
+This class implements the C<libarchive> Entry Link Resolver API.  The implementation is
+incomplete.
 
 =head1 CONSTRUCTOR
 
@@ -37,6 +42,13 @@ $ffi->attach( new => [] => 'opaque' => sub {
 $ffi->attach( [ free => 'DESTROY' ] => ['archive_entry_linkresolver'] => 'void' );
 
 require Archive::Libarchive::Lib::EntryLinkResolver unless $Archive::Libarchive::no_gen;
+
+=head1 METHODS
+
+This is a subset of total list of methods available to all archive classes.
+For the full list see L<Archive::Libarchive::API/Archive::Libarchive::EntryLinkResolver>.
+
+=cut
 
 1;
 

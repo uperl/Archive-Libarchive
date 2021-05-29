@@ -14,7 +14,12 @@ my $ffi = Archive::Libarchive::Lib->ffi;
 
 =head1 SYNOPSIS
 
+ # TODO
+
 =head1 DESCRIPTION
+
+This class implements the C<libarchive> Match API.  The implementation is
+incomplete.
 
 =head1 CONSTRUCTOR
 
@@ -36,6 +41,13 @@ $ffi->attach( new => [] => 'opaque' => sub {
 
 # TODO: warn if doesn't return ARCHIVE_OK
 $ffi->attach( [ free => 'DESTROY' ] => ['archive_match'] => 'void' );
+
+=head1 METHODS
+
+This is a subset of total list of methods available to all archive classes.
+For the full list see L<Archive::Libarchive::API/Archive::Libarchive::Match>.
+
+=cut
 
 require Archive::Libarchive::Lib::Match unless $Archive::Libarchive::no_gen;
 
