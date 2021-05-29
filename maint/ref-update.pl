@@ -356,7 +356,7 @@ sub process_functions ($href, $global, $bindings)
           $arg_types[0] = 'archive_read';
           $class = 'ArchiveRead';
           $name = $1;
-          $perl_name = "read_$1" if $name =~ /^(data|data_skip)$/;
+          $perl_name = "read_$1" if $name =~ /^(data|data_skip|data_block|data_into_fd)$/;
         }
 
         elsif($name =~ /^archive_write_(.*)$/)
@@ -364,7 +364,7 @@ sub process_functions ($href, $global, $bindings)
           $arg_types[0] = 'archive_write';
           $class = 'ArchiveWrite';
           $name = $1;
-          $perl_name = "write_$1" if $name =~ /^(data|header)$/;
+          $perl_name = "write_$1" if $name =~ /^(data|header|data_block)$/;
         }
 
         elsif($name =~ /^archive_match_(.*)$/)

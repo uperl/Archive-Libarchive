@@ -289,11 +289,6 @@ For the full list see L<Archive::Libarchive::API/CONSTANTS>.
  # archive_read_close
  my $int = $r->close;
 
-=head2 data_into_fd
-
- # archive_read_data_into_fd
- my $int1 = $r->data_into_fd($int2);
-
 =head2 extract
 
  # archive_read_extract
@@ -465,6 +460,11 @@ Read in data from the content section of the archive entry.  The output is writt
 C<$buffer>.  Up to C<$size> bytes will be read.  This will return the number of bytes
 read on success, zero (C<0>) on EOF and a L<normal status code|Archive::Libarchive/CONSTANTS>
 on error.
+
+=head2 read_data_into_fd
+
+ # archive_read_data_into_fd
+ my $int1 = $r->read_data_into_fd($int2);
 
 =head2 read_data_skip
 
@@ -865,11 +865,6 @@ Write the entry content data to the archive.  This takes a reference to the buff
 Returns the number of bytes written on success, and a L<normal status code|Archive::Libarchive/CONSTANTS>
 on error.
 
-=head2 data_block
-
- # archive_write_data_block
- my $ssize_t = $w->data_block($opaque, $size_t, $sint64);
-
 =head2 fail
 
  # archive_write_fail
@@ -1136,6 +1131,11 @@ So for a tar file this would be either C<'tar'> or C<ARCHIVE_FORMAT_TAR>.
 
  # archive_write_set_skip_file
  my $int = $w->set_skip_file($sint64_1, $sint64_2);
+
+=head2 write_data_block
+
+ # archive_write_data_block
+ my $ssize_t = $w->write_data_block($opaque, $size_t, $sint64);
 
 =head2 write_header
 
