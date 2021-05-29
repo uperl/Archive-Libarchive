@@ -43,7 +43,7 @@ $ffi->attach( add_filter_program => ['archive_write', 'string'] => 'int' );
 $ffi->attach( add_filter_uuencode => ['archive_write'] => 'int' );
 $ffi->attach( add_filter_xz => ['archive_write'] => 'int' );
 $ffi->attach( close => ['archive_write'] => 'int' );
-$ffi->attach( data_block => ['archive_write', 'opaque', 'size_t', 'sint64'] => 'ssize_t' );
+$ffi->attach( [data_block => 'write_data_block'] => ['archive_write', 'opaque', 'size_t', 'sint64'] => 'ssize_t' );
 $ffi->attach( fail => ['archive_write'] => 'int' );
 $ffi->attach( finish_entry => ['archive_write'] => 'int' );
 $ffi->attach( get_bytes_in_last_block => ['archive_write'] => 'int' );
