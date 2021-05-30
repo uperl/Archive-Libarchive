@@ -281,6 +281,11 @@ $ffi->attach( [data => 'read_data'] => ['archive_read', 'opaque', 'size_t'] => '
   return $rsize;
 });
 
+# TODO:
+$ffi->attach( [data_block   => '_read_data_block'  ] => ['archive_read', 'opaque*', 'size_t*', 'sint64*'] => 'int' );
+$ffi->attach( [data_into_fd => '_read_data_into_fd'] => ['archive_read', 'int'] => 'int' );
+
+
 =head2 append_filter
 
  # archive_read_append_filter

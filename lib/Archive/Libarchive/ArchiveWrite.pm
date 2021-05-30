@@ -223,13 +223,14 @@ on error.
 
 =cut
 
-# TODO: data_block?
-
 $ffi->attach( [ data => 'write_data' ] => ['archive_write', 'opaque', 'size_t'] => 'ssize_t' => sub {
   my $xsub = shift;
   my $self = shift;
   $xsub->($self, scalar_to_buffer ${$_[0]});
 });
+
+# TODO
+$ffi->attach( [data_block => '_write_data_block'] => ['archive_write', 'opaque', 'size_t', 'sint64'] => 'ssize_t' );
 
 =head2 add_filter
 

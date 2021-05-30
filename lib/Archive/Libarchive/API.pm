@@ -461,11 +461,6 @@ C<$buffer>.  Up to C<$size> bytes will be read.  This will return the number of 
 read on success, zero (C<0>) on EOF and a L<normal status code|Archive::Libarchive/CONSTANTS>
 on error.
 
-=head2 read_data_into_fd
-
- # archive_read_data_into_fd
- my $int1 = $r->read_data_into_fd($int2);
-
 =head2 read_data_skip
 
  # archive_read_data_skip
@@ -1131,11 +1126,6 @@ So for a tar file this would be either C<'tar'> or C<ARCHIVE_FORMAT_TAR>.
 
  # archive_write_set_skip_file
  my $int = $w->set_skip_file($sint64_1, $sint64_2);
-
-=head2 write_data_block
-
- # archive_write_data_block
- my $ssize_t = $w->write_data_block($opaque, $size_t, $sint64);
 
 =head2 write_header
 
