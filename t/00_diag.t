@@ -24,10 +24,8 @@ $modules{$_} = $_ for qw(
   Ref::Util
   Sub::Identify
   Term::Table
-  Test2::API
-  Test2::Tools::Basic
-  Test2::Tools::Compare
   Test2::V0
+  Test::Archive::Libarchive
   Test::Script
 );
 
