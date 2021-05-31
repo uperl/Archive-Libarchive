@@ -300,6 +300,20 @@ subtest 'open_filenames' => sub {
   la_eof $r, next_header => [$e];
 };
 
+subtest 'add_passphrase' => sub {
+
+  my $r = Archive::Libarchive::ArchiveRead->new;
+  my $e = Archive::Libarchive::Entry->new;
+
+  la_ok $r, 'support_filter_all';
+  la_ok $r, 'support_format_all';
+  la_ok $r, add_passphrase => ['password'];
+  la_ok $r, open_filename => ['corpus/archive.zip',512];
+
+  la_archive_ok($r);
+
+};
+
 sub la_archive_ok ($r)
 {
   my $e = Archive::Libarchive::Entry->new;
