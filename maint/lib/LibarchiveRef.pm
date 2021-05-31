@@ -1,4 +1,5 @@
-package LibarchiveRef;
+package
+  LibarchiveRef;
 
 use strict;
 use warnings;

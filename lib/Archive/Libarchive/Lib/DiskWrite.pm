@@ -21,7 +21,8 @@ This is a private class for L<Archive::Libarchive> see the main documentation fo
 
 =cut
 
-package Archive::Libarchive::DiskWrite;
+package
+  Archive::Libarchive::DiskWrite;
 
 use Archive::Libarchive::Lib;
 

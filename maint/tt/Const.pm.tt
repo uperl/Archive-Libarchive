@@ -34,7 +34,8 @@ sub _enums ($class, $ffi)
 [% END -%]
 }
 
-package Archive::Libarchive;
+package
+  Archive::Libarchive;
 
 use constant {
 [% FOREACH constant IN constants -%]
