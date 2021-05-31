@@ -314,6 +314,23 @@ subtest 'add_passphrase' => sub {
 
 };
 
+subtest 'set_passphrase_callback' => sub {
+
+  my $r = Archive::Libarchive::ArchiveRead->new;
+  my $e = Archive::Libarchive::Entry->new;
+
+  la_ok $r, 'support_filter_all';
+  la_ok $r, 'support_format_all';
+  la_ok $r, set_passphrase_callback => [sub {
+    note 'called passphrase callback';
+    return 'password';
+  }];
+  la_ok $r, open_filename => ['corpus/archive.zip',512];
+
+  la_archive_ok($r);
+
+};
+
 sub la_archive_ok ($r)
 {
   my $e = Archive::Libarchive::Entry->new;
@@ -322,12 +339,14 @@ sub la_archive_ok ($r)
 
   la_ok $r, 'next_header', [$e];
   is($e->pathname, 'archive/bar.txt', '$entry->pathname');
-  my $content = la_read_data_ok $r;
+  my $content = la_read_data_ok $r
+    or diag $r->error_string;
   is $content, "there\n", 'content matches';
 
   la_ok $r, 'next_header', [$e];
   is($e->pathname, 'archive/foo.txt', '$entry->pathname');
-  $content = la_read_data_ok $r;
+  $content = la_read_data_ok $r
+    or diag $r->error_string;
   is $content, "hello\n", 'content matches';
 
   la_ok $r, 'close';

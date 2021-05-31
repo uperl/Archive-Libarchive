@@ -48,7 +48,6 @@ $ffi->attach( set_filter_option => ['archive_read', 'string', 'string', 'string'
 $ffi->attach( set_format_option => ['archive_read', 'string', 'string', 'string'] => 'int' );
 $ffi->attach( set_option => ['archive_read', 'string', 'string', 'string'] => 'int' );
 $ffi->attach( set_options => ['archive_read', 'string'] => 'int' );
-#$ffi->attach( set_passphrase_callback => ['archive_read', 'opaque', undef] => 'int' );
 #$ffi->attach( set_switch_callback => ['archive_read', undef] => 'int' );
 $ffi->attach( support_compression_all => ['archive_read'] => 'int' );
 $ffi->attach( support_compression_bzip2 => ['archive_read'] => 'int' );

@@ -498,6 +498,17 @@ So for a tar file this would be either C<'tar'> or C<ARCHIVE_FORMAT_TAR>.
  # archive_read_set_options
  my $int = $r->set_options($string);
 
+=head2 set_passphrase_callback
+
+ # archive_read_set_passphrase_callback
+ my $int = $r->set_passphrase_callback(sub ($r) {
+   ...
+   return $passphrase;
+ });
+
+Set a callback that will be called when a passphrase is required, for example with a .zip
+file with encrypted entries.
+
 =head2 support_compression_all
 
  # archive_read_support_compression_all
