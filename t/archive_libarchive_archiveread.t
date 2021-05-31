@@ -269,6 +269,37 @@ subtest '$e->digest' => sub {
   la_ok $r, 'close';
 };
 
+subtest 'open_filenames' => sub {
+
+  my $r = Archive::Libarchive::ArchiveRead->new;
+  my $e = Archive::Libarchive::Entry->new;
+
+  la_ok $r, 'support_filter_all';
+  la_ok $r, 'support_format_all';
+  la_ok $r, open_filenames => [["corpus/test_read_splitted_rar_aa",
+                                "corpus/test_read_splitted_rar_ab",
+                                "corpus/test_read_splitted_rar_ac",
+                                "corpus/test_read_splitted_rar_ad"],
+                               512];
+
+  la_ok $r, next_header => [$e];
+  is($e->pathname, "test.txt");
+
+  la_ok $r, next_header => [$e];
+  is($e->pathname, "testlink");
+
+  la_ok $r, next_header => [$e];
+  is($e->pathname, "testdir/test.txt");
+
+  la_ok $r, next_header => [$e];
+  is($e->pathname, "testdir");
+
+  la_ok $r, next_header => [$e];
+  is($e->pathname, "testemptydir");
+
+  la_eof $r, next_header => [$e];
+};
+
 sub la_archive_ok ($r)
 {
   my $e = Archive::Libarchive::Entry->new;
@@ -284,6 +315,8 @@ sub la_archive_ok ($r)
   is($e->pathname, 'archive/foo.txt', '$entry->pathname');
   $content = la_read_data_ok $r;
   is $content, "hello\n", 'content matches';
+
+  la_ok $r, 'close';
 }
 
 done_testing;

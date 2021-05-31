@@ -41,6 +41,7 @@ pod_spelling_system:
     - FIFOs
     - dualvar
     - xattr
+    - RAR
 
 pod_coverage:
   skip: 0

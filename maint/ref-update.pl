@@ -153,7 +153,7 @@ my @const;
 
 sub type_fixup ($type)
 {
-  if($type =~ /^(archive|archive_entry|archive_entry_linkresolver)(\*+)$/)
+  if(defined $type && $type =~ /^(archive|archive_entry|archive_entry_linkresolver)(\*+)$/)
   {
     return $2 eq '*' ? $1 : undef;
   }

@@ -435,7 +435,10 @@ This takes either a L<FFI::C::File>, or an opaque pointer to a libc file pointer
 =head2 open_filenames
 
  # archive_read_open_filenames
- my $int = $r->open_filenames(\$string, $size_t);
+ my $int = $r->open_filenames(\@filenames, $size_t);
+
+Open a multi-file archive (typically for RAR format).   The C<$size_t> argument is
+the block size.
 
 =head2 open_memory
 

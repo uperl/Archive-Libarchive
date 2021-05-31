@@ -5,7 +5,7 @@ use warnings;
 use 5.020;
 use Archive::Libarchive::Lib;
 use FFI::Platypus::Buffer qw( scalar_to_buffer scalar_to_pointer );
-use Ref::Util qw( is_plain_scalarref is_plain_coderef is_blessed_ref );
+use Ref::Util qw( is_plain_scalarref is_plain_coderef is_blessed_ref is_plain_arrayref );
 use Carp ();
 use PeekPoke::FFI ();
 use experimental qw( signatures );
@@ -189,20 +189,6 @@ $ffi->attach( [ open1 => 'open' ] => [ 'archive_read'] => 'int' => sub {
   $xsub->($self);
 });
 
-=head2 next_header
-
- # archive_read_next_header
- my $code = $r->next_header($e);
-
-Returns the next L<Archive::Libarchive::Entry> object.
-
-=cut
-
-$ffi->attach( [ next_header2 => 'next_header' ] => ['archive_read','archive_entry'] => 'int' => sub {
-  my($xsub, $self, $entry) = @_;
-  $xsub->($self, $entry);
-});
-
 =head2 open_memory
 
  # archive_write_open_memory
@@ -254,6 +240,37 @@ sub open_perlfile ($self, $fh)
     },
   );
 }
+
+=head2 open_filenames
+
+ # archive_read_open_filenames
+ my $int = $r->open_filenames(\@filenames, $size_t);
+
+Open a multi-file archive (typically for RAR format).   The C<$size_t> argument is
+the block size.
+
+=cut
+
+$ffi->attach( open_filenames => ['archive_read', 'string[]', 'size_t'] => 'int' => sub {
+  my($xsub, $self, $filenames, $size) = @_;
+  Carp::croak("Filenames must be provided as an array reference")
+    unless defined $filenames && is_plain_arrayref $filenames;
+  $xsub->($self, defined $filenames->[-1] ? [@$filenames, undef] : $filenames, $size);
+});
+
+=head2 next_header
+
+ # archive_read_next_header
+ my $code = $r->next_header($e);
+
+Returns the next L<Archive::Libarchive::Entry> object.
+
+=cut
+
+$ffi->attach( [ next_header2 => 'next_header' ] => ['archive_read','archive_entry'] => 'int' => sub {
+  my($xsub, $self, $entry) = @_;
+  $xsub->($self, $entry);
+});
 
 =head2 read_data
 

@@ -44,7 +44,6 @@ $ffi->attach( open_fd => ['archive_read', 'int', 'size_t'] => 'int' );
 $ffi->attach( open_file => ['archive_read', 'string', 'size_t'] => 'int' );
 $ffi->attach( open_filename => ['archive_read', 'string', 'size_t'] => 'int' );
 $ffi->attach( open_filename_w => ['archive_read', 'wstring', 'size_t'] => 'int' );
-$ffi->attach( open_filenames => ['archive_read', 'string*', 'size_t'] => 'int' );
 $ffi->attach( set_filter_option => ['archive_read', 'string', 'string', 'string'] => 'int' );
 $ffi->attach( set_format_option => ['archive_read', 'string', 'string', 'string'] => 'int' );
 $ffi->attach( set_option => ['archive_read', 'string', 'string', 'string'] => 'int' );
