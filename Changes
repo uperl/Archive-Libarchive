@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}},
 
 {{$NEXT}}
+
+0.02      2021-05-31 05:50:17 -0600
   - Add support for ArchiveRead#open_filenames (gh#30)
 
 0.01      2021-05-30 18:37:47 -0600
