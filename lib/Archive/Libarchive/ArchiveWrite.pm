@@ -7,6 +7,7 @@ use Archive::Libarchive::Lib;
 use Carp ();
 use Ref::Util qw( is_plain_coderef is_blessed_ref );
 use FFI::Platypus::Buffer qw( window scalar_to_buffer );
+use FFI::Platypus::Memory qw( strdup free );
 use experimental qw( signatures );
 use parent qw( Archive::Libarchive::Archive );
 
@@ -44,6 +45,7 @@ $ffi->attach( new => [] => 'opaque' => sub {
 
 $ffi->attach( [ free => 'DESTROY' ] => ['archive_write'] => 'int' => sub {
   my($xsub, $self) = @_;
+  free delete $self->{passphrase} if defined $self->{passphrase};
   return if $self->{cb}                  # inside a callback, we don't own the archive pointer
     || ${^GLOBAL_PHASE} eq 'DESTRUCT';   # during global shutdown, the xsub might go away
   my $ret = $xsub->($self);
@@ -256,6 +258,39 @@ So for a tar file this would be either C<'tar'> or C<ARCHIVE_FORMAT_TAR>.
 
 $ffi->attach( add_filter => ['archive_write', 'archive_filter_t'] => 'int' );
 $ffi->attach( set_format => ['archive_write', 'archive_format_t'] => 'int' );
+
+=head2 set_passphrase_callback
+
+ # archive_write_set_passphrase_callback
+ my $int = $w->set_passphrase_callback(sub ($w) {
+   ...
+   return $passphrase;
+ });
+
+Set a callback that will be called when a passphrase is required, for example with a .zip
+file with encrypted entries.
+
+=cut
+
+$ffi->attach( set_passphrase_callback => ['archive_write', 'opaque', 'archive_passphrase_callback'] => 'int' => sub {
+  my($xsub, $self, $sub) = @_;
+
+  my $closure = FFI::Platypus->closure(sub ($w, $) {
+    $w = bless { ptr => $w, cb => 1 }, __PACKAGE__;
+    my $passphrase = $sub->($w);
+    $passphrase = '' unless defined $passphrase;
+    my $ptr = strdup $passphrase;
+    free delete $self->{passphrase} if defined $self->{passphrase};
+    return $self->{passphrase} = $ptr;
+  });
+
+  push @{ $self->{keep} }, $closure;
+
+  $xsub->($self, undef, $closure);
+
+});
+
+
 
 require Archive::Libarchive::Lib::ArchiveWrite unless $Archive::Libarchive::no_gen;
 

@@ -161,6 +161,35 @@ subtest 'encrypted zip' => sub {
 
 };
 
+subtest 'encrypted callback' => sub {
+
+  skip_all 'Test requires Archive::Zip'
+    unless eval { require Archive::Zip; 1 };
+
+  my $image;
+
+  my $w = Archive::Libarchive::ArchiveWrite->new;
+  la_ok $w, 'set_format_zip';
+  la_ok $w, 'add_filter_none';
+
+  my $ret = $w->set_options('zip:encryption=zipcrypt');
+  SKIP: {
+    skip "libarchive build does not support encryption", 6
+      unless $ret == 0;
+
+    is $ret, 0, 'set_options => ARCHIVE_OK';
+    la_ok $w, 'zip_set_compression_store';
+    la_ok $w, set_passphrase_callback => [sub {
+      note "called passphrase callback";
+      return 'password';
+    }];
+    la_ok $w, open_memory => [\$image];
+    la_write_ok($w);
+    la_readback_encrypted_zip_ok($image);
+  };
+
+};
+
 subtest 'filter / format' => sub {
 
   subtest 'string' => sub {

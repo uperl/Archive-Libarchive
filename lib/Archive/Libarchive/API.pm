@@ -1136,6 +1136,17 @@ So for a tar file this would be either C<'tar'> or C<ARCHIVE_FORMAT_TAR>.
  # archive_write_set_passphrase
  my $int = $w->set_passphrase($string);
 
+=head2 set_passphrase_callback
+
+ # archive_write_set_passphrase_callback
+ my $int = $w->set_passphrase_callback(sub ($w) {
+   ...
+   return $passphrase;
+ });
+
+Set a callback that will be called when a passphrase is required, for example with a .zip
+file with encrypted entries.
+
 =head2 set_skip_file
 
  # archive_write_set_skip_file
