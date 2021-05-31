@@ -64,7 +64,7 @@ subtest 'open / write' => sub {
     }];
 
     la_write_ok($w);
-    la_readback_ok($image);
+    la_readback_tar_ok($image);
 
   };
 
@@ -88,7 +88,7 @@ subtest 'open_FILE' => sub {
 
     $fp->fclose;
 
-    la_readback_ok($path->slurp_raw);
+    la_readback_tar_ok($path->slurp_raw);
   };
 
   subtest 'opaque pointer' => sub {
@@ -106,7 +106,7 @@ subtest 'open_FILE' => sub {
 
     $ffi->function( fclose => ['opaque'] => 'int' )->call($fp);
 
-    la_readback_ok($path->slurp_raw);
+    la_readback_tar_ok($path->slurp_raw);
   };
 
 };
@@ -119,7 +119,7 @@ subtest 'open_memory' => sub {
   la_ok $w, 'open_memory' => [\$image];
 
   la_write_ok($w);
-  la_readback_ok($image);
+  la_readback_tar_ok($image);
 };
 
 subtest 'open_perlfile' => sub {
@@ -132,7 +132,33 @@ subtest 'open_perlfile' => sub {
   la_ok $w, 'open_perlfile' => [$fh];
 
   la_write_ok($w);
-  la_readback_ok($path->slurp_raw);
+  la_readback_tar_ok($path->slurp_raw);
+};
+
+subtest 'encrypted zip' => sub {
+
+  skip_all 'Test requires Archive::Zip'
+    unless eval { require Archive::Zip; 1 };
+
+  my $image;
+
+  my $w = Archive::Libarchive::ArchiveWrite->new;
+  la_ok $w, 'set_format_zip';
+  la_ok $w, 'add_filter_none';
+
+  my $ret = $w->set_options('zip:encryption=zipcrypt');
+  SKIP: {
+    skip "libarchive build does not support encryption", 6
+      unless $ret == 0;
+
+    is $ret, 0, 'set_options => ARCHIVE_OK';
+    la_ok $w, 'zip_set_compression_store';
+    la_ok $w, set_passphrase => ['password'];
+    la_ok $w, open_memory => [\$image];
+    la_write_ok($w);
+    la_readback_encrypted_zip_ok($image);
+  };
+
 };
 
 subtest 'filter / format' => sub {
@@ -190,7 +216,7 @@ sub la_write_ok ($w)
   $ctx->release;
 }
 
-sub la_readback_ok ($image)
+sub la_readback_tar_ok ($image)
 {
   my $ctx = context();
 
@@ -199,7 +225,6 @@ sub la_readback_ok ($image)
   local $CWD = tempdir( CLEANUP => 1 );
   path('test.tar')->spew_raw($image);
 
-  my $tar = Archive::Tar->new;
   is(
     Archive::Tar->new,
     object {
@@ -216,6 +241,35 @@ sub la_readback_ok ($image)
       };
     },
     'extrat file with Archive::Tar',
+  );
+
+  $ctx->release;
+}
+
+sub la_readback_encrypted_zip_ok ($image)
+{
+
+  my $ctx = context();
+
+  my $data = path(__FILE__)->slurp_raw;
+
+  local $CWD = tempdir( CLEANUP => 1 );
+  path('test.tar')->spew_raw($image);
+
+  is(
+    Archive::Zip->new,
+    object {
+      call [ read => 'test.tar' ] => Archive::Zip::AZ_OK();
+      call_list members => [
+        object {
+          call isEncrypted => T();
+          call [ password => 'password' ] => T();
+          call fileName => 'archive_libarchive_archivewrite.t';
+          call contents => $data;
+        },
+      ];
+    },
+    'extract file with Archive::Zip',
   );
 
   $ctx->release;
