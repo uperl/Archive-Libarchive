@@ -81,7 +81,6 @@ $ffi->attach( set_format_zip => ['archive_write'] => 'int' );
 $ffi->attach( set_option => ['archive_write', 'string', 'string', 'string'] => 'int' );
 $ffi->attach( set_options => ['archive_write', 'string'] => 'int' );
 $ffi->attach( set_passphrase => ['archive_write', 'string'] => 'int' );
-#$ffi->attach( set_passphrase_callback => ['archive_write', 'opaque', undef] => 'int' );
 $ffi->attach( set_skip_file => ['archive_write', 'sint64', 'sint64'] => 'int' );
 $ffi->attach( zip_set_compression_deflate => ['archive_write'] => 'int' );
 $ffi->attach( zip_set_compression_store => ['archive_write'] => 'int' );
