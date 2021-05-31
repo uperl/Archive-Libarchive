@@ -1229,7 +1229,7 @@ So for a tar file this would be either C<'tar'> or C<ARCHIVE_FORMAT_TAR>.
 
 =head2 new
 
- my $r = Archive::Libarchive::DiskRead->new;
+ my $dr = Archive::Libarchive::DiskRead->new;
 
 Create a new disk read object.
 
@@ -1271,7 +1271,7 @@ Create a new disk read object.
 =head2 new
 
  # archive_write_disk_new
- my $r = Archive::Libarchive::DiskWrite->new;
+ my $dw = Archive::Libarchive::DiskWrite->new;
 
 Create a new disk write object.
 

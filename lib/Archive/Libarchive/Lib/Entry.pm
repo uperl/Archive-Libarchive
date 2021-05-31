@@ -21,7 +21,8 @@ This is a private class for L<Archive::Libarchive> see the main documentation fo
 
 =cut
 
-package Archive::Libarchive::Entry;
+package
+  Archive::Libarchive::Entry;
 
 use Archive::Libarchive::Lib;
 

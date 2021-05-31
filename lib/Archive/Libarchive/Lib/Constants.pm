@@ -88,7 +88,8 @@ sub _enums ($class, $ffi)
   );
 }
 
-package Archive::Libarchive;
+package
+  Archive::Libarchive;
 
 use constant {
   ARCHIVE_ENTRY_ACL_ADD_FILE => 16,
