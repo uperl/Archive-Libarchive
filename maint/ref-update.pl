@@ -279,7 +279,7 @@ sub process_functions ($href, $global, $bindings)
       push @prune, $name if $name eq 'archive_free';
 
       # these are aliases that are being renamed in 3.x and removed in 4.x
-      push @prune, $name if $name =~ /^archive_(write_set_compression.*|position_(compressed|uncompressed)|compression(_name|))$/;
+      push @prune, $name if $name =~ /^archive_(write_set_compression.*|read_support_compression.*|position_(compressed|uncompressed)|compression(_name|))$/;
 
       # The _finish forms were renamed to _Free in 3.x and will be
       # removed in 4.x
