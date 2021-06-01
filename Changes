@@ -1,6 +1,10 @@
 Revision history for {{$dist->name}}},
 
 {{$NEXT}}
+  - Remove deprecated support_compression* methods from
+    ArchiveRead class, and documentation/tests that were
+    using them.  Sorry, they should not have been included
+    in the original release (gh#32)
 
 0.03      2021-05-31 09:41:12 -0600
   - Add (full) support for encrypted zip entries (gh#31)

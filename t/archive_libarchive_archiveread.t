@@ -109,7 +109,7 @@ subtest 'open_perlfile' => sub {
 subtest 'read_data' => sub {
 
   my $r = Archive::Libarchive::ArchiveRead->new;
-  la_ok $r, 'support_compression_all';
+  la_ok $r, 'support_filter_all';
   la_ok $r, 'support_format_raw';
   la_ok $r, 'open_filename' => ['examples/hello.txt.uu', 10240];
   la_ok $r, 'next_header' => [Archive::Libarchive::Entry->new];
@@ -187,7 +187,7 @@ subtest '$e->digest' => sub {
     unless Archive::Libarchive::Entry->can('digest');
 
   my $r = Archive::Libarchive::ArchiveRead->new;
-  la_ok $r, 'support_compression_all';
+  la_ok $r, 'support_filter_all';
   la_ok $r, 'support_format_all';
   la_ok $r, open_filename => ['corpus/test_read_format_mtree.mtree.uu', 512];
 

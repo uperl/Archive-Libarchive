@@ -509,66 +509,6 @@ So for a tar file this would be either C<'tar'> or C<ARCHIVE_FORMAT_TAR>.
 Set a callback that will be called when a passphrase is required, for example with a .zip
 file with encrypted entries.
 
-=head2 support_compression_all
-
- # archive_read_support_compression_all
- my $int = $r->support_compression_all;
-
-=head2 support_compression_bzip2
-
- # archive_read_support_compression_bzip2
- my $int = $r->support_compression_bzip2;
-
-=head2 support_compression_compress
-
- # archive_read_support_compression_compress
- my $int = $r->support_compression_compress;
-
-=head2 support_compression_gzip
-
- # archive_read_support_compression_gzip
- my $int = $r->support_compression_gzip;
-
-=head2 support_compression_lzip
-
- # archive_read_support_compression_lzip
- my $int = $r->support_compression_lzip;
-
-=head2 support_compression_lzma
-
- # archive_read_support_compression_lzma
- my $int = $r->support_compression_lzma;
-
-=head2 support_compression_none
-
- # archive_read_support_compression_none
- my $int = $r->support_compression_none;
-
-=head2 support_compression_program
-
- # archive_read_support_compression_program
- my $int = $r->support_compression_program($string);
-
-=head2 support_compression_program_signature
-
- # archive_read_support_compression_program_signature
- my $int = $r->support_compression_program_signature($string, $opaque, $size_t);
-
-=head2 support_compression_rpm
-
- # archive_read_support_compression_rpm
- my $int = $r->support_compression_rpm;
-
-=head2 support_compression_uu
-
- # archive_read_support_compression_uu
- my $int = $r->support_compression_uu;
-
-=head2 support_compression_xz
-
- # archive_read_support_compression_xz
- my $int = $r->support_compression_xz;
-
 =head2 support_filter_all
 
  # archive_read_support_filter_all
@@ -2580,6 +2520,30 @@ to writing bindings for them.
 =item archive_read_prepend_callback_data
 
 =item archive_read_set_callback_data2
+
+=item archive_read_support_compression_all
+
+=item archive_read_support_compression_bzip2
+
+=item archive_read_support_compression_compress
+
+=item archive_read_support_compression_gzip
+
+=item archive_read_support_compression_lzip
+
+=item archive_read_support_compression_lzma
+
+=item archive_read_support_compression_none
+
+=item archive_read_support_compression_program
+
+=item archive_read_support_compression_program_signature
+
+=item archive_read_support_compression_rpm
+
+=item archive_read_support_compression_uu
+
+=item archive_read_support_compression_xz
 
 =item archive_utility_string_sort
 

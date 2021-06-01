@@ -49,18 +49,6 @@ $ffi->attach( set_format_option => ['archive_read', 'string', 'string', 'string'
 $ffi->attach( set_option => ['archive_read', 'string', 'string', 'string'] => 'int' );
 $ffi->attach( set_options => ['archive_read', 'string'] => 'int' );
 #$ffi->attach( set_switch_callback => ['archive_read', undef] => 'int' );
-$ffi->attach( support_compression_all => ['archive_read'] => 'int' );
-$ffi->attach( support_compression_bzip2 => ['archive_read'] => 'int' );
-$ffi->attach( support_compression_compress => ['archive_read'] => 'int' );
-$ffi->attach( support_compression_gzip => ['archive_read'] => 'int' );
-$ffi->attach( support_compression_lzip => ['archive_read'] => 'int' );
-$ffi->attach( support_compression_lzma => ['archive_read'] => 'int' );
-$ffi->attach( support_compression_none => ['archive_read'] => 'int' );
-$ffi->attach( support_compression_program => ['archive_read', 'string'] => 'int' );
-$ffi->attach( support_compression_program_signature => ['archive_read', 'string', 'opaque', 'size_t'] => 'int' );
-$ffi->attach( support_compression_rpm => ['archive_read'] => 'int' );
-$ffi->attach( support_compression_uu => ['archive_read'] => 'int' );
-$ffi->attach( support_compression_xz => ['archive_read'] => 'int' );
 $ffi->attach( support_filter_all => ['archive_read'] => 'int' );
 $ffi->attach( support_filter_bzip2 => ['archive_read'] => 'int' );
 $ffi->attach( support_filter_compress => ['archive_read'] => 'int' );
