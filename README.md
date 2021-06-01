@@ -35,6 +35,21 @@ when used as a universal archiver/extractor.  Supported formats include:
 - shell archive (shar)
 - ... and many many more
 
+There are a number of "simple" interfaces around this distribution, which are worth considering if you do not need
+the full power and configurability that this distribution provides.
+
+- [Archive::Libarchive::Peek](https://metacpan.org/pod/Archive::Libarchive::Peek)
+
+    Provides an interface for listing and retrieving entries from an archive without extracting them to the local filesystem.
+
+- [Archive::Libarchive::Extract](https://metacpan.org/pod/Archive::Libarchive::Extract)
+
+    Provides an interface for extracting arbitrary archives of any format/filter supported by `libarchive`.
+
+- [Archive::Libarchive::Unwrap](https://metacpan.org/pod/Archive::Libarchive::Unwrap)
+
+    Decompresses / unwraps files that have been compressed or wrapped in any of the filter formats supported by `libarchive`
+
 This distribution is split up into several classes, that correspond to `libarchive` classes.  Probably the best
 place to start when learning how to use this module is to look at the ["EXAMPLES"](#examples) section below, but you
 can also take a look at the main class documentation for the operation that you are interested in as well:
@@ -182,7 +197,7 @@ may be useful in a test report diagnostic.
 
 These examples are translated from the `libarchive` C examples, which can be found here:
 
-- [https://github.com/libarchive/libarchive/wiki/Examples#List\_contents\_of\_Archive\_stored\_in\_File](https://github.com/libarchive/libarchive/wiki/Examples#List_contents_of_Archive_stored_in_File)
+- [https://github.com/libarchive/libarchive/wiki/Examples](https://github.com/libarchive/libarchive/wiki/Examples)
 
 ## List contents of archive stored in file
 
@@ -249,6 +264,9 @@ performance.
 Note that the call to [read\_data\_skip](https://metacpan.org/pod/Archive::Libarchive::API#read_data_skip) here is not actually necessary, since
 [Archive::Libarchive](https://metacpan.org/pod/Archive::Libarchive) will invoke it automatically if you request the next header without reading the data for the
 last entry.
+
+The module [Archive::Libarchive::Peek](https://metacpan.org/pod/Archive::Libarchive::Peek) also provides similar functionality to this example in a simple, less
+powerful interface.
 
 ## List contents of archive stored in memory
 
@@ -360,6 +378,9 @@ Note that the "raw" format is not enabled by the
 Also note that the "raw" format handler does not recognize or accept empty files.  If you specifically want to be
 able to read empty files, you'll need to also invoke the
 [support\_format\_empty method on Archive::Libarchive::ArchiveRead](https://metacpan.org/pod/Archive::Libarchive::API#support_format_empty).
+
+The module [Archive::Libarchive::Unwrap](https://metacpan.org/pod/Archive::Libarchive::Unwrap) also provides similar functionality to this example in a simple, less
+powerful interface.
 
 ## A basic write example
 
@@ -571,6 +592,9 @@ $dw->close;
 You could create an archive by going the other way by copying entries from an
 [Archive::Libarchive::DiskRead](https://metacpan.org/pod/Archive::Libarchive::DiskRead) instance to an [Archive::Libarchive::ArchiveWrite](https://metacpan.org/pod/Archive::Libarchive::ArchiveWrite) instance.
 
+The module [Archive::Libarchive::Extract](https://metacpan.org/pod/Archive::Libarchive::Extract) also provides similar functionality to this example in a simple, less
+powerful interface.
+
 # CONSTANTS
 
 This module provides all of the constants used by `libarchive`.  These typically
@@ -688,6 +712,18 @@ I am using `castxml`, and I've created a reference build of `libarchive` using d
 ensure that the code generation is done consistently.
 
 # SEE ALSO
+
+- [Archive::Libarchive::Peek](https://metacpan.org/pod/Archive::Libarchive::Peek)
+
+    Provides an interface for listing and retrieving entries from an archive without extracting them to the local filesystem.
+
+- [Archive::Libarchive::Extract](https://metacpan.org/pod/Archive::Libarchive::Extract)
+
+    Provides an interface for extracting arbitrary archives of any format/filter supported by `libarchive`.
+
+- [Archive::Libarchive::Unwrap](https://metacpan.org/pod/Archive::Libarchive::Unwrap)
+
+    Decompresses / unwraps files that have been compressed or wrapped in any of the filter formats supported by `libarchive`
 
 - [Archive::Libarchive::API](https://metacpan.org/pod/Archive::Libarchive::API)
 
