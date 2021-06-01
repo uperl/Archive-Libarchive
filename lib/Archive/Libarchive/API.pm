@@ -473,6 +473,11 @@ Gotcha with this method is that it returns C<ARCHIVE_EOF> when there is no
 more data to read instead of the number of bytes.  The size can be determined
 from the length of the newly resized C<$buffer>.
 
+=head2 read_data_into_fd
+
+ # archive_read_data_into_fd
+ my $int1 = $r->read_data_into_fd($int2);
+
 =head2 read_data_skip
 
  # archive_read_data_skip
