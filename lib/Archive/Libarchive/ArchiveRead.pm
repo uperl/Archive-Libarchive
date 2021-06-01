@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use 5.020;
 use Archive::Libarchive::Lib;
-use FFI::Platypus::Buffer qw( scalar_to_buffer scalar_to_pointer );
+use FFI::Platypus::Buffer qw( scalar_to_buffer scalar_to_pointer grow set_used_length );
 use FFI::Platypus::Memory qw( strdup free );
 use Ref::Util qw( is_plain_scalarref is_plain_coderef is_blessed_ref is_plain_arrayref );
 use Carp ();
@@ -291,11 +291,9 @@ $ffi->attach( [data => 'read_data'] => ['archive_read', 'opaque', 'size_t'] => '
   my($xsub, $self, $ref, $size) = @_;
   $size ||= 512;
 
-  # TODO: this is highly non-performant!
-  $$ref = "\0" x $size;
+  grow $$ref, $size, { clear => 0 };
   my $rsize = $xsub->($self, (scalar_to_buffer $$ref));
-
-  $$ref = substr $$ref, 0, $rsize if $size != $rsize;
+  set_used_length $$ref, $rsize;
 
   return $rsize;
 });
