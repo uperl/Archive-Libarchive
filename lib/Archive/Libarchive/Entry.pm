@@ -261,6 +261,18 @@ __END__
 
 =over 4
 
+=item L<Archive::Libarchive::Peek>
+
+Provides an interface for listing and retrieving entries from an archive without extracting them to the local filesystem.
+
+=item L<Archive::Libarchive::Extract>
+
+Provides an interface for extracting arbitrary archives of any format/filter supported by C<libarchive>.
+
+=item L<Archive::Libarchive::Unwrap>
+
+Decompresses / unwraps files that have been compressed or wrapped in any of the filter formats supported by C<libarchive>
+
 =item L<Archive::Libarchive>
 
 This is the main top-level module for using C<libarchive> from
