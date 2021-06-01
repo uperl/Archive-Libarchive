@@ -214,7 +214,7 @@ sub open_perlfile ($self, $fh)
   );
 }
 
-=head2 data
+=head2 write_data
 
  # archive_write_data
  my $size_or_code = $w->write_data(\$buffer);
@@ -230,9 +230,6 @@ $ffi->attach( [ data => 'write_data' ] => ['archive_write', 'opaque', 'size_t'] 
   my $self = shift;
   $xsub->($self, scalar_to_buffer ${$_[0]});
 });
-
-# TODO
-$ffi->attach( [data_block => '_write_data_block'] => ['archive_write', 'opaque', 'size_t', 'sint64'] => 'ssize_t' );
 
 =head2 add_filter
 

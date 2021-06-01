@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use 5.020;
 use Archive::Libarchive::Lib;
-use FFI::Platypus::Buffer qw( scalar_to_buffer scalar_to_pointer grow set_used_length );
+use FFI::Platypus::Buffer qw( scalar_to_buffer scalar_to_pointer grow set_used_length window );
 use FFI::Platypus::Memory qw( strdup free );
 use Ref::Util qw( is_plain_scalarref is_plain_coderef is_blessed_ref is_plain_arrayref );
 use Carp ();
@@ -298,8 +298,31 @@ $ffi->attach( [data => 'read_data'] => ['archive_read', 'opaque', 'size_t'] => '
   return $rsize;
 });
 
+=head2 read_data_block
+
+ # archive_read_data_block
+ my $int = $r->read_data_block(\$buffer, \$offset);
+
+A zero-copy version of archive_read_data that also exposes the file offset
+of each returned block.  Note that the client has no way to specify
+the desired size of the block.  The API does guarantee that offsets will
+be strictly increasing and that returned blocks will not overlap.
+
+Gotcha with this method is that it returns C<ARCHIVE_EOF> when there is no
+more data to read instead of the number of bytes.  The size can be determined
+from the length of the newly resized C<$buffer>.
+
+=cut
+
+$ffi->attach( [data_block => 'read_data_block' ] => ['archive_read', 'opaque*', 'size_t*', 'sint64*'] => 'int' => sub {
+  my $xsub = shift;
+  my($ptr, $size);
+  my $ret = $xsub->($_[0], \$ptr, \$size, $_[2]);
+  window ${$_[1]}, $ptr, $size if defined $ptr;
+  return $ret;
+});
+
 # TODO:
-$ffi->attach( [data_block   => '_read_data_block'  ] => ['archive_read', 'opaque*', 'size_t*', 'sint64*'] => 'int' );
 $ffi->attach( [data_into_fd => '_read_data_into_fd'] => ['archive_read', 'int'] => 'int' );
 
 

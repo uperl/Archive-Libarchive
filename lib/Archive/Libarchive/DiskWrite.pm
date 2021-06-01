@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use 5.020;
 use Archive::Libarchive::Lib;
+use FFI::Platypus::Buffer qw( scalar_to_buffer );
 use experimental qw( signatures );
 use parent qw( Archive::Libarchive::ArchiveWrite );
 
@@ -46,7 +47,20 @@ require Archive::Libarchive::Lib::DiskWrite unless $Archive::Libarchive::no_gen;
 This is a subset of total list of methods available to all archive classes.
 For the full list see L<Archive::Libarchive::API/Archive::Libarchive::ArchiveRead>.
 
+=head2 write_data_block
+
+ # archive_write_data_block
+ my $ssize_t = $dw->write_data_block(\$buffer, $offset);
+
+Write the entry content data to the disk.  This is intended to be used with L<Archive::Libarchive::ArchiveRead/read_data_block>.
+
 =cut
+
+$ffi->attach( [data_block => 'write_data_block'] => ['archive_write', 'opaque', 'size_t', 'sint64'] => 'ssize_t' => sub {
+  my $xsub = shift;
+  my($ptr, $size) = scalar_to_buffer ${$_[1]};
+  $xsub->($_[0], $ptr, $size, $_[2]);
+});
 
 1;
 
