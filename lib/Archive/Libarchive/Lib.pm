@@ -36,6 +36,8 @@ sub ffi
 
     # use libarchive dynamic lib
     $ffi->lib(__PACKAGE__->lib);
+    # use libc
+    $ffi->lib(undef);
 
     $ffi->load_custom_type( '::WideString', 'wstring', access => 'read' );
 
@@ -82,6 +84,7 @@ sub ffi
     }
     else
     {
+      $ffi->attach( [ memcpy => 'Archive::Libarchive::ArchiveRead::_memcpy' ] => [ 'opaque', 'opaque[1]', 'size_t' ] => 'void' );
       require Archive::Libarchive::Lib::Constants;
       Archive::Libarchive::Lib::Constants->_enums($ffi);
     }

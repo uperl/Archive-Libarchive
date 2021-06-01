@@ -8,14 +8,15 @@ use FFI::Platypus::Buffer qw( scalar_to_buffer scalar_to_pointer grow set_used_l
 use FFI::Platypus::Memory qw( strdup free );
 use Ref::Util qw( is_plain_scalarref is_plain_coderef is_blessed_ref is_plain_arrayref );
 use Carp ();
-use PeekPoke::FFI ();
 use experimental qw( signatures );
 use parent qw( Archive::Libarchive::Archive );
+use constant;
 
 # ABSTRACT: Libarchive read archive class
 # VERSION
 
 my $ffi = Archive::Libarchive::Lib->ffi;
+constant->import(_opaque_size => $ffi->sizeof('opaque'));
 
 =head1 SYNOPSIS
 
@@ -166,8 +167,7 @@ $ffi->attach( [ open1 => 'open' ] => [ 'archive_read'] => 'int' => sub {
         $self->{read_buffer} = undef;
         my $size = $sub->($r, \$self->{read_buffer});
         my $ptr = defined $self->{read_buffer} ? scalar_to_pointer($self->{read_buffer}) : undef;
-        my $pp = PeekPoke::FFI->new( type => 'opaque', base => $ptrptr );
-        $pp->poke(0, $ptr);
+        _memcpy($ptrptr, [$ptr], _opaque_size());
         return $size;
       });
     }
