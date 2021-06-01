@@ -331,6 +331,37 @@ subtest 'set_passphrase_callback' => sub {
 
 };
 
+subtest 'read_data_block' => sub {
+
+  my $r = Archive::Libarchive::ArchiveRead->new;
+  my $e = Archive::Libarchive::Entry->new;
+
+  la_ok $r, 'support_filter_all';
+  la_ok $r, 'support_format_all';
+  la_ok $r, open_filename => ['examples/archive.tar',512];
+
+  la_ok $r, 'next_header', [$e];
+  la_ok $r, 'next_header', [$e];
+
+  my $total = 0;
+
+  while(1)
+  {
+    my($buff, $offset);
+    my $ret = $r->read_data_block(\$buff, \$offset);
+    ok $ret >= 0;
+    note "ret    = $ret";
+    note "buff   = @{[ $buff // 'undef' ]}";
+    note "offset = $offset";
+    last if $ret == 1;
+    $total += length $buff;
+  }
+
+  is $total, 6;
+
+  la_ok $r, 'close';
+};
+
 sub la_archive_ok ($r)
 {
   my $e = Archive::Libarchive::Entry->new;

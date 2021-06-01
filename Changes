@@ -8,6 +8,8 @@ Revision history for {{$dist->name}}},
   - Some additional, less prominent deprecated methods were
     also removed (gh#33)
   - Performance improvements (gh#2, gh#34)
+  - New methods: ArchiveRead#read_data_block,
+    ArchiveWrite#write_data_block (gh#2, gh#34)
 
 0.03      2021-05-31 09:41:12 -0600
   - Add (full) support for encrypted zip entries (gh#31)

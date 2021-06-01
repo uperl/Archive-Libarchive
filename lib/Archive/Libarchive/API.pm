@@ -459,6 +459,20 @@ C<$buffer>.  Up to C<$size> bytes will be read.  This will return the number of 
 read on success, zero (C<0>) on EOF and a L<normal status code|Archive::Libarchive/CONSTANTS>
 on error.
 
+=head2 read_data_block
+
+ # archive_read_data_block
+ my $int = $r->read_data_block(\$buffer, \$offset);
+
+A zero-copy version of archive_read_data that also exposes the file offset
+of each returned block.  Note that the client has no way to specify
+the desired size of the block.  The API does guarantee that offsets will
+be strictly increasing and that returned blocks will not overlap.
+
+Gotcha with this method is that it returns C<ARCHIVE_EOF> when there is no
+more data to read instead of the number of bytes.  The size can be determined
+from the length of the newly resized C<$buffer>.
+
 =head2 read_data_skip
 
  # archive_read_data_skip
@@ -800,15 +814,6 @@ For the full list see L<Archive::Libarchive::API/CONSTANTS>.
  # archive_write_close
  my $int = $w->close;
 
-=head2 data
-
- # archive_write_data
- my $size_or_code = $w->write_data(\$buffer);
-
-Write the entry content data to the archive.  This takes a reference to the buffer.
-Returns the number of bytes written on success, and a L<normal status code|Archive::Libarchive/CONSTANTS>
-on error.
-
 =head2 fail
 
  # archive_write_fail
@@ -1087,6 +1092,15 @@ file with encrypted entries.
  # archive_write_set_skip_file
  my $int = $w->set_skip_file($sint64_1, $sint64_2);
 
+=head2 write_data
+
+ # archive_write_data
+ my $size_or_code = $w->write_data(\$buffer);
+
+Write the entry content data to the archive.  This takes a reference to the buffer.
+Returns the number of bytes written on success, and a L<normal status code|Archive::Libarchive/CONSTANTS>
+on error.
+
 =head2 write_header
 
  # archive_write_header
@@ -1234,6 +1248,13 @@ Create a new disk read object.
  my $dw = Archive::Libarchive::DiskWrite->new;
 
 Create a new disk write object.
+
+=head2 write_data_block
+
+ # archive_write_data_block
+ my $ssize_t = $dw->write_data_block(\$buffer, $offset);
+
+Write the entry content data to the disk.  This is intended to be used with L<Archive::Libarchive::ArchiveRead/read_data_block>.
 
 =head1 Archive::Libarchive::Entry
 

@@ -42,10 +42,11 @@ while(1) {
   if($e->size > 0)
   {
     my $buffer;
+    my $offset;
     while(1) {
 
-      $ret = $r->read_data(\$buffer);
-      last if $ret == 0;
+      $ret = $r->read_data_block(\$buffer, \$offset);
+      last if $ret == ARCHIVE_EOF;
       if($ret < ARCHIVE_OK) {
         if($ret < ARCHIVE_WARN) {
           die "file read error on member @{[ $e->pathname ]} @{[ $r->error_string ]}";
@@ -54,7 +55,7 @@ while(1) {
         }
       }
 
-      $ret = $dw->write_data(\$buffer);
+      $ret = $dw->write_data_block(\$buffer, $offset);
       if($ret < ARCHIVE_OK) {
         if($ret < ARCHIVE_WARN) {
           die "file write error on member @{[ $e->pathname ]} @{[ $dw->error_string ]}";
