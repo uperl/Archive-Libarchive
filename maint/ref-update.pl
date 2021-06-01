@@ -9,7 +9,7 @@ use FFI::ExtractSymbols;
 use Path::Tiny qw( path );
 use Clang::CastXML;
 use Const::Introspect::C;
-use YAML qw( Dump );
+#use YAML qw( Dump );
 use List::Util 1.33 qw( all sum0 );
 use PerlX::Maybe;
 use Template;
@@ -221,8 +221,8 @@ sub process_functions ($href, $global, $bindings)
       $type->{target_type} = $target_type;
     }
 
-    say "unhandled type:";
-    say Dump({ $name => $type });
+    #say "unhandled type:";
+    #say Dump({ $name => $type });
     return undef;
   };
 
@@ -391,6 +391,8 @@ sub process_functions ($href, $global, $bindings)
 
     my $incomplete = (defined $ret_type && all { defined $_ } @arg_types) ? undef : 1;
     $count{$incomplete ? 'incomplete' : 'generated'}++;
+
+    say "warning: $orig is incomplete" if $incomplete;
 
     push $bindings->{$class}->@*, {
             symbol_name => $orig,
