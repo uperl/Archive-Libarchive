@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}},
 
 {{$NEXT}}
+
+0.04      2021-06-01 04:25:46 -0600
   - Remove deprecated support_compression* methods from
     ArchiveRead class, and documentation/tests that were
     using them.  Sorry, they should not have been included
