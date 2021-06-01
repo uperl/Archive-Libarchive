@@ -263,9 +263,6 @@ sub process_functions ($href, $global, $bindings)
       # we use the newer next_header2 method
       push @prune, $name if $name eq 'archive_read_next_header';
 
-      # This was renamed to archive_write_openfile
-      push @prune, $name if $name eq 'archive_write_open_file';
-
       # This ... doesn't really work or make sense for Perl the
       # way it is implemented.
       push @prune, $name if $name eq 'archive_write_open_memory';
@@ -279,7 +276,7 @@ sub process_functions ($href, $global, $bindings)
       push @prune, $name if $name eq 'archive_free';
 
       # these are aliases that are being renamed in 3.x and removed in 4.x
-      push @prune, $name if $name =~ /^archive_(write_set_compression.*|read_support_compression.*|position_(compressed|uncompressed)|compression(_name|))$/;
+      push @prune, $name if $name =~ /^archive_(write_set_compression.*|read_support_compression.*|position_(compressed|uncompressed)|compression(_name|)|(read|write)_open_file|entry_acl_text(|_w))$/;
 
       # The _finish forms were renamed to _Free in 3.x and will be
       # removed in 4.x

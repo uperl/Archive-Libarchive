@@ -41,7 +41,6 @@ $ffi->attach( format_capabilities => ['archive_read'] => 'int' );
 $ffi->attach( has_encrypted_entries => ['archive_read'] => 'int' );
 $ffi->attach( header_position => ['archive_read'] => 'sint64' );
 $ffi->attach( open_fd => ['archive_read', 'int', 'size_t'] => 'int' );
-$ffi->attach( open_file => ['archive_read', 'string', 'size_t'] => 'int' );
 $ffi->attach( open_filename => ['archive_read', 'string', 'size_t'] => 'int' );
 $ffi->attach( open_filename_w => ['archive_read', 'wstring', 'size_t'] => 'int' );
 $ffi->attach( set_filter_option => ['archive_read', 'string', 'string', 'string'] => 'int' );
@@ -100,6 +99,18 @@ __END__
 =head1 SEE ALSO
 
 =over 4
+
+=item L<Archive::Libarchive::Peek>
+
+Provides an interface for listing and retrieving entries from an archive without extracting them to the local filesystem.
+
+=item L<Archive::Libarchive::Extract>
+
+Provides an interface for extracting arbitrary archives of any format/filter supported by C<libarchive>.
+
+=item L<Archive::Libarchive::Unwrap>
+
+Decompresses / unwraps files that have been compressed or wrapped in any of the filter formats supported by C<libarchive>
 
 =item L<Archive::Libarchive>
 

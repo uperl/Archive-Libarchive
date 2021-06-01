@@ -417,11 +417,6 @@ This takes either a L<FFI::C::File>, or an opaque pointer to a libc file pointer
  # archive_read_open_fd
  my $int1 = $r->open_fd($int2, $size_t);
 
-=head2 open_file
-
- # archive_read_open_file
- my $int = $r->open_file($string, $size_t);
-
 =head2 open_filename
 
  # archive_read_open_filename
@@ -1287,16 +1282,6 @@ Create a new disk write object.
 
  # archive_entry_acl_reset
  my $int1 = $e->acl_reset($int2);
-
-=head2 acl_text
-
- # archive_entry_acl_text
- my $string = $e->acl_text($int);
-
-=head2 acl_text_w
-
- # archive_entry_acl_text_w
- my $wstring = $e->acl_text_w($int);
 
 =head2 acl_to_text
 
@@ -2483,6 +2468,10 @@ to writing bindings for them.
 
 =item archive_entry_acl
 
+=item archive_entry_acl_text
+
+=item archive_entry_acl_text_w
+
 =item archive_entry_gname_w
 
 =item archive_entry_hardlink_w
@@ -2514,6 +2503,8 @@ to writing bindings for them.
 =item archive_read_open
 
 =item archive_read_open2
+
+=item archive_read_open_file
 
 =item archive_read_open_memory2
 
@@ -2574,6 +2565,18 @@ to writing bindings for them.
 =head1 SEE ALSO
 
 =over 4
+
+=item L<Archive::Libarchive::Peek>
+
+Provides an interface for listing and retrieving entries from an archive without extracting them to the local filesystem.
+
+=item L<Archive::Libarchive::Extract>
+
+Provides an interface for extracting arbitrary archives of any format/filter supported by C<libarchive>.
+
+=item L<Archive::Libarchive::Unwrap>
+
+Decompresses / unwraps files that have been compressed or wrapped in any of the filter formats supported by C<libarchive>
 
 =item L<Archive::Libarchive>
 

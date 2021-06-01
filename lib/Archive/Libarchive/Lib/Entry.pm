@@ -34,8 +34,6 @@ $ffi->attach( acl_clear => ['archive_entry'] );
 $ffi->attach( acl_count => ['archive_entry', 'int'] => 'int' );
 $ffi->attach( acl_next => ['archive_entry', 'int', 'int*', 'int*', 'int*', 'int*', 'string*'] => 'int' );
 $ffi->attach( acl_reset => ['archive_entry', 'int'] => 'int' );
-$ffi->attach( acl_text => ['archive_entry', 'int'] => 'string' );
-$ffi->attach( acl_text_w => ['archive_entry', 'int'] => 'wstring' );
 $ffi->attach( atime => ['archive_entry'] => 'time_t' );
 $ffi->attach( atime_is_set => ['archive_entry'] => 'int' );
 $ffi->attach( atime_nsec => ['archive_entry'] => 'long' );
@@ -172,6 +170,18 @@ __END__
 =head1 SEE ALSO
 
 =over 4
+
+=item L<Archive::Libarchive::Peek>
+
+Provides an interface for listing and retrieving entries from an archive without extracting them to the local filesystem.
+
+=item L<Archive::Libarchive::Extract>
+
+Provides an interface for extracting arbitrary archives of any format/filter supported by C<libarchive>.
+
+=item L<Archive::Libarchive::Unwrap>
+
+Decompresses / unwraps files that have been compressed or wrapped in any of the filter formats supported by C<libarchive>
 
 =item L<Archive::Libarchive>
 
