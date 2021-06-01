@@ -7,6 +7,7 @@ Revision history for {{$dist->name}}},
     in the original release (gh#32)
   - Some additional, less prominent deprecated methods were
     also removed (gh#33)
+  - Performance improvements (gh#2, gh#34)
 
 0.03      2021-05-31 09:41:12 -0600
   - Add (full) support for encrypted zip entries (gh#31)
