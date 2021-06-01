@@ -322,10 +322,6 @@ $ffi->attach( [data_block => 'read_data_block' ] => ['archive_read', 'opaque*', 
   return $ret;
 });
 
-# TODO:
-$ffi->attach( [data_into_fd => '_read_data_into_fd'] => ['archive_read', 'int'] => 'int' );
-
-
 =head2 append_filter
 
  # archive_read_append_filter
