@@ -726,6 +726,10 @@ ensure that the code generation is done consistently.
 
     Decompresses / unwraps files that have been compressed or wrapped in any of the filter formats supported by `libarchive`
 
+- [Dist::Zilla::Plugin::Libarchive](https://metacpan.org/pod/Dist::Zilla::Plugin::Libarchive)
+
+    Build [Dist::Zilla](https://metacpan.org/pod/Dist::Zilla) based dist tarballs with libarchive instead of the built in [Archive::Tar](https://metacpan.org/pod/Archive::Tar).
+
 - [Archive::Libarchive::API](https://metacpan.org/pod/Archive::Libarchive::API)
 
     This contains the full and complete API for all of the [Archive::Libarchive](https://metacpan.org/pod/Archive::Libarchive)

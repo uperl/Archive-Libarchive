@@ -610,6 +610,10 @@ Provides an interface for extracting arbitrary archives of any format/filter sup
 
 Decompresses / unwraps files that have been compressed or wrapped in any of the filter formats supported by C<libarchive>
 
+=item L<Dist::Zilla::Plugin::Libarchive>
+
+Build L<Dist::Zilla> based dist tarballs with libarchive instead of the built in L<Archive::Tar>.
+
 =item L<Archive::Libarchive::API>
 
 This contains the full and complete API for all of the L<Archive::Libarchive>
