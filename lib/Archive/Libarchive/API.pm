@@ -976,10 +976,25 @@ So for a tar file this would be either C<'tar'> or C<ARCHIVE_FORMAT_TAR>.
  # archive_write_set_format_cpio
  my $int = $w->set_format_cpio;
 
+=head2 set_format_cpio_bin
+
+ # archive_write_set_format_cpio_bin (optional)
+ my $int = $w->set_format_cpio_bin;
+
 =head2 set_format_cpio_newc
 
  # archive_write_set_format_cpio_newc
  my $int = $w->set_format_cpio_newc;
+
+=head2 set_format_cpio_odc
+
+ # archive_write_set_format_cpio_odc (optional)
+ my $int = $w->set_format_cpio_odc;
+
+=head2 set_format_cpio_pwb
+
+ # archive_write_set_format_cpio_pwb (optional)
+ my $int = $w->set_format_cpio_pwb;
 
 =head2 set_format_filter_by_ext
 
@@ -2393,6 +2408,8 @@ documentation.
 
 =item ARCHIVE_FORMAT_CPIO_POSIX
 
+=item ARCHIVE_FORMAT_CPIO_PWB
+
 =item ARCHIVE_FORMAT_CPIO_SVR4_CRC
 
 =item ARCHIVE_FORMAT_CPIO_SVR4_NOCRC
@@ -2454,6 +2471,8 @@ documentation.
 =item ARCHIVE_READDISK_NO_ACL
 
 =item ARCHIVE_READDISK_NO_FFLAGS
+
+=item ARCHIVE_READDISK_NO_SPARSE
 
 =item ARCHIVE_READDISK_NO_TRAVERSE_MOUNTS
 

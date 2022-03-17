@@ -1,6 +1,15 @@
-Revision history for {{$dist->name}}},
+Revision history for {{$dist->name}},
 
 {{$NEXT}}
+  - Add support for libarchive 2.6.0
+    * Archive::Libarchive::ArchiveWrite
+      + add_filter_zstd
+      + set_format_cpio_bin
+      + set_format_cpio_odc
+      + set_format_cpio_pwb
+    * Archive::Libarchive::Constant
+      + ARCHIVE_READDISK_NO_SPARSE
+      + cpio_pwb
 
 0.04      2021-06-01 04:25:46 -0600
   - Remove deprecated support_compression* methods from
