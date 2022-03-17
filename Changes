@@ -1,7 +1,7 @@
 Revision history for {{$dist->name}},
 
 {{$NEXT}}
-  - Add support for libarchive 2.6.0
+  - Add support for libarchive 2.6.0 (gh#37)
     * Archive::Libarchive::ArchiveWrite
       + add_filter_zstd
       + set_format_cpio_bin
