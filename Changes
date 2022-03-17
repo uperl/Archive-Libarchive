@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}},
 
 {{$NEXT}}
+
+0.05      2022-03-17 11:24:19 -0600
   - Add support for libarchive 2.6.0 (gh#37)
     * Archive::Libarchive::ArchiveWrite
       + add_filter_zstd
