@@ -3,7 +3,7 @@ package Archive::Libarchive::Lib;
 use strict;
 use warnings;
 use 5.020;
-use FFI::CheckLib 0.28 qw( find_lib_or_die );
+use FFI::CheckLib 0.30 qw( find_lib_or_die );
 use Encode qw( decode );
 use experimental qw( signatures );
 
