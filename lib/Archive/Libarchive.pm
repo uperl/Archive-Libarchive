@@ -532,7 +532,7 @@ experience writing FFI bindings in Perl.
 BULK88 was in the audience for a DC / Baltimore version of my I<Never Need to Write XS> talk and he pointed
 me to a feature in XS that would make FFI calls much faster than what was possible in L<FFI::Raw>.  Using
 the C<any_ptr> it is possible to remove method calls from an FFI interface, which, due to their dynamic
-nature.
+nature are slower that non-method subroutine calls.
 
 I was loosing faith in L<FFI::Raw> being tenable or performant for large APIs, so I I gathered up my ideas
 of what would make a better FFI experience in Perl and the C<any_ptr> feature that Bulk had shown me and
