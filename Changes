@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}},
 
 {{$NEXT}}
+
+0.06      2022-09-22 05:19:04 -0600
   - Documentation improvements (gh#41)
   - Removed two memory leaks that happen in some circumstances
     for Archive::Libarchive::ArchiveRead (gh#36, gh#42)
