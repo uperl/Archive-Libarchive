@@ -106,3 +106,5 @@ RUN cpanm -n \
   https://dist.wdlabs.com/App-castyml-0.01.tar.gz  \
   Test::Archive::Libarchive                        \
   && rm -rf ~/cpanm
+
+RUN cpanm -n http://cpan.metacpan.org/authors/id/P/PL/PLICEASE/FFI-CheckLib-0.30.tar.gz && rm -rf ~/cpanm

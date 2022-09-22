@@ -43,7 +43,7 @@ require Archive::Libarchive::Lib::DiskRead unless $Archive::Libarchive::no_gen;
 =head1 METHODS
 
 This is a subset of total list of methods available to all archive classes.
-For the full list see L<Archive::Libarchive::API/Archive::Libarchive::ArchiveWrite>.
+For the full list see L<Archive::Libarchive::API/Archive::Libarchive::DiskRead>.
 
 =cut
 

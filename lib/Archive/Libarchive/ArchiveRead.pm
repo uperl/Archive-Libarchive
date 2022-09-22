@@ -246,6 +246,13 @@ sub open_perlfile ($self, $fh)
   );
 }
 
+=head2 open_filename
+
+ # archive_read_open_filename
+ my $int = $r->open_filename($string, $size_t);
+
+Open a single-file archive.  The C<$size_t> argument is the block size.
+
 =head2 open_filenames
 
  # archive_read_open_filenames

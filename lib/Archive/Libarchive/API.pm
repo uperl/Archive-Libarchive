@@ -422,6 +422,13 @@ This takes either a L<FFI::C::File>, or an opaque pointer to a libc file pointer
  # archive_read_open_filename
  my $int = $r->open_filename($string, $size_t);
 
+Open a single-file archive.  The C<$size_t> argument is the block size.
+
+=head2 open_filename
+
+ # archive_read_open_filename
+ my $int = $r->open_filename($string, $size_t);
+
 =head2 open_filename_w
 
  # archive_read_open_filename_w

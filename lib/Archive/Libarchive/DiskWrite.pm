@@ -45,7 +45,7 @@ require Archive::Libarchive::Lib::DiskWrite unless $Archive::Libarchive::no_gen;
 =head1 METHODS
 
 This is a subset of total list of methods available to all archive classes.
-For the full list see L<Archive::Libarchive::API/Archive::Libarchive::ArchiveRead>.
+For the full list see L<Archive::Libarchive::API/Archive::Libarchive::DiskWrite>.
 
 =head2 write_data_block
 

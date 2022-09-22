@@ -58,7 +58,7 @@ $ffi->attach( [ free => 'DESTROY' ] => ['archive_write'] => 'int' => sub {
 =head1 METHODS
 
 This is a subset of total list of methods available to all archive classes.
-For the full list see L<Archive::Libarchive::API/Archive::Libarchive::ArchiveRead>.
+For the full list see L<Archive::Libarchive::API/Archive::Libarchive::ArchiveWrite>.
 
 =head2 open
 
