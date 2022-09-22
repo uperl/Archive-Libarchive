@@ -8,6 +8,7 @@ use FFI::Platypus::Buffer qw( scalar_to_buffer scalar_to_pointer grow set_used_l
 use FFI::Platypus::Memory qw( strdup free );
 use Ref::Util qw( is_plain_scalarref is_plain_coderef is_blessed_ref is_plain_arrayref );
 use Carp ();
+use Scalar::Util qw( refaddr );
 use experimental qw( signatures );
 use parent qw( Archive::Libarchive::Archive );
 use constant;
@@ -17,6 +18,7 @@ use constant;
 
 my $ffi = Archive::Libarchive::Lib->ffi;
 constant->import(_opaque_size => $ffi->sizeof('opaque'));
+my %keep;
 
 =head1 SYNOPSIS
 
@@ -51,6 +53,7 @@ $ffi->attach( [ free => 'DESTROY' ] => ['archive_read'] => 'int' => sub {
   return if $self->{cb}                 # inside a callback, we don't own the archive pointer
     || ${^GLOBAL_PHASE} eq 'DESTRUCT';  # during global shutdown the xsub might go away
   my $ret = $xsub->($self);
+  delete $keep{refaddr $self};
   warn "destroying archive pointer did not return ARCHIVE_OK" unless $ret == 0;
 });
 
@@ -179,7 +182,7 @@ $ffi->attach( [ open1 => 'open' ] => [ 'archive_read'] => 'int' => sub {
       });
     }
 
-    push @{ $self->{keep} }, $closure;
+    push @{ $keep{refaddr $self} }, $closure;
 
     $set->($self, $closure);
   }
@@ -204,7 +207,7 @@ $ffi->attach( open_memory => ['archive_read','opaque','size_t'] => 'int' => sub 
   my($xsub, $self, $ref) = @_;
   Carp::croak("buffer must be a scalar reference")
     unless defined $ref && is_plain_scalarref $ref;
-  push @{ $self->{keep} }, \($$ref);
+  push @{ $keep{refaddr $self} }, \($$ref);
   my($ptr, $size) = scalar_to_buffer $$ref;
   $xsub->($self, $ptr, $size);
 });
@@ -372,7 +375,7 @@ $ffi->attach( set_passphrase_callback => ['archive_read', 'opaque', 'archive_pas
     return $self->{passphrase} = $ptr;
   });
 
-  push @{ $self->{keep} }, $closure;
+  push @{ $keep{refaddr $self} }, $closure;
 
   $xsub->($self, undef, $closure);
 

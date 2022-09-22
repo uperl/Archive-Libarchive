@@ -102,6 +102,7 @@ RUN cpanm -n \
   Sub::Identify                                    \
   PeekPoke::FFI                                    \
   FFI::C::Stat                                     \
+  Devel::Cycle                                     \
   https://dist.wdlabs.com/App-castyml-0.01.tar.gz  \
   Test::Archive::Libarchive                        \
   && rm -rf ~/cpanm

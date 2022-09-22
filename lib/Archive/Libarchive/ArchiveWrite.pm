@@ -8,6 +8,7 @@ use Carp ();
 use Ref::Util qw( is_plain_coderef is_blessed_ref );
 use FFI::Platypus::Buffer qw( window scalar_to_buffer );
 use FFI::Platypus::Memory qw( strdup free );
+use Scalar::Util qw( refaddr );
 use experimental qw( signatures );
 use parent qw( Archive::Libarchive::Archive );
 
@@ -15,6 +16,7 @@ use parent qw( Archive::Libarchive::Archive );
 # VERSION
 
 my $ffi = Archive::Libarchive::Lib->ffi;
+my %keep;
 
 =head1 SYNOPSIS
 
@@ -49,6 +51,7 @@ $ffi->attach( [ free => 'DESTROY' ] => ['archive_write'] => 'int' => sub {
   return if $self->{cb}                  # inside a callback, we don't own the archive pointer
     || ${^GLOBAL_PHASE} eq 'DESTRUCT';   # during global shutdown, the xsub might go away
   my $ret = $xsub->($self);
+  delete $keep{refaddr $self};
   warn "destroying archive pointer did not return ARCHIVE_OK" unless $ret == 0;
 });
 
@@ -130,7 +133,7 @@ $ffi->attach( open => ['archive_write', 'opaque', 'archive_open_callback', 'arch
       $w = bless { ptr => $w, cb => 1 }, __PACKAGE__;
       $orig->($w);
     });
-    push @{ $self->{keep} }, $opener;
+    push @{ $keep{refaddr $self} }, $opener;
   }
 
   if($writer)
@@ -142,7 +145,7 @@ $ffi->attach( open => ['archive_write', 'opaque', 'archive_open_callback', 'arch
       window $buffer, $ptr, $size;
       $orig->($w, \$buffer);
     });
-    push @{ $self->{keep} }, $writer;
+    push @{ $keep{refaddr $self} }, $writer;
   }
 
   if($closer)
@@ -152,7 +155,7 @@ $ffi->attach( open => ['archive_write', 'opaque', 'archive_open_callback', 'arch
       $w = bless { ptr => $w, cb => 1 }, __PACKAGE__;
       $orig->($w);
     });
-    push @{ $self->{keep} }, $closer;
+    push @{ $keep{refaddr $self} }, $closer;
   }
 
   $xsub->($self, undef, $opener, $writer, $closer);
@@ -281,7 +284,7 @@ $ffi->attach( set_passphrase_callback => ['archive_write', 'opaque', 'archive_pa
     return $self->{passphrase} = $ptr;
   });
 
-  push @{ $self->{keep} }, $closure;
+  push @{ $keep{refaddr $self} }, $closure;
 
   $xsub->($self, undef, $closure);
 
