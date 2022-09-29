@@ -86,6 +86,7 @@ RUN cd /usr/bin && ln -s /opt/libarchive/${latest}/bin/* .                      
   && cd /usr/include && ln -s /opt/libarchive/${latest}/include/* .
 
 RUN cpanm -n \
+  Test2::Tools::MemoryCycle                        \
   File::chdir                                      \
   FFI::CheckLib                                    \
   FFI::Platypus                                    \
