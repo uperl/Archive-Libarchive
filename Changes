@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}},
 
 {{$NEXT}}
+  - Add support for libarchive 3.7.4 (gh#46)
 
 0.08      2022-09-29 10:40:53 -0600
   - Unbundle Test2::Tools::MemoryCycle as it is now on
