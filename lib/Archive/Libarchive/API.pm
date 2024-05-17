@@ -1549,10 +1549,20 @@ is one of C<mt>, C<reg>, C<lnx>, C<sock>, C<chr>, C<blk>, C<dir> or C<ifo>, and
 integer values will match the corresponding C<AE_IF> prefixed constant.  See
 L<Archive::Libarchive::API/CONSTANTS> for the full list.
 
+=head2 filetype_is_set
+
+ # archive_entry_filetype_is_set (optional)
+ my $int = $e->filetype_is_set;
+
 =head2 gid
 
  # archive_entry_gid
  my $sint64 = $e->gid;
+
+=head2 gid_is_set
+
+ # archive_entry_gid_is_set (optional)
+ my $int = $e->gid_is_set;
 
 =head2 gname
 
@@ -1656,6 +1666,11 @@ Create a new Entry object.
 
  # archive_entry_perm
  my $mode_t = $e->perm;
+
+=head2 perm_is_set
+
+ # archive_entry_perm_is_set (optional)
+ my $int = $e->perm_is_set;
 
 =head2 rdev
 
@@ -1930,6 +1945,11 @@ Not currently implemented on Windows.
 
  # archive_entry_uid
  my $sint64 = $e->uid;
+
+=head2 uid_is_set
+
+ # archive_entry_uid_is_set (optional)
+ my $int = $e->uid_is_set;
 
 =head2 uname
 
