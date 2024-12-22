@@ -2,4 +2,7 @@ Archive-Libarchive-*
 /.build/
 *.swp
 
-
+/Archive-Libarchive-*
+/.build
+*.old
+*.orig
