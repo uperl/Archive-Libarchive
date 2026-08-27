@@ -92,6 +92,10 @@ $ffi->attach( add_filter_zstd => ['archive_write'] => 'int' );
 $ffi->attach( set_format_cpio_bin => ['archive_write'] => 'int' );
 $ffi->attach( set_format_cpio_odc => ['archive_write'] => 'int' );
 $ffi->attach( set_format_cpio_pwb => ['archive_write'] => 'int' );
+$ffi->attach( zip_set_compression_bzip2 => ['archive_write'] => 'int' );
+$ffi->attach( zip_set_compression_lzma => ['archive_write'] => 'int' );
+$ffi->attach( zip_set_compression_xz => ['archive_write'] => 'int' );
+$ffi->attach( zip_set_compression_zstd => ['archive_write'] => 'int' );
 
 $ffi->ignore_not_found(0);
 
