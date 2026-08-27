@@ -1133,15 +1133,35 @@ on error.
  # archive_write_header
  my $int = $w->write_header($e);
 
+=head2 zip_set_compression_bzip2
+
+ # archive_write_zip_set_compression_bzip2 (optional)
+ my $int = $w->zip_set_compression_bzip2;
+
 =head2 zip_set_compression_deflate
 
  # archive_write_zip_set_compression_deflate
  my $int = $w->zip_set_compression_deflate;
 
+=head2 zip_set_compression_lzma
+
+ # archive_write_zip_set_compression_lzma (optional)
+ my $int = $w->zip_set_compression_lzma;
+
 =head2 zip_set_compression_store
 
  # archive_write_zip_set_compression_store
  my $int = $w->zip_set_compression_store;
+
+=head2 zip_set_compression_xz
+
+ # archive_write_zip_set_compression_xz (optional)
+ my $int = $w->zip_set_compression_xz;
+
+=head2 zip_set_compression_zstd
+
+ # archive_write_zip_set_compression_zstd (optional)
+ my $int = $w->zip_set_compression_zstd;
 
 =head1 Archive::Libarchive::DiskRead
 
@@ -1393,6 +1413,11 @@ Clone the entry instance.
  # archive_entry_copy_fflags_text
  my $string1 = $e->copy_fflags_text($string2);
 
+=head2 copy_fflags_text_len
+
+ # archive_entry_copy_fflags_text_len (optional)
+ my $string1 = $e->copy_fflags_text_len($string2, $size_t);
+
 =head2 copy_fflags_text_w
 
  # archive_entry_copy_fflags_text_w
@@ -1579,6 +1604,11 @@ L<Archive::Libarchive::API/CONSTANTS> for the full list.
  # archive_entry_hardlink
  my $string = $e->hardlink;
 
+=head2 hardlink_is_set
+
+ # archive_entry_hardlink_is_set (optional)
+ my $int = $e->hardlink_is_set;
+
 =head2 hardlink_utf8
 
  # archive_entry_hardlink_utf8
@@ -1676,6 +1706,11 @@ Create a new Entry object.
 
  # archive_entry_rdev
  my $dev_t = $e->rdev;
+
+=head2 rdev_is_set
+
+ # archive_entry_rdev_is_set (optional)
+ my $int = $e->rdev_is_set;
 
 =head2 rdevmajor
 
@@ -1781,6 +1816,16 @@ L<Archive::Libarchive::API/CONSTANTS> for the full list.
 
  # archive_entry_set_link
  $e->set_link($string);
+
+=head2 set_link_to_hardlink
+
+ # archive_entry_set_link_to_hardlink (optional)
+ $e->set_link_to_hardlink;
+
+=head2 set_link_to_symlink
+
+ # archive_entry_set_link_to_symlink (optional)
+ $e->set_link_to_symlink;
 
 =head2 set_link_utf8
 
@@ -2534,6 +2579,10 @@ to writing bindings for them.
 
 =over 4
 
+=item archive_cng_version
+
+=item archive_commoncrypto_version
+
 =item archive_compression
 
 =item archive_compression_name
@@ -2559,6 +2608,36 @@ to writing bindings for them.
 =item archive_entry_uname_w
 
 =item archive_free
+
+=item archive_libacl_version
+
+=item archive_libattr_version
+
+=item archive_libbsdxml_version
+
+=item archive_libexpat_version
+
+=item archive_libiconv_version
+
+=item archive_liblzo2_version
+
+=item archive_libmd_version
+
+=item archive_libpcre2_version
+
+=item archive_libpcre_version
+
+=item archive_librichacl_version
+
+=item archive_libxml2_version
+
+=item archive_mbedtls_version
+
+=item archive_nettle_version
+
+=item archive_openssl_version
+
+=item archive_parse_date
 
 =item archive_position_compressed
 
@@ -2609,6 +2688,8 @@ to writing bindings for them.
 =item archive_read_support_compression_xz
 
 =item archive_utility_string_sort
+
+=item archive_wincrypt_version
 
 =item archive_write_finish
 
