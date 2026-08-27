@@ -2,6 +2,9 @@ Revision history for {{$dist->name}},
 
 {{$NEXT}}
 
+0.10      2026-08-27 08:17:24 -0600
+  - Add support for libarchive 3.8.9 (gh#48)
+
 0.09      2024-05-17 13:33:05 -0600
   - Add support for libarchive 3.7.4 (gh#46)
 
