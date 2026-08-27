@@ -33,24 +33,7 @@ $ffi->attach( archive_entry_partial_links => ['archive_entry_linkresolver', 'uin
 
 $ffi->ignore_not_found(1);
 
-$ffi->attach( archive_cng_version => [] => 'string' );
-$ffi->attach( archive_commoncrypto_version => [] => 'string' );
-$ffi->attach( archive_libacl_version => [] => 'string' );
-$ffi->attach( archive_libattr_version => [] => 'string' );
-$ffi->attach( archive_libbsdxml_version => [] => 'string' );
-$ffi->attach( archive_libexpat_version => [] => 'string' );
-$ffi->attach( archive_libiconv_version => [] => 'string' );
-$ffi->attach( archive_liblzo2_version => [] => 'string' );
-$ffi->attach( archive_libmd_version => [] => 'string' );
-$ffi->attach( archive_libpcre2_version => [] => 'string' );
-$ffi->attach( archive_libpcre_version => [] => 'string' );
-$ffi->attach( archive_librichacl_version => [] => 'string' );
-$ffi->attach( archive_libxml2_version => [] => 'string' );
-$ffi->attach( archive_mbedtls_version => [] => 'string' );
-$ffi->attach( archive_nettle_version => [] => 'string' );
-$ffi->attach( archive_openssl_version => [] => 'string' );
 $ffi->attach( archive_parse_date => ['time_t', 'string'] => 'time_t' );
-$ffi->attach( archive_wincrypt_version => [] => 'string' );
 
 $ffi->ignore_not_found(0);
 
